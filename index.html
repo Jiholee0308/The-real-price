@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>진짜가격 — 선택의 진짜 가격</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ECEFF3;--card:#FFFFFF;--soft:#F4F6F9;--ink:#0F1B2D;--muted:#586477;--line:#D3D9E1;
+  --cobalt:#2340E8;--on-cobalt:#FFFFFF;
+  --amber:#FFB020;--amber-soft:#FFF1D2;--amber-ink:#7A4700;
+  --green:#0B8F63;--green-soft:#DDF4EA;--red:#C93A3A;--red-soft:#FBE4E4;
+  --f-num:'Bricolage Grotesque','IBM Plex Sans KR',system-ui,sans-serif;
+  --f-body:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0D121A;--card:#151C27;--soft:#1B2431;--ink:#E9EFF7;--muted:#98A5B8;--line:#2A3546;
+  --cobalt:#8AA0FF;--on-cobalt:#0D121A;--amber:#FFC24D;--amber-soft:#3A2E12;--amber-ink:#FFD98A;
+  --green:#45D2A0;--green-soft:#133328;--red:#FF8A8A;--red-soft:#3A1B1E;}}
+:root[data-theme="dark"]{
+  --paper:#0D121A;--card:#151C27;--soft:#1B2431;--ink:#E9EFF7;--muted:#98A5B8;--line:#2A3546;
+  --cobalt:#8AA0FF;--on-cobalt:#0D121A;--amber:#FFC24D;--amber-soft:#3A2E12;--amber-ink:#FFD98A;
+  --green:#45D2A0;--green-soft:#133328;--red:#FF8A8A;--red-soft:#3A1B1E;}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+button,input,textarea{font:inherit;color:inherit}
+button,.btn,label{-webkit-tap-highlight-color:transparent}
+.btn:focus-within{outline:3px solid var(--cobalt);outline-offset:2px}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+.app{max-width:520px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 18px 120px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:6px 0 18px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:17px;letter-spacing:-.02em}
+.brand svg{color:var(--cobalt)}
+h1{font-size:27px;line-height:1.28;letter-spacing:-.03em;margin:0 0 10px;font-weight:700}
+h2{font-size:18px;line-height:1.35;letter-spacing:-.02em;margin:0 0 8px;font-weight:700}
+h3{font-size:15px;margin:0 0 6px;font-weight:600}
+p{margin:0 0 10px}
+.lead{color:var(--muted);font-size:15.5px}
+.small{font-size:13.5px;color:var(--muted)}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:0 0 14px}
+.section{margin:26px 0 0}
+.section>h2{margin-bottom:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 20px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);font-weight:600;text-align:center}
+.btn.primary{background:var(--cobalt);border-color:var(--cobalt);color:var(--on-cobalt)}
+.btn.ghost{background:transparent}
+.btn.block{display:flex;width:100%}
+.btn.sm{min-height:38px;padding:0 14px;font-size:14px;border-radius:10px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.stack>*+*{margin-top:10px}
+.back{background:none;border:0;padding:6px 0;margin:0 0 8px;color:var(--muted);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font-size:14.5px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.field{display:block;margin:0 0 12px}
+.field>span{display:block;font-size:13.5px;color:var(--muted);margin-bottom:5px}
+input[type=text],input[type=number],textarea{width:100%;min-height:48px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card)}
+textarea{min-height:110px;resize:vertical;line-height:1.5}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.7}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pairbox{border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--card);margin-bottom:14px}
+.pairbox legend{font-weight:600;padding:0 6px;font-size:14px}
+.err{background:var(--red-soft);color:var(--red);border-radius:12px;padding:10px 14px;margin:0 0 12px;font-size:14.5px}
+.banner{background:var(--amber-soft);color:var(--amber-ink);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:14.5px}
+.note{border-left:3px solid var(--line);padding:2px 0 2px 12px;color:var(--muted);font-size:13.5px;margin:14px 0}
+/* price bars */
+.bar{display:flex;height:22px;border-radius:6px;overflow:hidden;background:var(--soft);border:1px solid var(--line);margin:10px 0 12px}
+.bar i{display:block;height:100%}
+.s-vis{background:var(--ink)}
+.s-time{background:var(--amber)}
+.s-hass{background:repeating-linear-gradient(135deg,var(--amber) 0 4px,transparent 4px 8px)}
+.s-ben{background:var(--green)}
+.legend{margin:0;display:grid;gap:4px;font-size:14px}
+.legend div{display:flex;justify-content:space-between;gap:12px}
+.legend dt{display:flex;align-items:center;gap:8px;color:var(--muted)}
+.legend dd{margin:0;font-weight:600}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+.opt{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.opt.win{border-color:var(--ink)}
+.opt-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tag{font-size:12.5px;font-weight:600;background:var(--ink);color:var(--paper);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.tag.soft{background:var(--soft);color:var(--muted);border:1px solid var(--line)}
+.tag.amb{background:var(--amber-soft);color:var(--amber-ink)}
+.big{font-size:34px;font-weight:800;line-height:1.15;margin:6px 0 0}
+.range{font-size:13px;color:var(--muted)}
+.verdict{background:var(--soft);border-radius:16px;padding:14px 16px;margin:0 0 14px}
+.verdict strong{font-weight:700}
+/* hero */
+.hero{margin:0 0 22px}
+.hero .demo{margin:16px 0 4px}
+.demo .bar{animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes grow{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){.demo .bar{animation:none}*{scroll-behavior:auto!important}}
+.cta{display:flex;flex-direction:column;align-items:flex-start;gap:2px;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:18px;padding:16px 18px;margin-bottom:12px}
+.cta.main{background:var(--cobalt);border-color:var(--cobalt);color:var(--on-cobalt)}
+.cta b{font-size:18px;letter-spacing:-.02em}
+.cta span{font-size:14px;opacity:.85}
+/* onboarding */
+.prog{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin:4px 0 22px}
+.prog i{display:block;height:100%;background:var(--cobalt);transition:width .3s}
+.ob-opt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:16px 18px;margin-bottom:12px;min-height:76px}
+.ob-opt b{display:block;font-size:18px;letter-spacing:-.02em}
+.ob-opt span{color:var(--muted);font-size:14.5px}
+.ob-opt:active{border-color:var(--cobalt)}
+.kicker{font-size:14px;color:var(--muted);margin-bottom:6px}
+.result-tp{font-size:52px;font-weight:800;line-height:1.05;margin:6px 0 4px}
+/* rows */
+.row{padding:12px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row-h{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.row-h .lab{font-weight:500}
+.row-h .val{font-weight:700;white-space:nowrap}
+.row-sub{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 2px;font-size:12.5px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--cobalt);height:32px;margin:0}
+.grp{margin:20px 0 0}
+.grp>h3{display:flex;align-items:center;gap:8px}
+.ask{background:var(--amber-soft);color:var(--amber-ink);border-radius:16px;padding:14px 16px;margin:16px 0}
+.ask .chip{background:var(--card);color:var(--ink)}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.scale button{min-height:60px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);font-size:22px;font-weight:700;font-family:var(--f-num)}
+.scale small{display:block;font-size:11.5px;font-weight:400;color:var(--muted);font-family:var(--f-body)}
+.emo{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.emo button{min-height:86px;font-size:38px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);line-height:1}
+.emo small{display:block;font-size:13px;color:var(--muted);margin-top:6px}
+/* lists */
+.item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item .t{font-weight:600}
+.meter{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--cobalt)}
+.dim{display:grid;grid-template-columns:1fr 44px;gap:4px 12px;align-items:center;margin:0 0 12px;font-size:14.5px}
+.dim .meter{grid-column:1/2}
+.lock{opacity:.9}
+.lock .badge2{font-size:12.5px;color:var(--muted)}
+.unl{border-left:4px solid var(--green);padding-left:14px}
+.bal{display:grid;gap:8px;margin:12px 0}
+.bal .bar{margin:0}
+.bal .lab{display:flex;justify-content:space-between;font-size:14px}
+.tabs{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;background:var(--card);border-top:1px solid var(--line);padding:6px 10px calc(6px + env(safe-area-inset-bottom));z-index:5}
+.tabs>div{display:flex;width:100%;max-width:520px}
+.tab{position:relative;flex:1;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;color:var(--muted);font-size:12.5px;min-height:52px}
+.tab[aria-current="page"]{color:var(--cobalt);font-weight:600}
+.badge{position:absolute;top:2px;left:calc(50% + 6px);min-width:18px;height:18px;border-radius:99px;background:var(--red);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;padding:0 5px;font-weight:700}
+.spin{width:28px;height:28px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--cobalt);animation:sp 1s linear infinite;margin:0 0 12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
+#toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-size:14px;z-index:9;opacity:0;pointer-events:none;transition:opacity .2s;max-width:88vw}
+#toast.on{opacity:1}
+pre.export{white-space:pre-wrap;max-height:220px;overflow:auto;background:var(--soft);border-radius:12px;padding:12px;font-size:12px;user-select:all}
+.scroll-x{overflow-x:auto}
+
+.strip{display:flex;gap:4px;margin:12px 0 6px}
+.segb{min-width:0;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:2px;font-size:13px}
+.segb b{font-size:14px}
+.segb span{color:var(--muted);font-size:12px}
+.segb.hit{border-color:var(--ink)}
+.segb.cur{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.segb.cur span{color:inherit;opacity:.85}
+
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+/* ========= 유틸 ========= */
+const KEY='jinjja-gagyeok:v1';
+const $=(s,r)=>(r||document).querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Math.round(n).toLocaleString('ko-KR');
+const won=n=>(Math.round(n)<0?'−':'')+fmt(Math.abs(n))+'원';
+const signWon=n=>(Math.round(n)>0?'+':Math.round(n)<0?'−':'')+fmt(Math.abs(n))+'원';
+const man=n=>{const a=Math.abs(n);const s=n<0?'−':'';return a>=10000?s+(a/10000).toFixed(a>=1e6?0:1).replace(/\.0$/,'')+'만원':s+fmt(a)+'원'};
+const r500=n=>Math.max(500,Math.round(n/500)*500);
+const uid=()=>Math.random().toString(36).slice(2,9);
+const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+const mm=m=>m<60?m+'분':Math.floor(m/60)+'시간'+(m%60?' '+(m%60)+'분':'');
+const DAY=864e5,HR=36e5;
+const dstr=ts=>{const d=new Date(ts);return (d.getMonth()+1)+'월 '+d.getDate()+'일'};
+const CAT={daily:'일상 이동·식사',trip:'여행·여가',buy:'물건 구매',activity:'모임·활동',other:'기타'};
+const DEEP_CATS=['trip','buy','activity','other'];
+const DUE_H={daily:3,trip:5*24,buy:7*24,activity:7*24,other:3*24};
+const DIM={experience:'경험',relation:'관계',future:'미래 가치',wellbeing:'회복·즐거움',durable:'오래 쓰는 가치'};
+const CTXS=['출근·등교','약속','주말·여가'];
+const HASSLE=[{k:'rain',l:'비·눈',w:.3},{k:'bag',l:'짐 많음',w:.25},{k:'tired',l:'피곤함',w:.3},{k:'late',l:'늦은 밤(안전)',w:.4}];
+const RATE_LABEL={5:'만족 😀',3:'보통 😐',1:'아쉬움 😞'};
+
+/* ========= 저장소 ========= */
+let storageOK=true;
+function fresh(){return {v:1,onboarded:false,P:{time:null,risk:.5,future:.5,exp:.5,rel:.5,dur:.5,ctx:{}},D:[],created:Date.now()}}
+function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);if(o&&o.v===1&&o.P)return o}}catch(e){storageOK=false}return fresh()}
+let S=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){storageOK=false}}
+
+/* ========= PWA 보조 ========= */
+const PWA=typeof document!=='undefined'&&!!document.querySelector('link[rel=manifest]');
+const isStandalone=()=>{try{return window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true}catch(e){return false}};
+const isIOS=()=>/iphone|ipad|ipod/i.test((typeof navigator!=='undefined'&&navigator.userAgent)||'');
+let installEv=null;
+if(PWA){
+  try{
+    window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEv=e});
+    if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
+    if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+  }catch(e){}
+}
+function cleanImport(o){
+  if(!o||o.v!==1||!o.P||!Array.isArray(o.D))return null;
+  const out=fresh(),P=o.P,ok=x=>typeof x==='number'&&x>=0&&x<=1;
+  if(P.time&&isFinite(P.time.est)&&P.time.est>0)out.P.time={est:+P.time.est,low:+P.time.low||r500(P.time.est/1.25),high:+P.time.high||r500(P.time.est*1.25),calib:+P.time.calib||0};
+  ['risk','future','exp','rel','dur'].forEach(k=>{if(ok(P[k]))out.P[k]=P[k]});
+  Object.keys(P.ctx||{}).forEach(c=>{if(CAT[c]&&['cost','balanced','value'].includes(P.ctx[c]&&P.ctx[c].pri))out.P.ctx[c]={pri:P.ctx[c].pri,ts:+P.ctx[c].ts||0}});
+  out.onboarded=!!(o.onboarded&&out.P.time);
+  out.D=o.D.filter(d=>d&&typeof d.id==='string'&&CAT[d.cat]&&Array.isArray(d.options)&&d.options.length>=2&&Number.isInteger(d.chosen)&&d.options[d.chosen]&&isFinite(d.ts)&&isFinite(d.predicted)&&isFinite(d.due)).map(d=>{
+    const r=d.outcome&&[1,3,5].includes(d.outcome.rating)?{rating:d.outcome.rating,again:d.outcome.again==='diff'?'diff':'same',note:String(d.outcome.note||'').slice(0,200),ts:+d.outcome.ts||d.due}:null;
+    return {id:d.id.slice(0,20),ts:+d.ts,mode:d.mode==='deep'?'deep':'quick',cat:d.cat,title:String(d.title||'').slice(0,60),ctx:CTXS.includes(d.ctx)?d.ctx:null,options:d.options.slice(0,3).map(x=>({name:String((x&&x.name)||'').slice(0,40)})),chosen:d.chosen,favored:Number.isInteger(d.favored)?d.favored:null,predicted:+d.predicted,net:+d.net||0,be:null,fastIdx:Number.isInteger(d.fastIdx)?d.fastIdx:-1,due:+d.due,outcome:r,demo:!!d.demo};
+  }).filter(d=>d.options[d.chosen]);
+  return out;
+}
+
+/* ========= UI 상태 ========= */
+function newOb(active){return {active:!!active,step:-1,lo:1500,hi:60000,ans:{},showResult:false}}
+function newQuick(){return {stage:'form',a:{name:'',money:'',mins:''},b:{name:'',money:'',mins:''},c:{name:'',money:'',mins:''},showC:false,ctx:null,has:[],result:null,chosen:null}}
+function newDeep(){return {stage:'form',text:'',cost:'',hours:'',category:'trip',items:[],title:'',banner:'',missing:null,chosen:null,ctl:null}}
+const ui={tab:'home',home:'menu',err:'',ob:newOb(!S.onboarded),quick:newQuick(),deep:newDeep(),rev:null,revStep:0,revMsg:'',saved:null,exportText:'',confirmDel:false,importPending:null,importMsg:''};
+
+/* ========= 프로필 ========= */
+function tp(){const t=S.P.time;return t?{low:t.low,mid:t.est,high:t.high}:{low:8000,mid:10000,high:12500}}
+function setTime(est){const t=S.P.time||{calib:0};t.est=est;t.low=r500(est/1.25);t.high=r500(est*1.25);S.P.time=t}
+function calibrateSeg(seg,chosen){
+  const t=S.P.time;if(!t)return;
+  const sg=seg.find(x=>x.idx===chosen);if(!sg)return;
+  let target=null;
+  if(t.est<sg.from)target=sg.from;else if(t.est>sg.to)target=sg.to;
+  if(target&&target>0&&isFinite(target)){const c=t.calib||0;setTime(Math.exp(.85*Math.log(t.est)+.15*Math.log(target)));S.P.time.calib=c+1}
+}
+
+/* ========= 온보딩 ========= */
+const TIME_Q=[
+  {title:'학교(회사)까지 가는 길',slow:{n:'버스',m:2000,min:35},fast:{n:'택시',min:10},save:25},
+  {title:'저녁 식사',slow:{n:'직접 요리',m:5000,min:60,note:'장보기·요리·설거지 포함'},fast:{n:'배달',min:25,note:'주문~식사 시작까지'},save:35},
+  {title:'본가에 가는 길',slow:{n:'시외버스',m:20000,min:210},fast:{n:'KTX',min:120},save:90},
+  {title:'고장 난 자전거',slow:{n:'직접 고치기',m:3000,min:120,note:'부품값 포함'},fast:{n:'수리점 맡기기',min:30},save:90}
+];
+function timeQuestion(i){
+  const q=TIME_Q[i],o=ui.ob;
+  const th=Math.sqrt(o.lo*o.hi);
+  const raw=q.slow.m+th*q.save/60;
+  const step=raw>30000?1000:500;
+  const fm=Math.max(q.slow.m+step,Math.round(raw/step)*step);
+  return {q,fm,realTh:(fm-q.slow.m)/(q.save/60)};
+}
+function obQuestion(s){
+  if(s<4){
+    const {q,fm}=timeQuestion(s);
+    const slow={k:'slow',t:q.slow.n+' '+won(q.slow.m),s:mm(q.slow.min)+(q.slow.note?' · '+q.slow.note:'')};
+    const fast={k:'fast',t:q.fast.n+' '+won(fm),s:mm(q.fast.min)+(q.fast.note?' · '+q.fast.note:'')};
+    return {kick:q.title,prompt:'어느 쪽을 고르시겠어요?',opts:s%2?[fast,slow]:[slow,fast]};
+  }
+  if(s===4)return {kick:'용돈 게임',prompt:'동전을 던져 앞면이면 100,000원, 뒷면이면 0원이에요.',opts:[{k:'sure',t:'확정 40,000원 받기',s:'고민 없이 바로 받아요'},{k:'gamble',t:'동전 던지기',s:'앞면 100,000원 / 뒷면 0원'}]};
+  if(s===5){
+    const sure=ui.ob.ans.r1==='gamble'?55000:25000;
+    return {kick:'용돈 게임',prompt:'같은 동전 던지기예요. 확정 금액만 바뀌었어요.',opts:[{k:'sure',t:'확정 '+won(sure)+' 받기',s:'고민 없이 바로 받아요'},{k:'gamble',t:'동전 던지기',s:'앞면 100,000원 / 뒷면 0원'}]};
+  }
+  if(s===6)return {kick:'기다림',prompt:'어느 쪽이 더 끌리세요?',opts:[{k:'now',t:'지금 50,000원',s:'바로 받아요'},{k:'later',t:'한 달 뒤 55,000원',s:'10% 더, 대신 기다려요'}]};
+  if(s===7)return {kick:'뜻밖의 돈',prompt:'400,000원이 생겼어요.',opts:[{k:'exp',t:'친구들과 3일 여행',s:'돈은 사라지지만 추억이 남아요'},{k:'save',t:'저축',s:'통장에 그대로 둬요'}]};
+  if(s===8)return {kick:'토요일 오후 3시간',prompt:'무엇을 하시겠어요?',opts:[{k:'friend',t:'친구 약속',s:'20,000원 쓰고 즐겁게 놀아요'},{k:'work',t:'혼자 알바',s:'30,000원을 벌어요'}]};
+  return {kick:'신발 사기',prompt:'3년 동안 드는 총비용은 같아요.',opts:[{k:'durable',t:'120,000원짜리 신발 1켤레',s:'3년 쓰는 튼튼한 신발'},{k:'cheap',t:'40,000원짜리 신발 3켤레',s:'1년마다 새로 사요'}]};
+}
+function obAnswer(k){
+  const o=ui.ob,s=o.step;
+  if(s<4){const {realTh}=timeQuestion(s);if(k==='fast')o.lo=Math.min(realTh,o.hi*.98);else o.hi=Math.max(realTh,o.lo*1.02)}
+  else if(s===4)o.ans.r1=k;
+  else if(s===5){o.ans.risk=o.ans.r1==='gamble'?(k==='gamble'?.9:.65):(k==='gamble'?.4:.15)}
+  else if(s===6)o.ans.future=k==='later'?.75:.25;
+  else if(s===7)o.ans.exp=k==='exp'?.8:.25;
+  else if(s===8)o.ans.rel=k==='friend'?.8:.3;
+  else if(s===9)o.ans.dur=k==='durable'?.75:.3;
+  o.step++;
+  if(o.step>=10){
+    const a=o.ans;
+    setTime(Math.sqrt(o.lo*o.hi));S.P.time.calib=0;
+    S.P.risk=a.risk;S.P.future=a.future;S.P.exp=a.exp;S.P.rel=a.rel;S.P.dur=a.dur;
+    S.onboarded=true;o.showResult=true;save();
+  }
+}
+
+/* ========= 빠른 모드 계산 ========= */
+function evalOpts(opts,hs){
+  const p=tp(),minM=Math.min(...opts.map(o=>o.mins));
+  return opts.map(o=>{
+    const h=o.mins>minM?hs:0,hrs=o.mins/60;
+    const at=pr=>({money:o.money,time:hrs*pr,hassle:hrs*pr*h,total:o.money+hrs*pr*(1+h)});
+    return {name:o.name,money:o.money,mins:o.mins,h,eff:hrs*(1+h),lo:at(p.low),mid:at(p.mid),hi:at(p.high)};
+  });
+}
+/* 시간 가격 p(원/시간)에 따라 가장 싼 선택지가 바뀌는 구간 (하한 포락선) */
+function envelope(r){
+  const seg=[];let p=0,cur=0;
+  r.forEach((o,i)=>{if(o.money<r[cur].money-1e-9||(Math.abs(o.money-r[cur].money)<1e-9&&o.eff<r[cur].eff))cur=i});
+  for(let g=0;g<6;g++){
+    let nxt=-1,np=Infinity;
+    r.forEach((o,j)=>{
+      if(o.eff<r[cur].eff-1e-12){const x=(o.money-r[cur].money)/(r[cur].eff-o.eff);if(x>=p-1e-9&&x<np){np=x;nxt=j}}
+    });
+    if(nxt<0){seg.push({idx:cur,from:p,to:Infinity});break}
+    seg.push({idx:cur,from:p,to:np});p=np;cur=nxt;
+  }
+  return seg.filter(x=>x.to-x.from>1);
+}
+function quickVerdict(r){
+  const arg=k=>{let b=0;r.forEach((o,i)=>{if(o[k].total<r[b][k].total)b=i});return b};
+  const bLo=arg('lo'),bMid=arg('mid'),bHi=arg('hi');
+  const sorted=r.map((o,i)=>({i,t:o.mid.total})).sort((a,b)=>a.t-b.t);
+  const gap=sorted[1].t-sorted[0].t;
+  const minEff=Math.min(...r.map(o=>o.eff));
+  const fl=r.map((o,i)=>i).filter(i=>Math.abs(r[i].eff-minEff)<1e-9);
+  const tie=bLo===bHi&&gap<1;
+  return {best:bMid,second:sorted[1].i,gap,tie,straddle:bLo!==bHi||tie,seg:envelope(r),fast:fl.length===1?fl[0]:-1};
+}
+function optCard(o,max,win){
+  const w=x=>(Math.max(0,x)/max*100).toFixed(1)+'%';
+  const m=o.mid;
+  return `<div class="opt ${win?'win':''}">
+    <div class="opt-h"><h3 style="margin:0">${esc(o.name)}</h3>${win?'<span class="tag">진짜 가격이 더 낮아요</span>':''}</div>
+    <div class="big num">${won(m.total)}</div>
+    <div class="range">내 시간 가격 범위 기준 ${won(o.lo.total)} ~ ${won(o.hi.total)}</div>
+    <div class="bar" role="img" aria-label="${esc(o.name)}: 보이는 가격 ${won(o.money)}, 시간 비용 ${won(m.time)}${m.hassle>0?', 불편 비용 '+won(m.hassle):''}">
+      <i class="s-vis" style="width:${w(o.money)}"></i><i class="s-time" style="width:${w(m.time)}"></i><i class="s-hass" style="width:${w(m.hassle)}"></i>
+    </div>
+    <dl class="legend">
+      <div><dt><span class="dot s-vis"></span>보이는 가격</dt><dd class="num">${won(o.money)}</dd></div>
+      <div><dt><span class="dot s-time"></span>시간 비용 (${mm(o.mins)})</dt><dd class="num">+${won(m.time)}</dd></div>
+      ${m.hassle>0?`<div><dt><span class="dot s-hass"></span>불편·피로 비용</dt><dd class="num">+${won(m.hassle)}</dd></div>`:''}
+    </dl></div>`;
+}
+
+/* ========= 심층 모드 계산 ========= */
+function mkItem(group,label,kind,low,high,extra){
+  const val=(low+high)/2;
+  const max=kind==='hours'?Math.max(Math.ceil(high*2),4):Math.max(Math.ceil(high*2/1000)*1000,10000);
+  return Object.assign({id:uid(),group,label,kind,low,high,val,max,src:'ai'},extra||{});
+}
+function benefitW(it){
+  const P=S.P;
+  const dw={experience:.6+.8*P.exp,relation:.6+.8*P.rel,future:.6+.8*P.future,durable:.6+.8*P.dur,wellbeing:1}[it.dim]||1;
+  const pri=(P.ctx[ui.deep.category]||{}).pri;
+  const pf=pri==='value'?1.25:pri==='cost'?.8:1;
+  return {dw,pf,f:dw*pf};
+}
+const aversion=()=>.7+.6*(1-S.P.risk);
+function itemVals(it){
+  const t=tp();
+  let lo,mid,hi;
+  if(it.kind==='hours'){lo=it.low*t.low;mid=it.val*t.mid;hi=it.high*t.high}else{lo=it.low;mid=it.val;hi=it.high}
+  let f=1;
+  if(it.group==='benefit')f=benefitW(it).f;
+  else if(it.group==='risk')f=(it.prob==null?.3:it.prob)*aversion();
+  return {lo:lo*f,mid:mid*f,hi:hi*f,f};
+}
+function deepTotals(items){
+  const c={lo:0,mid:0,hi:0},b={lo:0,mid:0,hi:0};let vis=0;
+  items.forEach(it=>{const v=itemVals(it),tgt=it.group==='benefit'?b:c;tgt.lo+=v.lo;tgt.mid+=v.mid;tgt.hi+=v.hi;if(it.group==='direct')vis+=v.mid});
+  return {c,b,vis,net:{mid:b.mid-c.mid,lo:b.lo-c.hi,hi:b.hi-c.lo}};
+}
+function deepVerdict(T){
+  const n=T.net;
+  if(n.lo>0)return {fav:0,text:`현재 당신의 가치 기준에서는 <strong>얻는 것이 비용보다 높게</strong> 평가돼요. 불확실성을 감안해도 순가치가 ${man(n.lo)} 이상이에요.`};
+  if(n.hi<0)return {fav:1,text:`현재 당신의 가치 기준에서는 <strong>비용이 얻는 것보다 높게</strong> 평가돼요. 불확실성을 감안해도 순가치가 ${man(n.hi)} 이하예요.`};
+  return {fav:null,text:`중간값으로는 <strong>${n.mid>=0?'얻는 것':'비용'}이 조금 앞서지만</strong>, 불확실성 범위(${man(n.lo)} ~ ${man(n.hi)})가 0을 지나요. 지금 정보로는 갈리지 않으니 값을 조정해 보세요.`};
+}
+function rowVal(it){
+  const v=itemVals(it),collapsed=Math.abs(v.hi-v.lo)<1;
+  const sign=it.group==='benefit'?'+':'';
+  return `<span class="num">${sign}${man(v.mid)}</span>`+(collapsed?'':`<span class="range" style="display:block;font-weight:400;text-align:right">${man(v.lo)} ~ ${man(v.hi)}</span>`);
+}
+const GLABEL={time:'시간',opp:'기회비용',future:'미래 비용',risk:'위험'};
+function rowSub(it){
+  const v=itemVals(it),tags=[];
+  if(GLABEL[it.group])tags.push(`<span class="tag amb">${GLABEL[it.group]}</span>`);
+  if(it.kind==='hours')tags.push(`<span>${(+it.val).toFixed(1).replace(/\.0$/,'')}시간${it.group==='benefit'?' 상당':' × 내 시간 가격'}</span>`);
+  if(it.group==='benefit'){const w=benefitW(it);tags.push(`<span class="tag soft">${DIM[it.dim]||'편익'} ×${w.f.toFixed(2)} 내 프로필 반영</span>`)}
+  if(it.group==='risk')tags.push(`<span class="tag soft">발생 확률 ${Math.round((it.prob==null?.3:it.prob)*100)}% · 위험 성향 ×${aversion().toFixed(2)}</span>`);
+  tags.push(`<span class="tag ${it.src==='user'?'':'amb'}">${it.src==='user'?'직접 수정':it.src==='tpl'?'기본 추정':'AI 추정'}</span>`);
+  return tags.join('');
+}
+function rowHtml(it){
+  const step=it.kind==='hours'?.5:Math.max(100,Math.round(it.max/200/100)*100);
+  return `<div class="row" id="row-${it.id}">
+    <div class="row-h"><span class="lab">${esc(it.label)}</span><span class="val" data-v>${rowVal(it)}</span></div>
+    <div class="row-sub" data-sub>${rowSub(it)}</div>
+    <input type="range" min="0" max="${it.max}" step="${step}" value="${it.val}" data-slide="${it.id}" aria-label="${esc(it.label)} 조정">
+  </div>`;
+}
+function summaryHtml(){
+  const d=ui.deep,T=deepTotals(d.items),V=deepVerdict(T);
+  const scale=Math.max(T.c.mid,T.b.mid,1);
+  const w=x=>(Math.max(0,x)/scale*100).toFixed(1)+'%';
+  const hid=T.c.mid-T.vis;
+  return `<div class="card" id="deep-summary">
+    <div class="bal">
+      <div><div class="lab"><span>비용 합계</span><span class="num"><b>${man(T.c.mid)}</b></span></div>
+        <div class="bar" role="img" aria-label="비용 ${man(T.c.mid)} 중 보이는 가격 ${man(T.vis)}, 숨은 비용 ${man(hid)}"><i class="s-vis" style="width:${w(T.vis)}"></i><i class="s-time" style="width:${w(hid)}"></i></div>
+        <div class="small">보이는 가격 ${man(T.vis)} + 숨은 비용 ${man(hid)}</div></div>
+      <div><div class="lab"><span>얻는 것 합계</span><span class="num"><b>${man(T.b.mid)}</b></span></div>
+        <div class="bar" role="img" aria-label="얻는 것 ${man(T.b.mid)}"><i class="s-ben" style="width:${w(T.b.mid)}"></i></div></div>
+    </div>
+    <div class="verdict" style="margin:0"><p style="margin:0 0 6px">${V.text}</p><p class="small" style="margin:0">순가치(중간값) <b class="num">${T.net.mid>0?'+':''}${man(T.net.mid)}</b> · 결정은 당신 몫이에요.</p></div>
+  </div>`;
+}
+
+/* ========= 심층 분석: AI + 기본 추정 ========= */
+function buildPrompt(d){
+  return `당신은 개인 의사결정 분석 도우미입니다. 아래 선택 상황을 "비용"과 "편익"으로 분해하세요. 대학생·사회초년생 기준이며, 모든 값은 보수적인 범위로 추정합니다.
+JSON 객체 하나만 출력하세요(설명·코드펜스 금지). 스키마:
+{"title":"15자 이내 짧은 제목",
+ "usable_hours":숫자(이 선택 때문에 다른 일에 쓸 수 없게 되는 '활용 가능 시간'. 수면 제외. 여행 3일이면 약 24~30),
+ "direct_cost":숫자(원. 언급 없으면 0),
+ "opportunity":[{"label":"...","low":원,"high":원}] (시간 자체와 겹치지 않는, 포기하는 수입·기회. 없으면 []),
+ "future_cost":[{"label":"...","low":원,"high":원}] (이후에 생기는 추가 지출·부담. 없으면 []),
+ "risks":[{"label":"...","low":원,"high":원,"prob":0~1}] (발생 시 손실 금액과 확률),
+ "benefits":[{"label":"...","dim":"experience|relation|future|wellbeing|durable","low_hours":숫자,"high_hours":숫자}] (이 편익이 '내 시간 몇 시간의 가치'와 맞먹는지),
+ "missing":"판단에 꼭 필요한데 빠진 정보가 있으면 한국어 질문 한 줄, 없으면 null"}
+규칙: 각 배열 최대 3개, 라벨은 한국어 20자 이내, 과장 금지, 금액 단위는 원.
+선택 상황: ${d.text.trim().slice(0,1500)}
+분류: ${CAT[d.category]}
+사용자가 적은 금액: ${+d.cost>0?fmt(+d.cost)+'원':'없음'}
+사용자가 적은 활용 가능 시간: ${+d.hours>0?d.hours+'시간':'없음'}`;
+}
+const num=(v,lo,hi,def)=>{v=+v;return isFinite(v)?Math.min(hi,Math.max(lo,v)):def};
+function sanitizeAI(r){
+  if(!r||typeof r!=='object'||!Array.isArray(r.benefits)||!r.benefits.length)return null;
+  const arr=(a,f)=>(Array.isArray(a)?a:[]).slice(0,3).map(f).filter(Boolean);
+  const won3=x=>{if(!x||!x.label)return null;const lo=num(x.low,0,1e8,0),hi=Math.max(lo,num(x.high,0,1e8,lo));return {label:String(x.label).slice(0,30),low:lo,high:hi,prob:num(x.prob,0,1,.3)}};
+  const out={
+    title:String(r.title||'').slice(0,20),
+    hours:num(r.usable_hours,0,2000,null),
+    cost:num(r.direct_cost,0,1e9,0),
+    opp:arr(r.opportunity,won3),fut:arr(r.future_cost,won3),risks:arr(r.risks,won3),
+    ben:arr(r.benefits,x=>{if(!x||!x.label)return null;const lo=num(x.low_hours,0,500,0),hi=Math.max(lo,num(x.high_hours,0,500,lo));return {label:String(x.label).slice(0,30),dim:DIM[x.dim]?x.dim:'wellbeing',low:lo,high:hi}}),
+    missing:r.missing?String(r.missing).slice(0,120):null
+  };
+  return out.ben.length?out:null;
+}
+function itemsFromAI(ai,d){
+  const cost=+d.cost>0?+d.cost:ai.cost,hrs=+d.hours>0?+d.hours:(ai.hours==null?4:ai.hours);
+  const it=[mkItem('direct','직접 비용','won',cost,cost,{src:+d.cost>0?'user':'ai'}),mkItem('time','쓰게 되는 시간(활용 가능 시간)','hours',hrs,hrs,{src:+d.hours>0?'user':'ai'})];
+  ai.opp.forEach(x=>it.push(mkItem('opp',x.label,'won',x.low,x.high)));
+  ai.fut.forEach(x=>it.push(mkItem('future',x.label,'won',x.low,x.high)));
+  ai.risks.forEach(x=>it.push(mkItem('risk',x.label,'won',x.low,x.high,{prob:x.prob})));
+  ai.ben.forEach(x=>it.push(mkItem('benefit',x.label,'hours',x.low,x.high,{dim:x.dim})));
+  return it;
+}
+function templateItems(d){
+  const cost=Math.max(0,+d.cost||0),cat=d.category;
+  const hrs=+d.hours>0?+d.hours:{trip:24,buy:2,activity:30,other:4}[cat];
+  const T=(g,l,k,a,b,x)=>mkItem(g,l,k,a,b,Object.assign({src:'tpl'},x||{}));
+  const rd=v=>Math.round(v/1000)*1000;
+  const it=[T('direct','직접 비용','won',cost,cost,{src:+d.cost>0?'user':'tpl'}),T('time','쓰게 되는 시간(활용 가능 시간)','hours',hrs,hrs,{src:+d.hours>0?'user':'tpl'})];
+  const add=(g,l,a,b,x)=>{if(b>0)it.push(T(g,l,'won',a,b,x))};
+  if(cat==='trip'){add('future','여행 중 추가 지출',rd(cost*.1),rd(cost*.3));add('risk','일정 변경·예상 밖 비용',rd(cost*.1),rd(cost*.3),{prob:.3});
+    it.push(T('benefit','친구와의 관계','hours',6,14,{dim:'relation'}),T('benefit','새로운 경험','hours',5,12,{dim:'experience'}),T('benefit','스트레스 해소','hours',3,8,{dim:'wellbeing'}))}
+  else if(cat==='buy'){add('future','유지·소모품 비용',rd(cost*.05),rd(cost*.15));add('risk','후회·되팔 때 손실',rd(cost*.2),rd(cost*.5),{prob:.3});
+    it.push(T('benefit','오래 쓰는 가치','hours',3,10,{dim:'durable'}),T('benefit','사용 편의·즐거움','hours',3,8,{dim:'wellbeing'}))}
+  else if(cat==='activity'){add('risk','일정 충돌·부담',30000,100000,{prob:.3});
+    it.push(T('benefit','성장·미래 기회','hours',8,24,{dim:'future'}),T('benefit','새로운 사람과 관계','hours',6,16,{dim:'relation'}),T('benefit','재미·성취감','hours',2,6,{dim:'wellbeing'}))}
+  else{it.push(T('benefit','즐거움·회복','hours',3,8,{dim:'wellbeing'}),T('benefit','장기적으로 남는 것','hours',2,6,{dim:'future'}))}
+  return it;
+}
+function errCopy(e){
+  const c=e&&e.code;
+  if(c==='absent'||c==='capability_removed'||c==='capability_disabled'||c==='not_declared')return 'AI 분석을 쓸 수 없는 환경이라 기본 추정으로 채웠어요.';
+  if(c==='not_granted')return 'AI 사용을 허용하지 않아 기본 추정으로 채웠어요. 원하면 다시 시도할 때 허용해 주세요.';
+  if(c==='rate_limited')return '사용 한도에 도달해 기본 추정으로 채웠어요. 잠시 뒤 다시 시도해 보세요.';
+  if(c==='invalid_json'||c==='empty_completion'||c==='refused')return 'AI 응답을 읽지 못해 기본 추정으로 채웠어요.';
+  return 'AI 분석에 실패해 기본 추정으로 채웠어요.';
+}
+async function deepAI(){
+  const d=ui.deep;
+  if(!d.text.trim()){ui.err='선택 상황을 한 줄이라도 적어주세요.';return render()}
+  ui.err='';d.stage='loading';d.ctl=new AbortController();render();
+  const ctl=d.ctl;let ai=null,banner='';
+  try{
+    const sample=(window.claude&&window.claude.use)?await window.claude.use('sample'):null;
+    if(!sample)throw {code:'absent'};
+    ai=sanitizeAI(await sample.json(buildPrompt(d),{signal:ctl.signal}));
+    if(!ai)throw {code:'invalid_json'};
+  }catch(e){
+    if(e&&e.code==='cancelled'){d.stage='form';d.ctl=null;return render()}
+    banner=errCopy(e);
+  }
+  if(d.ctl!==ctl)return;
+  d.ctl=null;deepFill(ai,banner);
+}
+function deepTpl(){const d=ui.deep;if(!d.text.trim()){ui.err='선택 상황을 한 줄이라도 적어주세요.';return render()}ui.err='';deepFill(null,'')}
+function deepFill(ai,banner){
+  const d=ui.deep;
+  d.items=ai?itemsFromAI(ai,d):templateItems(d);
+  const flat=d.text.trim().replace(/\s+/g,' ');d.title=(ai&&ai.title)||(flat.length>14?flat.slice(0,14)+'…':flat);
+  d.missing=ai?ai.missing:null;
+  d.banner=banner||(ai?'':(hasAI()?'AI 없이 ':'')+'기본 추정으로 채웠어요. 값이 대략적이니 꼭 조정해 주세요.');
+  d.stage='edit';d.chosen=null;
+  render();window.scrollTo(0,0);
+}
+
+/* ========= 회고/인사이트 ========= */
+function dueList(){const n=Date.now();return S.D.filter(d=>!d.outcome&&d.due<=n)}
+function saveOutcome(id,rating,again,note){
+  const d=S.D.find(x=>x.id===id);if(!d)return;
+  d.outcome={rating,again,note:(note||'').slice(0,200),ts:Date.now()};save();
+  const diff=d.predicted-rating;
+  ui.revMsg=`「${d.title}」 예상 ${d.predicted}점 → 실제 ${rating}점. `+(diff>=2?'기대가 꽤 컸어요.':diff<=-2?'기대보다 훨씬 좋았어요.':'예측이 비교적 맞았어요.');
+}
+function weekly(){
+  const since=Date.now()-7*DAY,w=S.D.filter(d=>d.ts>=since).sort((a,b)=>b.ts-a.ts);
+  if(!w.length)return '';
+  const rv=w.filter(d=>d.outcome);
+  let line='회고를 남기면 예측과 실제를 비교해 드려요.';
+  if(rv.length>=2){
+    const bias=avg(rv.map(d=>d.predicted))-avg(rv.map(d=>d.outcome.rating));
+    line=Math.abs(bias)<.4?'이번 주엔 예측이 실제와 거의 맞았어요.':bias>0?`이번 주엔 기대가 실제보다 평균 ${bias.toFixed(1)}점 높았어요.`:`이번 주엔 실제가 기대보다 평균 ${Math.abs(bias).toFixed(1)}점 좋았어요.`;
+  }
+  return `<section class="section"><h2>이번 주 리뷰</h2><div class="card">
+    <p style="margin:0 0 6px"><b>${w.length}개</b>의 결정을 했어요. ${line}</p>
+    ${w.slice(0,3).map(d=>`<div class="item"><span class="t">${esc(d.title)}</span><span class="small num">예상 ${d.predicted}점 → ${d.outcome?'실제 '+d.outcome.rating+'점':'회고 전'}</span></div>`).join('')}
+    </div></section>`;
+}
+
+/* ========= 데모 데이터 ========= */
+function rng(seed){let s=seed;return()=>{s=(s*1664525+1013904223)%4294967296;return s/4294967296}}
+function pickW(R,w){const r=R();return r<w[0]?1:r<w[0]+w[1]?3:5}
+function makeDemo(){
+  const R=rng(11),now=Date.now(),out=[];
+  const T={daily:['택시 vs 버스','배달 vs 직접 요리','KTX vs 시외버스','카페 작업 vs 집 공부'],trip:['친구들과 제주 여행','당일치기 바다 여행','주말 근교 캠핑'],buy:['노트북 교체','무선 이어폰 구매','운동화 구매','전공서적 새 책 vs 중고'],activity:['동아리 A 가입','스터디 참여','주말 알바 추가','학회 행사 참석']};
+  const plan=['daily','daily','buy','daily','trip','activity','daily','buy','daily','activity','daily','trip','daily','buy','activity','daily','daily','buy','trip','daily','activity','daily','buy','daily','activity','daily','daily','trip','buy','daily','daily','activity','daily','buy','daily','daily','trip','activity','daily','buy','daily','daily','activity','daily'];
+  const PW={trip:[.2,.5,.3],buy:[.15,.45,.4],activity:[.1,.5,.4],daily:[.15,.5,.35]};
+  plan.forEach((cat,i)=>{
+    const ts=now-((plan.length-i)*1.2+R()*.5)*DAY,list=T[cat],title=list[Math.floor(R()*list.length)];
+    const pred=cat==='trip'?(R()<.7?5:4):cat==='buy'?(R()<.5?4:5):cat==='activity'?(R()<.5?3:4):(R()<.6?3:4);
+    const d={id:uid(),ts,mode:cat==='daily'?'quick':'deep',cat,title,demo:true,predicted:pred,due:ts+DUE_H[cat]*HR,outcome:null,net:0};
+    if(cat==='daily'){
+      const nm=title.split(' vs ');d.options=[{name:nm[0]},{name:nm[1]||'다른 선택'}];d.fastIdx=0;d.ctx=CTXS[Math.floor(R()*3)];
+      d.be=6000+R()*30000;d.favored=d.be<tp().mid?0:1;d.chosen=R()<.55?0:1;
+    }else{d.options=[{name:'하기'},{name:'하지 않기'}];d.favored=R()<.6?0:null;d.chosen=R()<.8?0:1}
+    if(d.due<now&&R()<.92){
+      const rating=pickW(R,PW[cat]);
+      d.outcome={rating,again:rating===5?(R()<.95?'same':'diff'):rating===3?(R()<.7?'same':'diff'):(R()<.85?'diff':'same'),note:'',ts:d.due+HR};
+    }
+    out.push(d);
+  });
+  return out;
+}
+
+/* ========= 뷰: 공통 ========= */
+const ICON={
+  tag:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
+  check:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
+};
+function chips(list,cur,action,multi){
+  return `<div class="chips">${list.map(x=>`<button type="button" class="chip" data-a="${action}" data-v="${esc(x.v)}" aria-pressed="${multi?cur.includes(x.v):cur===x.v}">${esc(x.l)}</button>`).join('')}</div>`;
+}
+const hasAI=()=>!!(window.claude&&window.claude.use);
+const errBox=()=>ui.err?`<div class="err" role="alert">${esc(ui.err)}</div>`:'';
+
+function viewShell(){
+  const due=dueList().length;
+  const t=ui.tab;
+  const body=t==='home'?viewHome():t==='review'?viewReview():viewProfile();
+  const tab=(k,l,ic,badge)=>`<button class="tab" data-a="tab" data-t="${k}" ${t===k?'aria-current="page"':''}>${ic}<span>${l}</span>${badge?`<span class="badge" aria-label="회고 ${badge}건">${badge}</span>`:''}</button>`;
+  return `<div class="app"><header class="top"><div class="brand">${ICON.tag}<span>진짜가격</span></div><span class="small">${storageOK?'':'저장 불가 · 새로고침하면 사라져요'}</span></header>
+  <main>${body}</main></div>
+  <nav class="tabs" aria-label="주요 메뉴"><div>${tab('home','결정',ICON.tag,0)}${tab('review','회고',ICON.check,due)}${tab('profile','내 프로필',ICON.chart,0)}</div></nav>`;
+}
+
+/* ========= 뷰: 온보딩 ========= */
+function viewOb(){
+  const o=ui.ob;
+  if(o.step<0){
+    return `<div class="app"><header class="top"><div class="brand">${ICON.tag}<span>진짜가격</span></div></header>
+    <h1>보이는 가격 뒤의<br>진짜 가격을 계산해요</h1>
+    <p class="lead">택시 15,000원 vs 버스 2,000원. 정말 버스가 싼 걸까요? 시간, 피로, 포기한 기회까지 더하면 답은 사람마다 달라져요.</p>
+    <div class="card"><h2>먼저 10문항만 답해 주세요</h2>
+    <p class="lead" style="margin:0">별점 대신 실제로 고르는 상황으로 <b>내 시간 가격</b>과 위험·미래·경험 성향을 추정해요. 정답은 없고, 2분이면 끝나요.</p></div>
+    <button class="btn primary block" data-a="ob-start" style="margin-bottom:10px">시작하기</button>
+    ${S.onboarded?'<button class="btn ghost block" data-a="ob-cancel">지금은 그만두기</button>':''}
+    <p class="note">${storageOK?'모든 기록은 이 기기의 브라우저에만 저장돼요.':'이 환경에서는 저장이 되지 않을 수 있어요.'} 의료·법률·투자 결정은 다루지 않아요.</p></div>`;
+  }
+  if(o.step>=10){
+    const t=tp();
+    return `<div class="app"><header class="top"><div class="brand">${ICON.tag}<span>진짜가격</span></div></header>
+    <p class="kicker">첫 결과</p><h1>당신의 시간 가격</h1>
+    <div class="card"><div class="result-tp num">${fmt(t.mid)}<span style="font-size:22px;font-weight:600">원/시간</span></div>
+    <p class="lead" style="margin:0 0 4px">범위 ${won(t.low)} ~ ${won(t.high)}</p>
+    <p class="small" style="margin:0">1시간을 아끼려고 평균 이 정도까지 쓸 마음이 있다는 뜻이에요. 실제 선택이 쌓이면 보정돼요.</p></div>
+    <div class="card"><h3>다른 성향 추정</h3>${dimBars()}</div>
+    <div class="stack"><button class="btn primary block" data-a="ob-done">첫 결정 분석하러 가기</button>
+    <button class="btn block" data-a="copy-tp">결과 텍스트 복사</button></div></div>`;
+  }
+  const q=obQuestion(o.step);
+  return `<div class="app"><header class="top"><div class="brand">${ICON.tag}<span>진짜가격</span></div><span class="small num">${o.step+1} / 10</span></header>
+  <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="${o.step}"><i style="width:${o.step/10*100}%"></i></div>
+  <p class="kicker">${esc(q.kick)}</p><h1 style="font-size:23px">${esc(q.prompt)}</h1>
+  <div>${q.opts.map(x=>`<button class="ob-opt" data-a="ob" data-k="${x.k}"><b>${esc(x.t)}</b><span>${esc(x.s)}</span></button>`).join('')}</div></div>`;
+}
+function dimBars(){
+  const P=S.P;
+  const rows=[['경험에 쓰는 편',P.exp],['관계를 우선하는 편',P.rel],['미래를 위해 기다리는 편',P.future],['불확실성을 감수하는 편',P.risk],['오래 쓸 물건을 고르는 편',P.dur]];
+  return rows.map(r=>`<div class="dim"><span>${r[0]}</span><span class="num" style="text-align:right">${Math.round(r[1]*100)}</span><div class="meter" role="img" aria-label="${r[0]} ${Math.round(r[1]*100)}점"><i style="width:${r[1]*100}%"></i></div></div>`).join('')+'<p class="small" style="margin:0">설문 기반 추정이에요. 실제 선택과 회고로 계속 보정돼요.</p>';
+}
+
+/* ========= 뷰: 홈 ========= */
+function viewHome(){
+  if(ui.home==='quick')return viewQuick();
+  if(ui.home==='deep')return viewDeep();
+  if(ui.home==='saved')return viewSaved();
+  const t=tp(),r=evalOpts([{name:'택시',money:15000,mins:10},{name:'버스',money:2000,mins:35}],0);
+  const max=Math.max(r[0].mid.total,r[1].mid.total);
+  const due=dueList().length;
+  return `<section class="hero"><h1>택시 15,000원,<br>진짜 가격은 얼마일까요?</h1>
+    <p class="lead">내 시간 가격 <b class="num">${fmt(t.mid)}원/시간</b>으로 계산한 예시예요.</p>
+    <div class="demo">${r.map(o=>{const w=x=>(x/max*100).toFixed(1)+'%';return `<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><b>${o.name}</b><span class="num"><b>${won(o.mid.total)}</b></span></div><div class="bar" style="margin:6px 0 2px" role="img" aria-label="${o.name} 진짜 가격 ${won(o.mid.total)}"><i class="s-vis" style="width:${w(o.money)}"></i><i class="s-time" style="width:${w(o.mid.time)}"></i></div><div class="small">보이는 가격 ${won(o.money)} + 시간 ${won(o.mid.time)}</div></div>`}).join('')}
+    <div class="legend" style="margin-top:8px;display:flex;gap:16px"><span style="display:flex;align-items:center;gap:6px" class="small"><span class="dot s-vis"></span>보이는 가격</span><span style="display:flex;align-items:center;gap:6px" class="small"><span class="dot s-time"></span>숨은 가격(시간)</span></div></div></section>
+  <button class="cta main" data-a="open-quick"><b>빠른 비교</b><span>10초 · 택시/버스/걷기처럼 2~3개 선택지를 바로 비교</span></button>
+  <button class="cta" data-a="open-deep"><b>심층 분석</b><span>2~3분 · 여행, 구매, 동아리처럼 큰 결정을 비용·편익으로 분해</span></button>
+  ${due?`<button class="cta" data-a="tab" data-t="review" style="border-color:var(--amber);background:var(--amber-soft);color:var(--amber-ink)"><b>회고할 결정 ${due}개</b><span>한 번 누르면 끝나요. 예측과 실제를 비교해요.</span></button>`:''}
+  ${weekly()}
+  ${installCard()}
+  <p class="note">이 앱은 결정을 대신 내리지 않아요. 판단의 근거와 불확실성 범위를 보여주고, 선택은 당신이 해요. 의료·법률·투자 결정은 범위 밖이에요.</p>`;
+}
+function installCard(){
+  if(!PWA||isStandalone()||S.hideInstall)return '';
+  const how=isIOS()?'Safari 아래쪽 공유 버튼 → “홈 화면에 추가”':'브라우저 메뉴(⋮) → “앱 설치” 또는 “홈 화면에 추가”';
+  return `<div class="card" style="margin-top:18px"><h3>앱처럼 쓰기</h3>
+    <p class="small" style="margin-top:0">홈 화면에 추가하면 아이콘으로 바로 열리고 오프라인에서도 열려요. 브라우저가 기록을 정리해 버리는 일도 줄어들 수 있어요.</p>
+    ${installEv?'<button class="btn primary sm" data-a="pwa-install">앱으로 설치</button>':`<p class="small" style="margin:0 0 8px"><b>${how}</b></p>`}
+    <button class="btn ghost sm" data-a="pwa-hide">다시 보지 않기</button></div>`;
+}
+function viewSaved(){
+  const s=ui.saved||{};
+  return `<div class="card"><h1 style="font-size:24px">기록했어요</h1>
+  <p class="lead">「${esc(s.title||'')}」 선택과 예상 만족도 ${s.pred}점을 저장했어요. 나중에 기억으로 채우면 왜곡되기 때문에 지금 남기는 게 중요해요.</p>
+  <p class="small">회고는 <b>${esc(s.when||'')}</b>부터 회고 탭에서 한 번 눌러 답할 수 있어요. 이 웹앱은 푸시 알림을 보낼 수 없어서, 앱을 열면 회고 탭 배지로 알려드려요.</p></div>
+  <div class="stack"><button class="btn primary block" data-a="home-menu">홈으로</button><button class="btn block" data-a="tab" data-t="review">회고 탭 보기</button></div>`;
+}
+
+/* ========= 뷰: 빠른 모드 ========= */
+function viewQuick(){
+  const q=ui.quick;
+  if(q.stage==='result'||q.stage==='predict')return viewQuickResult();
+  const side=(k,label,ph,removable)=>`<fieldset class="pairbox" style="margin-inline:0"><legend>${label}</legend>
+    <label class="field"><span>이름</span><input type="text" data-bind="quick.${k}.name" value="${esc(q[k].name)}" placeholder="${ph[0]}" maxlength="24"></label>
+    <div class="grid2"><label class="field" style="margin:0"><span>금액(원)</span><input type="number" inputmode="numeric" min="0" data-bind="quick.${k}.money" value="${esc(q[k].money)}" placeholder="${ph[1]}"></label>
+    <label class="field" style="margin:0"><span>걸리는 시간(분)</span><input type="number" inputmode="numeric" min="1" data-bind="quick.${k}.mins" value="${esc(q[k].mins)}" placeholder="${ph[2]}"></label></div>
+    ${removable?'<button type="button" class="btn ghost sm" data-a="q-toggle-c" style="margin-top:12px">이 선택지 빼기</button>':''}</fieldset>`;
+  return `<button class="back" data-a="home-menu">‹ 홈</button>
+  <h1>선택지의 진짜 가격</h1><p class="lead">금액과 시간만 넣으면 돼요. 2개면 충분하고, 필요하면 3개까지 비교할 수 있어요.</p>
+  ${errBox()}
+  ${side('a','선택지 A',['예) 택시','15000','10'])}
+  ${side('b','선택지 B',['예) 버스','2000','35'])}
+  ${q.showC?side('c','선택지 C',['예) 걷기','0','60'],true):'<button class="btn ghost block" data-a="q-toggle-c" style="margin-bottom:14px">+ 선택지 추가 (최대 3개)</button>'}
+  <h3>어떤 상황인가요? <span class="small" style="font-weight:400">(선택)</span></h3>
+  ${chips(CTXS.map(x=>({v:x,l:x})),q.ctx,'q-ctx')}
+  <h3 style="margin-top:16px">가장 빠른 쪽보다 오래 걸리는 선택지가 힘들어지는 상황 <span class="small" style="font-weight:400">(선택)</span></h3>
+  ${chips(HASSLE.map(x=>({v:x.k,l:x.l})),q.has,'q-has',true)}
+  <div class="stack" style="margin-top:22px"><button class="btn primary block" data-a="q-run">진짜 가격 보기</button><button class="btn ghost block" data-a="q-example">예시 채우기 (택시·버스·걷기)</button></div>`;
+}
+function segRange(sg){
+  if(sg.from<=0)return fmt(sg.to)+'원 이하';
+  if(!isFinite(sg.to))return fmt(sg.from)+'원 이상';
+  return fmt(sg.from)+' ~ '+fmt(sg.to)+'원';
+}
+function segStrip(r,v){
+  const t=tp();
+  const fin=v.seg.map(x=>x.to).filter(isFinite);
+  const maxP=Math.max(20000,(fin.length?Math.max(...fin):0)*1.4,t.high*1.3);
+  const hit=x=>x.from<=t.high&&x.to>=t.low;
+  return `<div class="strip">${v.seg.map(x=>{
+    const len=Math.min(x.to,maxP)-x.from,cur=x.from<=t.mid&&t.mid<x.to;
+    return `<div class="segb ${cur?'cur':hit(x)?'hit':''}" style="flex:${Math.max(len/maxP,.16).toFixed(3)}"><b>${esc(r[x.idx].name)}</b><span class="num">${segRange(x)}</span></div>`;
+  }).join('')}</div>`;
+}
+function viewQuickResult(){
+  const q=ui.quick,R=q.result,r=R.rows,v=R.verdict,t=tp();
+  const max=Math.max(...r.map(o=>o.mid.total),1);
+  let verdict;
+  if(v.tie)verdict=`선택지들의 진짜 가격이 <strong>거의 같아요.</strong> 값어치는 취향과 그날의 사정에 따라 갈려요.`;
+  else if(v.straddle)verdict=`내 시간 가격 범위(${won(t.low)} ~ ${won(t.high)}) 안에서 <strong>가장 싼 선택지가 바뀌어요.</strong> 값어치는 취향과 그날의 사정에 따라 갈려요.`;
+  else verdict=`내 시간 가격(약 ${fmt(t.mid)}원/시간) 기준으로 <strong>${esc(r[v.best].name)}</strong>의 진짜 가격이 가장 낮아요. 다음으로 낮은 ${esc(r[v.second].name)}보다 약 <strong>${won(v.gap)}</strong> 낮아요.`;
+  let sub='';
+  if(v.seg.length>1){
+    const parts=v.seg.map(x=>{const n=esc(r[x.idx].name);return x.from<=0?`${won(x.to)} 이하로 치면 ${n}`:!isFinite(x.to)?`${won(x.from)} 이상이면 ${n}`:`${won(x.from)}~${won(x.to)}이면 ${n}`});
+    sub=`<p class="small" style="margin:8px 0 0">시간을 시간당 ${parts.join(', ')} 쪽이 가장 싸요.</p>${segStrip(r,v)}<p class="small" style="margin:0">진한 칸이 내 시간 가격이 속한 구간이에요.</p>`;
+  }else sub=`<p class="small" style="margin:8px 0 0">${esc(r[v.seg[0].idx].name)} 쪽이 어떤 시간 가격에서도 가장 싸요.</p>`;
+  const inSeg=new Set(v.seg.map(x=>x.idx)),never=r.filter((o,i)=>!inSeg.has(i));
+  if(never.length&&r.length>2)sub+=`<p class="small" style="margin:6px 0 0">${never.map(o=>esc(o.name)).join(', ')} 쪽은 어떤 시간 가격에서도 가장 싸지 않아요.</p>`;
+  const head=`<button class="back" data-a="q-edit">‹ 수정하기</button><h1 style="font-size:24px">진짜 가격</h1>
+    <div class="verdict"><p style="margin:0">${verdict}</p>${sub}</div>
+    ${r.map((o,i)=>optCard(o,max,!v.straddle&&v.best===i)).join('')}`;
+  if(q.stage==='result'){
+    return head+`<div class="card"><h2>어느 쪽을 고르셨나요?</h2><p class="small">고른 뒤에 만족도를 예상해서 남기면, 나중에 예측이 얼마나 맞았는지 알 수 있어요.</p>
+    <div class="stack">${r.map((o,i)=>`<button class="btn block" data-a="q-pick" data-i="${i}">${esc(o.name)}</button>`).join('')}</div></div>
+    <button class="btn ghost block" data-a="home-menu">아직 안 정했어요 (기록 안 함)</button>`;
+  }
+  return head+predictCard(r[q.chosen].name+' 선택','q-pred');
+}
+function predictCard(name,action){
+  const lab=['별로','아쉬움','보통','좋음','최고'];
+  return `<div class="card"><h2>「${esc(name)}」, 며칠 뒤 만족도는 몇 점일까요?</h2><p class="small">지금 예상을 남겨 두면 나중에 실제와 비교해요.</p>
+  <div class="scale">${[1,2,3,4,5].map(n=>`<button data-a="${action}" data-n="${n}" aria-label="${n}점 ${lab[n-1]}">${n}<small>${lab[n-1]}</small></button>`).join('')}</div></div>`;
+}
+
+/* ========= 뷰: 심층 모드 ========= */
+function viewDeep(){
+  const d=ui.deep;
+  if(d.stage==='loading')return `<div class="card" style="text-align:left"><div class="spin" role="status" aria-label="분석 중"></div><h2>선택을 비용과 편익으로 나누는 중이에요</h2><p class="lead">보통 5~60초 걸려요. 처음이라면 Claude 사용 허용 창이 먼저 뜰 수 있어요.</p><button class="btn block" data-a="d-cancel">취소</button></div>`;
+  if(d.stage==='edit'||d.stage==='predict')return viewDeepEdit();
+  return `<button class="back" data-a="home-menu">‹ 홈</button>
+  <h1>큰 결정, 하나씩 뜯어봐요</h1><p class="lead">상황을 편하게 적어 주세요. 비용·시간·기회비용·편익·위험으로 나눠 드려요.</p>
+  ${errBox()}
+  <label class="field"><span>어떤 선택인가요?</span><textarea data-bind="deep.text" placeholder="예) 친구들이랑 3일 동안 제주도 여행 갈까 고민 중이야. 40만 원 정도 들어." maxlength="1500">${esc(d.text)}</textarea></label>
+  <h3>분류</h3>${chips(DEEP_CATS.map(x=>({v:x,l:CAT[x]})),d.category,'d-cat')}
+  <div class="grid2" style="margin-top:16px"><label class="field"><span>드는 돈(원) · 선택</span><input type="number" inputmode="numeric" min="0" data-bind="deep.cost" value="${esc(d.cost)}" placeholder="400000"></label>
+  <label class="field"><span>쓰게 될 시간(시간) · 선택</span><input type="number" inputmode="numeric" min="0" data-bind="deep.hours" value="${esc(d.hours)}" placeholder="24"></label></div>
+  <p class="small" style="margin-top:-4px">시간은 다른 일에 쓸 수 없게 되는 시간이에요. 수면은 빼고 대략만 적어도 돼요.</p>
+  ${hasAI()?`<div class="stack" style="margin-top:18px"><button class="btn primary block" data-a="d-ai">AI로 분석하기</button><button class="btn ghost block" data-a="d-tpl">AI 없이 기본 추정으로 채우기</button></div>
+  <p class="note">AI 분석을 쓰면 위에 적은 내용이 Claude에게 전송돼요. 이 앱은 의료·법률·투자 결정을 다루지 않아요.</p>`:`<div class="stack" style="margin-top:18px"><button class="btn primary block" data-a="d-tpl">비용·편익으로 나누기</button></div>
+  <p class="note">분류별 기본 추정값으로 채워 드려요. 값은 대략적이니 슬라이더로 꼭 조정해 주세요. 이 앱은 의료·법률·투자 결정을 다루지 않아요.</p>`}`;
+}
+function viewDeepEdit(){
+  const d=ui.deep,items=d.items;
+  const G=(gs,title)=>{const l=items.filter(i=>gs.includes(i.group));return l.length?`<h3 style="margin:0 0 4px">${title}</h3>${l.map(rowHtml).join('')}`:''};
+  const T=deepTotals(items),V=deepVerdict(T);
+  const pri=S.P.ctx[d.category];
+  const ask=pri?'':`<div class="ask"><p style="margin:0 0 10px"><b>한 가지만 더 물어볼게요.</b> ${CAT[d.category]}에서는 비용과 경험·가치 중 어느 쪽이 더 중요하세요?</p>
+    <div class="chips"><button class="chip" data-a="d-ctx" data-v="cost">비용이 더 중요</button><button class="chip" data-a="d-ctx" data-v="balanced">비슷해요</button><button class="chip" data-a="d-ctx" data-v="value">경험·가치가 더 중요</button></div></div>`;
+  const pick=d.stage==='predict'?predictCard(d.title+' — '+(d.chosen===0?'하기':'하지 않기'),'d-pred'):`<div class="card"><h2>어떻게 하실래요?</h2><p class="small">결정은 당신 몫이에요. 정했다면 기록해 두세요.</p>
+    <div class="stack"><button class="btn block" data-a="d-pick" data-i="0">하기</button><button class="btn block" data-a="d-pick" data-i="1">하지 않기</button></div></div>`;
+  return `<button class="back" data-a="d-back">‹ 상황 수정</button>
+  <h1 style="font-size:24px">${esc(d.title)}</h1>
+  ${d.banner?`<div class="banner">${esc(d.banner)}</div>`:''}
+  ${d.missing?`<div class="banner">AI가 더 알고 싶은 것: ${esc(d.missing)} <br><span class="small" style="color:inherit">상황 수정에서 내용을 보강하면 더 정확해져요.</span></div>`:''}
+  ${summaryHtml()}
+  ${ask}
+  <p class="small">슬라이더로 값을 고치면 <b>직접 수정</b>으로 표시되고 불확실성 범위가 사라져요. 숫자는 정답이 아니라 추정이에요.</p>
+  <div class="card">${G(['direct'],'보이는 가격')}</div>
+  <div class="card">${G(['time','opp','future','risk'],'숨은 비용')}</div>
+  <div class="card">${G(['benefit'],'얻는 것(편익)')}</div>
+  ${pick}`;
+}
+
+/* ========= 뷰: 회고 ========= */
+function viewReview(){
+  const now=Date.now();
+  if(ui.rev){
+    const d=S.D.find(x=>x.id===ui.rev);
+    if(d){
+      const step=ui.revStep;
+      return `<button class="back" data-a="rev-close">‹ 목록</button>
+      <div class="card"><p class="kicker">${CAT[d.cat]||''} · ${dstr(d.ts)}</p><h1 style="font-size:23px">${esc(d.title)}</h1>
+      <p class="lead" style="margin:0">내 선택: <b>${esc(d.options[d.chosen].name)}</b> · 예상 만족도 <b class="num">${d.predicted}점</b></p></div>
+      ${step===0?`<h2>어땠어요?</h2><div class="emo">${[[5,'😀','만족'],[3,'😐','보통'],[1,'😞','아쉬움']].map(x=>`<button data-a="rev-rate" data-r="${x[0]}" aria-label="${x[2]}">${x[1]}<small>${x[2]}</small></button>`).join('')}</div>`
+      :`<h2>다시 선택한다면?</h2><label class="field"><span>한 줄 메모 (선택)</span><input type="text" data-bind="revNote" maxlength="120" placeholder="예) 생각보다 피곤했어요"></label>
+      <div class="grid2"><button class="btn primary" data-a="rev-again" data-v="same">같은 선택</button><button class="btn" data-a="rev-again" data-v="diff">다른 선택</button></div>`}`;
+    }
+  }
+  const pend=S.D.filter(d=>!d.outcome).sort((a,b)=>a.due-b.due);
+  const due=pend.filter(d=>d.due<=now),wait=pend.filter(d=>d.due>now);
+  const done=S.D.filter(d=>d.outcome).sort((a,b)=>b.outcome.ts-a.outcome.ts).slice(0,8);
+  const when=d=>{const h=(d.due-now)/HR;return h<24?'오늘 안에':Math.ceil(h/24)+'일 뒤'};
+  const rowP=(d,late)=>`<div class="item"><div><div class="t">${esc(d.title)}</div><div class="small">${CAT[d.cat]||''} · 예상 ${d.predicted}점${late?'':' · '+when(d)+' 회고'}</div></div><button class="btn sm ${late?'primary':''}" data-a="rev-open" data-id="${d.id}">${late?'회고하기':'미리 하기'}</button></div>`;
+  return `<h1>회고</h1><p class="lead">한 번 누르면 끝나요. 예측과 실제를 비교해 프로필이 정교해져요.</p>
+  ${ui.revMsg?`<div class="banner" role="status">${esc(ui.revMsg)}</div>`:''}
+  <section class="section" style="margin-top:14px"><h2>지금 할 차례 ${due.length?`<span class="tag amb">${due.length}</span>`:''}</h2><div class="card">${due.length?due.map(d=>rowP(d,true)).join(''):'<p class="small" style="margin:0">지금 회고할 결정이 없어요.</p>'}</div></section>
+  ${wait.length?`<section class="section"><h2>기다리는 중</h2><div class="card">${wait.map(d=>rowP(d,false)).join('')}</div></section>`:''}
+  ${done.length?`<section class="section"><h2>최근 완료</h2><div class="card">${done.map(d=>`<div class="item"><div><div class="t">${esc(d.title)}</div><div class="small">${esc(d.options[d.chosen].name)}${d.outcome.note?' · '+esc(d.outcome.note):''}</div></div><div class="num" style="text-align:right"><b>${d.predicted} → ${d.outcome.rating}</b><div class="small">${d.outcome.again==='same'?'같은 선택':'다른 선택'}</div></div></div>`).join('')}</div></section>`:''}
+  ${!S.D.length?'<div class="card"><p style="margin:0">아직 기록한 결정이 없어요. 결정 탭에서 첫 결정을 분석해 보세요.</p></div>':''}`;
+}
+
+/* ========= 뷰: 프로필 ========= */
+function insightL1(){
+  const q=S.D.filter(d=>d.mode==='quick'&&d.ctx&&d.fastIdx>=0);
+  if(!q.length)return '<p class="small" style="margin:0">상황을 고른 빠른 모드 결정이 아직 없어요.</p>';
+  return CTXS.map(c=>{
+    const a=q.filter(d=>d.ctx===c);
+    if(a.length<3)return `<div class="item"><span>${c}</span><span class="small">표본 ${a.length}건 · 아직 판단하기 이릅니다</span></div>`;
+    const p=Math.round(a.filter(d=>d.chosen===d.fastIdx).length/a.length*100);
+    return `<div class="item"><span>${c}</span><span class="num"><b>${p}%</b> <span class="small">시간 절약 선택 (${a.length}건)</span></span></div>`;
+  }).join('');
+}
+function insightL2(rv){
+  const bias=avg(rv.map(d=>d.predicted))-avg(rv.map(d=>d.outcome.rating));
+  const head=Math.abs(bias)<.3?'예측이 실제와 비교적 잘 맞는 편이에요.':bias>0?`전체적으로 만족도를 실제보다 <b>${bias.toFixed(1)}점 높게</b> 예상하는 경향이 있어요.`:`전체적으로 만족도를 실제보다 <b>${Math.abs(bias).toFixed(1)}점 낮게</b> 예상하는 경향이 있어요.`;
+  const rows=Object.keys(CAT).map(c=>{
+    const a=rv.filter(d=>d.cat===c);if(a.length<3)return '';
+    const p=avg(a.map(d=>d.predicted)),ac=avg(a.map(d=>d.outcome.rating)),b=p-ac;
+    return `<div class="item"><span>${CAT[c]} <span class="small">(${a.length}건)</span></span><span class="num"><b>${p.toFixed(1)} → ${ac.toFixed(1)}</b> <span class="small" style="color:${b>.5?'var(--red)':b<-.5?'var(--green)':'var(--muted)'}">${b>0?'+':''}${b.toFixed(1)}</span></span></div>`;
+  }).join('');
+  return `<p style="margin:0 0 6px">${head}</p>${rows}<p class="small" style="margin:8px 0 0">예측 점수 → 실제 점수 (😀=5, 😐=3, 😞=1로 환산)</p>`;
+}
+function insightL3(rv){
+  const reg=Object.keys(CAT).map(c=>{const a=rv.filter(d=>d.cat===c);return a.length>=4?{c,n:a.length,p:a.filter(d=>d.outcome.again==='diff').length/a.length}:null}).filter(Boolean).sort((x,y)=>y.p-x.p);
+  const ag=rv.filter(d=>d.favored!=null&&d.favored===d.chosen),dg=rv.filter(d=>d.favored!=null&&d.favored!==d.chosen);
+  let s='';
+  if(reg.length)s+=`<p style="margin:0 0 6px">다시 선택하면 다르게 고르겠다는 비율이 가장 높은 유형은 <b>${CAT[reg[0].c]}</b>예요 (${Math.round(reg[0].p*100)}%, ${reg[0].n}건).</p>`;
+  if(ag.length>=5&&dg.length>=5)s+=`<p style="margin:0">분석 결과와 같은 쪽을 고른 결정의 만족도 평균은 <b>${avg(ag.map(d=>d.outcome.rating)).toFixed(1)}점</b>, 다른 쪽을 고른 결정은 <b>${avg(dg.map(d=>d.outcome.rating)).toFixed(1)}점</b>이에요.</p>`;
+  else s+=`<p class="small" style="margin:0">분석과 같은/다른 선택을 비교하려면 각각 5건 이상 필요해요 (현재 ${ag.length}건 / ${dg.length}건).</p>`;
+  return s;
+}
+function levelCard(title,need,have,unit,unlockedHtml,desc){
+  const ok=have>=need;
+  if(ok)return `<div class="card unl"><h3>${title}</h3>${unlockedHtml()}</div>`;
+  return `<div class="card lock"><h3>${title} <span class="tag soft">잠김</span></h3><p class="small" style="margin:0 0 8px">${desc}</p><div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="${need}" aria-valuenow="${have}"><i style="width:${Math.min(100,have/need*100)}%"></i></div><p class="small num" style="margin:6px 0 0">${unit} ${have} / ${need} · 표본이 부족하면 판단하지 않아요</p></div>`;
+}
+function viewProfile(){
+  const t=tp(),nd=S.D.length,rv=S.D.filter(d=>d.outcome),n=rv.length,hasDemo=S.D.some(d=>d.demo);
+  const ctxRows=Object.keys(S.P.ctx).map(c=>`<div class="item"><span>${CAT[c]}</span><span class="small">${{cost:'비용을 더 중시',balanced:'비용과 가치를 균형 있게',value:'경험·가치를 더 중시'}[S.P.ctx[c].pri]}</span></div>`).join('');
+  return `<h1>내 프로필</h1>
+  <div class="card"><p class="kicker">내 시간 가격</p><div class="result-tp num" style="font-size:44px">${fmt(t.mid)}<span style="font-size:20px;font-weight:600">원/시간</span></div>
+    <p class="small" style="margin:0 0 10px">범위 ${won(t.low)} ~ ${won(t.high)} · ${S.P.time&&S.P.time.calib?`실제 선택 ${S.P.time.calib}건으로 보정됨`:'설문 기반 추정'}</p>
+    <button class="btn sm" data-a="copy-tp">결과 텍스트 복사</button></div>
+  <div class="card"><h3>결정 성향</h3>${dimBars()}</div>
+  ${ctxRows?`<div class="card"><h3>상황별 가치관</h3>${ctxRows}</div>`:''}
+  <section class="section"><h2>인사이트</h2>
+  <p class="small">결정 ${nd}개 · 회고 완료 ${n}개. 표본이 충분해질 때만 열려요.</p>
+  ${levelCard('상황별 시간 선택',10,nd,'결정',()=>insightL1(),'결정 10개가 쌓이면 출근길·약속·주말의 시간 절약 경향을 보여드려요.')}
+  ${levelCard('내 예측 오차',20,n,'회고 완료',()=>insightL2(rv),'회고까지 마친 결정 20개가 쌓이면 어떤 결정에서 만족도를 과대·과소평가하는지 보여드려요.')}
+  ${levelCard('후회 패턴',40,n,'회고 완료',()=>insightL3(rv),'회고까지 마친 결정 40개가 쌓이면 후회가 큰 결정 유형과 분석과의 일치도를 보여드려요.')}
+  </section>
+  <section class="section"><h2>내 데이터</h2><div class="card">
+    <p class="small" style="margin-top:0">${storageOK?'모든 기록은 이 기기의 브라우저에만 저장돼요. 개인 데이터를 팔거나 광고에 쓰지 않아요.':'저장소를 쓸 수 없는 환경이라 새로고침하면 기록이 사라져요.'} ${hasAI()?'심층 분석에서 AI를 쓸 때만 입력 문장이 Claude로 전송돼요.':''}</p>
+    <div class="stack">
+      <button class="btn block" data-a="export">데이터 내보내기 (JSON)</button>
+      <label class="btn block" style="position:relative;cursor:pointer">백업 불러오기<input type="file" accept="application/json,.json" data-import style="position:absolute;inset:0;opacity:0;cursor:pointer" aria-label="백업 파일 선택"></label>
+      <button class="btn block" data-a="retake">온보딩 설문 다시 하기</button>
+      ${hasDemo?'<button class="btn block" data-a="demo-clear">데모 데이터 지우기</button>':'<button class="btn block" data-a="demo-load">데모 데이터 불러오기 (인사이트 미리보기)</button>'}
+      ${ui.confirmDel?'<button class="btn block" style="border-color:var(--red);color:var(--red)" data-a="del2">정말 모든 데이터 삭제</button><button class="btn ghost block" data-a="del0">취소</button>':'<button class="btn ghost block" data-a="del1">모든 데이터 삭제</button>'}
+    </div>
+    ${ui.importMsg?`<div class="banner" style="margin-top:14px" role="status">${esc(ui.importMsg)}</div>`:''}
+    ${ui.importPending?`<div class="ask" style="margin-top:14px"><p style="margin:0 0 10px">결정 <b>${ui.importPending.D.length}개</b>가 담긴 백업이에요. 불러오면 <b>지금 기록이 이 백업으로 바뀌어요.</b></p><div class="chips"><button class="chip" data-a="import-apply">불러오기</button><button class="chip" data-a="import-cancel">취소</button></div></div>`:''}
+    ${ui.exportText?`<p class="small" style="margin:14px 0 6px">다운로드가 안 되면 아래 내용을 복사해 두세요.</p><pre class="export" tabindex="0">${esc(ui.exportText)}</pre><button class="btn sm ghost" data-a="export-close">닫기</button>`:''}
+  </div></div></section>`;
+}
+
+/* ========= 렌더 & 이벤트 ========= */
+function render(){
+  const root=$('#root');
+  root.innerHTML=ui.ob.active?viewOb():viewShell();
+}
+function go(){render();window.scrollTo(0,0)}
+let toastT;
+function toast(m){const el=$('#toast');if(!el)return;el.textContent=m;el.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('on'),2400)}
+function setPath(o,p,v){const k=p.split('.');let c=o;for(let i=0;i<k.length-1;i++)c=c[k[i]];c[k[k.length-1]]=v}
+async function copyText(s){
+  try{await navigator.clipboard.writeText(s);toast('복사했어요')}catch(e){ui.exportText=s;toast('복사가 막혀 있어 아래에 표시했어요');ui.tab='profile';go()}
+}
+async function doExport(){
+  const data=JSON.stringify(S,null,2);
+  try{
+    const dl=(window.claude&&window.claude.use)?await window.claude.use('downloads'):null;
+    if(!dl)throw {code:'unavailable'};
+    await dl.save({filename:'jinjja-gagyeok-data.json',data});toast('내보냈어요');
+  }catch(e){
+    if(e&&e.code==='declined')return;
+    ui.exportText=data;render();
+  }
+}
+function validQuick(){
+  const q=ui.quick,rows=[];
+  for(const k of (q.showC?['a','b','c']:['a','b'])){
+    const o=q[k],money=parseFloat(o.money),mins=parseFloat(o.mins),L=k.toUpperCase();
+    if(!isFinite(money)||money<0){ui.err=`선택지 ${L}의 금액을 0 이상 숫자로 입력해 주세요. (공짜면 0)`;return null}
+    if(!isFinite(mins)||mins<=0){ui.err=`선택지 ${L}의 걸리는 시간(분)을 1 이상 숫자로 입력해 주세요.`;return null}
+    rows.push({name:(o.name||'').trim()||`선택지 ${L}`,money,mins});
+  }
+  return rows;
+}
+const ACT={
+  'tab':d=>{ui.tab=d.t;ui.rev=null;ui.revMsg=d.t==='review'?ui.revMsg:'';go()},
+  'ob-start':()=>{ui.ob.step=0;go()},
+  'ob':d=>{obAnswer(d.k);go()},
+  'ob-done':()=>{ui.ob.active=false;ui.tab='home';ui.home='menu';go()},
+  'ob-cancel':()=>{ui.ob.active=false;go()},
+  'copy-tp':()=>{const t=tp();copyText(`내 시간 가격은 시간당 약 ${fmt(t.mid)}원 (${fmt(t.low)}~${fmt(t.high)}원) — 진짜가격`)},
+  'home-menu':()=>{ui.home='menu';ui.err='';ui.quick=newQuick();ui.deep=newDeep();go()},
+  'open-quick':()=>{ui.home='quick';ui.err='';go()},
+  'open-deep':()=>{ui.home='deep';ui.err='';go()},
+  /* 빠른 모드 */
+  'q-example':()=>{const q=ui.quick;q.a={name:'택시',money:'15000',mins:'10'};q.b={name:'버스',money:'2000',mins:'35'};q.c={name:'걷기',money:'0',mins:'60'};q.showC=true;q.ctx='출근·등교';ui.err='';go()},
+  'q-toggle-c':()=>{ui.quick.showC=!ui.quick.showC;ui.err='';render()},
+  'q-ctx':d=>{ui.quick.ctx=ui.quick.ctx===d.v?null:d.v;render()},
+  'q-has':d=>{const h=ui.quick.has,i=h.indexOf(d.v);if(i<0)h.push(d.v);else h.splice(i,1);render()},
+  'q-run':()=>{
+    const rows=validQuick();if(!rows){return render()}
+    ui.err='';const q=ui.quick;
+    const hs=HASSLE.filter(x=>q.has.includes(x.k)).reduce((s,x)=>s+x.w,0);
+    const r=evalOpts(rows,hs);q.result={rows:r,verdict:quickVerdict(r)};q.stage='result';q.chosen=null;go();
+  },
+  'q-edit':()=>{ui.quick.stage='form';go()},
+  'q-pick':d=>{ui.quick.chosen=+d.i;ui.quick.stage='predict';render();window.scrollTo(0,document.body.scrollHeight)},
+  'q-pred':d=>{
+    const q=ui.quick,r=q.result.rows,v=q.result.verdict,ts=Date.now();
+    const rec={id:uid(),ts,mode:'quick',cat:'daily',title:r.map(o=>o.name).join(' vs '),ctx:q.ctx,options:r.map(o=>({name:o.name})),chosen:q.chosen,favored:v.straddle?null:v.best,predicted:+d.n,net:v.gap,be:null,fastIdx:v.fast,due:ts+DUE_H.daily*HR,outcome:null};
+    S.D.push(rec);
+    calibrateSeg(v.seg,q.chosen);
+    save();ui.saved={title:rec.title,pred:rec.predicted,when:'오늘 저녁'};ui.quick=newQuick();ui.home='saved';go();
+  },
+  /* 심층 모드 */
+  'd-cat':d=>{ui.deep.category=d.v;render()},
+  'd-ai':()=>{deepAI()},
+  'd-tpl':()=>{deepTpl()},
+  'd-cancel':()=>{if(ui.deep.ctl)ui.deep.ctl.abort();ui.deep.ctl=null;ui.deep.stage='form';go()},
+  'd-back':()=>{ui.deep.stage='form';go()},
+  'd-ctx':d=>{S.P.ctx[ui.deep.category]={pri:d.v,ts:Date.now()};save();render()},
+  'd-pick':d=>{ui.deep.chosen=+d.i;ui.deep.stage='predict';render();window.scrollTo(0,document.body.scrollHeight)},
+  'd-pred':d=>{
+    const dp=ui.deep,V=deepVerdict(deepTotals(dp.items)),ts=Date.now(),cat=dp.category;
+    const rec={id:uid(),ts,mode:'deep',cat,title:dp.title,options:[{name:'하기'},{name:'하지 않기'}],chosen:dp.chosen,favored:V.fav,predicted:+d.n,net:deepTotals(dp.items).net.mid,due:ts+DUE_H[cat]*HR,outcome:null};
+    S.D.push(rec);save();
+    const days=Math.round(DUE_H[cat]/24);
+    ui.saved={title:rec.title,pred:rec.predicted,when:days>=1?days+'일 뒤':'오늘 저녁'};ui.deep=newDeep();ui.home='saved';go();
+  },
+  /* 회고 */
+  'rev-open':d=>{ui.rev=d.id;ui.revStep=0;ui.revNote='';ui.revMsg='';go()},
+  'rev-close':()=>{ui.rev=null;go()},
+  'rev-rate':d=>{ui.revRating=+d.r;ui.revStep=1;go()},
+  'rev-again':d=>{saveOutcome(ui.rev,ui.revRating,d.v,ui.revNote);ui.rev=null;ui.revStep=0;go()},
+  /* 프로필 */
+  'export':()=>{doExport()},
+  'export-close':()=>{ui.exportText='';render()},
+  'retake':()=>{ui.ob=newOb(true);go()},
+  'demo-load':()=>{S.D=S.D.concat(makeDemo());save();toast('데모 데이터를 불러왔어요');render()},
+  'demo-clear':()=>{S.D=S.D.filter(d=>!d.demo);save();toast('데모 데이터를 지웠어요');render()},
+  'import-apply':()=>{S=ui.importPending;ui.importPending=null;ui.importMsg='백업을 불러왔어요.';ui.ob=newOb(!S.onboarded);save();go()},
+  'import-cancel':()=>{ui.importPending=null;render()},
+  'pwa-install':()=>{if(installEv){installEv.prompt();installEv=null}render()},
+  'pwa-hide':()=>{S.hideInstall=true;save();render()},
+  'del1':()=>{ui.confirmDel=true;render()},
+  'del0':()=>{ui.confirmDel=false;render()},
+  'del2':()=>{try{localStorage.removeItem(KEY)}catch(e){}S=fresh();ui.confirmDel=false;ui.exportText='';ui.quick=newQuick();ui.deep=newDeep();ui.home='menu';ui.tab='home';ui.ob=newOb(true);go()}
+};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');
+  if(!b||b.disabled)return;
+  const f=ACT[b.dataset.a];if(f)f(b.dataset,b);
+});
+document.addEventListener('change',async e=>{
+  const t=e.target;if(!t||!t.dataset||t.dataset.import===undefined)return;
+  const f=t.files&&t.files[0];if(!f)return;
+  ui.importMsg='';ui.importPending=null;
+  try{
+    if(f.size>5e6)throw new Error('big');
+    const o=cleanImport(JSON.parse(await f.text()));
+    if(!o)throw new Error('bad');
+    ui.importPending=o;
+  }catch(err){ui.importMsg='이 진짜가격 백업 파일이 아니에요. 내보내기로 받은 JSON 파일을 골라 주세요.'}
+  t.value='';render();
+});
+document.addEventListener('input',e=>{
+  const t=e.target;if(!t||!t.dataset)return;
+  if(t.dataset.bind){setPath(ui,t.dataset.bind,t.value);return}
+  if(t.dataset.slide){
+    const it=ui.deep.items.find(x=>x.id===t.dataset.slide);if(!it)return;
+    const v=parseFloat(t.value);it.val=v;it.low=v;it.high=v;it.src='user';
+    const row=document.getElementById('row-'+it.id);
+    if(row){row.querySelector('[data-v]').innerHTML=rowVal(it);row.querySelector('[data-sub]').innerHTML=rowSub(it)}
+    const sm=document.getElementById('deep-summary');
+    if(sm){const tmp=document.createElement('div');tmp.innerHTML=summaryHtml();sm.replaceWith(tmp.firstElementChild)}
+  }
+});
+render();
+
+</script>
+</body>
+</html>
