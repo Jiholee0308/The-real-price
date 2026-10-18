@@ -1,0 +1,1416 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>진짜가격 — 선택의 진짜 가격</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#ECEFF3;--card:#FFFFFF;--soft:#F4F6F9;--ink:#0F1B2D;--muted:#586477;--line:#D3D9E1;
+  --cobalt:#2340E8;--on-cobalt:#FFFFFF;
+  --amber:#FFB020;--amber-soft:#FFF1D2;--amber-ink:#7A4700;
+  --green:#0B8F63;--green-soft:#DDF4EA;--red:#C93A3A;--red-soft:#FBE4E4;
+  --f-num:'Bricolage Grotesque','IBM Plex Sans KR',system-ui,sans-serif;
+  --f-body:'IBM Plex Sans KR','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0D121A;--card:#151C27;--soft:#1B2431;--ink:#E9EFF7;--muted:#98A5B8;--line:#2A3546;
+  --cobalt:#8AA0FF;--on-cobalt:#0D121A;--amber:#FFC24D;--amber-soft:#3A2E12;--amber-ink:#FFD98A;
+  --green:#45D2A0;--green-soft:#133328;--red:#FF8A8A;--red-soft:#3A1B1E;}}
+:root[data-theme="dark"]{
+  --paper:#0D121A;--card:#151C27;--soft:#1B2431;--ink:#E9EFF7;--muted:#98A5B8;--line:#2A3546;
+  --cobalt:#8AA0FF;--on-cobalt:#0D121A;--amber:#FFC24D;--amber-soft:#3A2E12;--amber-ink:#FFD98A;
+  --green:#45D2A0;--green-soft:#133328;--red:#FF8A8A;--red-soft:#3A1B1E;}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+button,input,textarea{font:inherit;color:inherit}
+button,.btn,label{-webkit-tap-highlight-color:transparent}
+.btn:focus-within{outline:3px solid var(--cobalt);outline-offset:2px}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+.app{max-width:520px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 18px 140px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:6px 0 18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:-.02em}
+.brand svg{color:var(--cobalt);width:28px;height:28px}
+h1{font-size:27px;line-height:1.28;letter-spacing:-.03em;margin:0 0 10px;font-weight:700}
+h2{font-size:20px;line-height:1.35;letter-spacing:-.02em;margin:0 0 8px;font-weight:700}
+h3{font-size:16.5px;margin:0 0 8px;font-weight:700}
+p{margin:0 0 10px}
+.lead{color:var(--muted);font-size:16.5px}
+.small{font-size:14.5px;color:var(--muted)}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:0 0 14px}
+.section{margin:26px 0 0}
+.section>h2{margin-bottom:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:54px;padding:0 20px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);font-weight:600;font-size:17px;text-align:center}
+.btn.primary{background:var(--cobalt);border-color:var(--cobalt);color:var(--on-cobalt)}
+.btn.ghost{background:transparent}
+.btn.block{display:flex;width:100%}
+.btn.sm{min-height:44px;padding:0 16px;font-size:15px;border-radius:12px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.stack>*+*{margin-top:10px}
+.back{background:none;border:0;padding:10px 0;margin:0 0 8px;color:var(--muted);font-size:17px;font-weight:600;min-height:44px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:46px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font-size:15.5px;display:inline-flex;align-items:center;gap:7px}
+.chip svg{flex:none;width:20px;height:20px}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.field{display:block;margin:0 0 12px}
+.field>span{display:block;font-size:15px;color:var(--muted);margin-bottom:5px}
+input[type=text],input[type=number],textarea{width:100%;min-height:54px;font-size:18px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card)}
+textarea{min-height:110px;resize:vertical;line-height:1.5}
+input::placeholder,textarea::placeholder{color:var(--muted);opacity:.7}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pairbox{border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--card);margin-bottom:14px}
+.pairbox legend{font-weight:600;padding:0 6px;font-size:14px}
+.err{background:var(--red-soft);color:var(--red);border-radius:12px;padding:10px 14px;margin:0 0 12px;font-size:14.5px}
+.banner{background:var(--amber-soft);color:var(--amber-ink);border-radius:12px;padding:10px 14px;margin:0 0 14px;font-size:14.5px}
+.note{border-left:3px solid var(--line);padding:2px 0 2px 12px;color:var(--muted);font-size:14.5px;margin:14px 0}
+/* price bars */
+.bar{display:flex;height:22px;border-radius:6px;overflow:hidden;background:var(--soft);border:1px solid var(--line);margin:10px 0 12px}
+.bar i{display:block;height:100%}
+.s-vis{background:var(--ink)}
+.s-time{background:var(--amber)}
+.s-hass{background:repeating-linear-gradient(135deg,var(--amber) 0 4px,transparent 4px 8px)}
+.s-ben{background:var(--green)}
+.legend{margin:0;display:grid;gap:4px;font-size:14px}
+.legend div{display:flex;justify-content:space-between;gap:12px}
+.legend dt{display:flex;align-items:center;gap:8px;color:var(--muted)}
+.legend dd{margin:0;font-weight:600}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+.opt{background:var(--card);border:1.5px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.opt.win{border-color:var(--ink)}
+.opt-h{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.tag{font-size:13.5px;font-weight:600;background:var(--ink);color:var(--paper);border-radius:999px;padding:2px 10px;white-space:nowrap}
+.tag.soft{background:var(--soft);color:var(--muted);border:1px solid var(--line)}
+.tag.amb{background:var(--amber-soft);color:var(--amber-ink)}
+.big{font-size:34px;font-weight:800;line-height:1.15;margin:6px 0 0}
+.range{font-size:13px;color:var(--muted)}
+.verdict{background:var(--soft);border-radius:16px;padding:14px 16px;margin:0 0 14px}
+.verdict strong{font-weight:700}
+/* hero */
+.hero{margin:0 0 22px}
+.hero .demo{margin:16px 0 4px}
+.demo .bar{animation:grow .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes grow{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@media (prefers-reduced-motion:reduce){.demo .bar{animation:none}*{scroll-behavior:auto!important}}
+.cta{display:grid;grid-template-columns:56px 1fr;column-gap:16px;row-gap:2px;align-items:center;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:20px;padding:18px;margin-bottom:12px}
+.cta .ico{grid-row:1/3;width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:var(--soft);color:var(--cobalt)}
+.cta .ico svg{width:30px;height:30px}
+.cta.main .ico{background:rgba(255,255,255,.18);color:inherit}
+.survey{display:flex;align-items:center;gap:14px}
+.survey>div{flex:1;min-width:0}
+.survey b{display:block}
+.survey .ico{flex:none;width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:var(--soft);color:var(--cobalt)}
+.survey .ico svg{width:26px;height:26px}
+.survey-cta{border-style:dashed}
+.cta.main{background:var(--cobalt);border-color:var(--cobalt);color:var(--on-cobalt)}
+.cta b{font-size:20px;letter-spacing:-.02em;min-width:0}
+.cta>span:not(.ico){font-size:15px;opacity:.85;min-width:0}
+/* onboarding */
+.prog{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin:4px 0 22px}
+.prog i{display:block;height:100%;background:var(--cobalt);transition:width .3s}
+.ob-opt{display:block;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:16px 18px;margin-bottom:12px;min-height:76px}
+.ob-opt b{display:block;font-size:20px;letter-spacing:-.02em}
+.ob-opt span{color:var(--muted);font-size:15.5px}
+.ob-opt:active{border-color:var(--cobalt)}
+.kicker{font-size:14px;color:var(--muted);margin-bottom:6px}
+.result-tp{font-size:52px;font-weight:800;line-height:1.05;margin:6px 0 4px}
+/* rows */
+.row{padding:12px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row-h{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.row-h .lab{font-weight:500}
+.row-h .val{font-weight:700;white-space:nowrap}
+.row-sub{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 2px;font-size:12.5px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--cobalt);height:32px;margin:0}
+.grp{margin:20px 0 0}
+.grp>h3{display:flex;align-items:center;gap:8px}
+.ask{background:var(--amber-soft);color:var(--amber-ink);border-radius:16px;padding:14px 16px;margin:16px 0}
+.ask .chip{background:var(--card);color:var(--ink)}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.scale button{min-height:60px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);font-size:22px;font-weight:700;font-family:var(--f-num)}
+.scale small{display:block;font-size:11.5px;font-weight:400;color:var(--muted);font-family:var(--f-body)}
+.emo{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.emo button{min-height:86px;font-size:38px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);line-height:1}
+.emo small{display:block;font-size:13px;color:var(--muted);margin-top:6px}
+/* lists */
+.item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item .t{font-weight:600}
+.meter{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--cobalt)}
+.dim{display:grid;grid-template-columns:1fr 44px;gap:4px 12px;align-items:center;margin:0 0 12px;font-size:14.5px}
+.dim .meter{grid-column:1/2}
+.lock{opacity:.9}
+.lock .badge2{font-size:12.5px;color:var(--muted)}
+.unl{border-left:4px solid var(--green);padding-left:14px}
+.bal{display:grid;gap:8px;margin:12px 0}
+.bal .bar{margin:0}
+.bal .lab{display:flex;justify-content:space-between;font-size:14px}
+.tabs{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;background:var(--card);border-top:1px solid var(--line);padding:6px 10px calc(6px + env(safe-area-inset-bottom));z-index:5}
+.tabs>div{display:flex;width:100%;max-width:520px}
+.tab{position:relative;flex:1;background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;color:var(--muted);font-size:14.5px;font-weight:600;min-height:64px}
+.tab svg{width:28px;height:28px}
+.tab[aria-current="page"]{color:var(--cobalt);font-weight:600}
+.badge{position:absolute;top:2px;left:calc(50% + 6px);min-width:18px;height:18px;border-radius:99px;background:var(--red);color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;padding:0 5px;font-weight:700}
+.spin{width:28px;height:28px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--cobalt);animation:sp 1s linear infinite;margin:0 0 12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
+#toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:12px;font-size:14px;z-index:9;opacity:0;pointer-events:none;transition:opacity .2s;max-width:88vw}
+#toast.on{opacity:1}
+pre.export{white-space:pre-wrap;max-height:220px;overflow:auto;background:var(--soft);border-radius:12px;padding:12px;font-size:12px;user-select:all}
+.scroll-x{overflow-x:auto}
+
+.strip{display:flex;gap:4px;margin:12px 0 6px}
+.segb{min-width:0;border:1.5px solid var(--line);background:var(--card);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:2px;font-size:13px}
+.segb b{font-size:14px}
+.segb span{color:var(--muted);font-size:12px}
+.segb.hit{border-color:var(--ink)}
+.segb.cur{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.segb.cur span{color:inherit;opacity:.85}
+/* 해외·가격 체크 */
+select{width:100%;min-height:52px;font-size:16px;padding:8px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);font:inherit;color:inherit}
+.conv{display:block;font-size:15px;color:var(--muted);margin-top:5px;min-height:1.2em}
+.conv b{color:var(--ink);font-weight:600}
+.tag.ok{background:var(--green-soft);color:var(--green)}
+.tag.warn{background:var(--amber-soft);color:var(--amber-ink)}
+.tag.bad{background:var(--red-soft);color:var(--red)}
+.lvl{border-radius:18px;padding:16px;margin:0 0 14px;border:1.5px solid transparent;display:grid;grid-template-columns:48px 1fr;gap:14px;align-items:start}
+.lvl>svg{width:48px;height:48px}
+.lvl>div{min-width:0}
+.lvl h2{margin:2px 0 4px;font-size:23px}
+.lvl p{margin:0}
+.lvl.ok{background:var(--green-soft);color:var(--green)}
+.lvl.high,.lvl.low{background:var(--amber-soft);color:var(--amber-ink)}
+.lvl.scam{background:var(--red-soft);color:var(--red)}
+.lvl .small{color:inherit;opacity:.9}
+.tstat{display:flex;align-items:center;gap:12px;background:var(--card);border:1.5px solid var(--cobalt);border-radius:16px;padding:12px 14px;margin:0 0 14px}
+.tstat .small{display:block}
+.tstat>div{flex:1;min-width:0}
+.tstat>svg{flex:none;width:36px;height:36px;color:var(--cobalt)}
+.tstat b{font-size:17px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font-size:16px}
+.kv span:first-child{color:var(--muted)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.three div{background:var(--soft);border-radius:12px;padding:10px;text-align:center}
+.three b{display:block;font-size:17px}
+.three span{font-size:13.5px;color:var(--muted)}
+.fair{font-size:14px;margin:-4px 0 10px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+
+</style>
+</head>
+<body>
+<div id="root"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+/* ========= 유틸 ========= */
+const KEY='jinjja-gagyeok:v1';
+const $=(s,r)=>(r||document).querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Math.round(n).toLocaleString('ko-KR');
+const won=n=>(Math.round(n)<0?'−':'')+fmt(Math.abs(n))+'원';
+const signWon=n=>(Math.round(n)>0?'+':Math.round(n)<0?'−':'')+fmt(Math.abs(n))+'원';
+const man=n=>{const a=Math.abs(n);const s=n<0?'−':'';return a>=10000?s+(a/10000).toFixed(a>=1e6?0:1).replace(/\.0$/,'')+'만원':s+fmt(a)+'원'};
+const r500=n=>Math.max(500,Math.round(n/500)*500);
+const uid=()=>Math.random().toString(36).slice(2,9);
+const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0;
+const mm=m=>m<60?m+'분':Math.floor(m/60)+'시간'+(m%60?' '+(m%60)+'분':'');
+const DAY=864e5,HR=36e5;
+const dstr=ts=>{const d=new Date(ts);return (d.getMonth()+1)+'월 '+d.getDate()+'일'};
+const CAT={daily:'일상 이동·식사',trip:'여행·여가',buy:'물건 구매',activity:'모임·활동',other:'기타'};
+const DEEP_CATS=['trip','buy','activity','other'];
+const DUE_H={daily:3,trip:5*24,buy:7*24,activity:7*24,other:3*24};
+const DIM={experience:'경험',relation:'관계',future:'미래 가치',wellbeing:'회복·즐거움',durable:'오래 쓰는 가치'};
+const CTXS=['출근·등교','약속','주말·여가'];
+const HASSLE=[{k:'rain',l:'비·눈',w:.3},{k:'bag',l:'짐 많음',w:.25},{k:'tired',l:'피곤함',w:.3},{k:'late',l:'늦은 밤(안전)',w:.4}];
+const RATE_LABEL={5:'만족 😀',3:'보통 😐',1:'아쉬움 😞'};
+
+/* ========= 저장소 ========= */
+let storageOK=true;
+function freshT(){return {on:false,city:'hanoi',cur:'VND',mult:1.5}}
+function freshFX(){return {live:{},ts:0,date:'',manual:{}}}
+function fresh(){return {v:1,onboarded:false,P:{time:null,risk:.5,future:.5,exp:.5,rel:.5,dur:.5,ctx:{}},D:[],T:freshT(),FX:freshFX(),PR:[],created:Date.now()}}
+function migrate(o){
+  if(!o.T||typeof o.T!=='object')o.T=freshT();
+  if(!o.FX||typeof o.FX!=='object')o.FX=freshFX();
+  if(!o.FX.live)o.FX.live={};if(!o.FX.manual)o.FX.manual={};
+  if(!Array.isArray(o.PR))o.PR=[];
+  return o;
+}
+function load(){try{const r=localStorage.getItem(KEY);if(r){const o=JSON.parse(r);if(o&&o.v===1&&o.P)return migrate(o)}}catch(e){storageOK=false}return fresh()}
+let S=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){storageOK=false}}
+
+/* ========= PWA 보조 ========= */
+const PWA=typeof document!=='undefined'&&!!document.querySelector('link[rel=manifest]');
+const isStandalone=()=>{try{return window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true}catch(e){return false}};
+const isIOS=()=>/iphone|ipad|ipod/i.test((typeof navigator!=='undefined'&&navigator.userAgent)||'');
+let installEv=null;
+if(PWA){
+  try{
+    window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEv=e});
+    if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
+    if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});
+  }catch(e){}
+}
+function cleanImport(o){
+  if(!o||o.v!==1||!o.P||!Array.isArray(o.D))return null;
+  const out=fresh(),P=o.P,ok=x=>typeof x==='number'&&x>=0&&x<=1;
+  if(P.time&&isFinite(P.time.est)&&P.time.est>0)out.P.time={est:+P.time.est,low:+P.time.low||r500(P.time.est/1.25),high:+P.time.high||r500(P.time.est*1.25),calib:+P.time.calib||0};
+  ['risk','future','exp','rel','dur'].forEach(k=>{if(ok(P[k]))out.P[k]=P[k]});
+  Object.keys(P.ctx||{}).forEach(c=>{if(CAT[c]&&['cost','balanced','value'].includes(P.ctx[c]&&P.ctx[c].pri))out.P.ctx[c]={pri:P.ctx[c].pri,ts:+P.ctx[c].ts||0}});
+  out.onboarded=!!(o.onboarded&&out.P.time);
+  out.D=o.D.filter(d=>d&&typeof d.id==='string'&&CAT[d.cat]&&Array.isArray(d.options)&&d.options.length>=2&&Number.isInteger(d.chosen)&&d.options[d.chosen]&&isFinite(d.ts)&&isFinite(d.predicted)&&isFinite(d.due)).map(d=>{
+    const r=d.outcome&&[1,3,5].includes(d.outcome.rating)?{rating:d.outcome.rating,again:d.outcome.again==='diff'?'diff':'same',note:String(d.outcome.note||'').slice(0,200),ts:+d.outcome.ts||d.due}:null;
+    return {id:d.id.slice(0,20),ts:+d.ts,mode:d.mode==='deep'?'deep':'quick',cat:d.cat,title:String(d.title||'').slice(0,60),ctx:CTXS.includes(d.ctx)?d.ctx:null,options:d.options.slice(0,3).map(x=>({name:String((x&&x.name)||'').slice(0,40)})),chosen:d.chosen,favored:Number.isInteger(d.favored)?d.favored:null,predicted:+d.predicted,net:+d.net||0,be:null,fastIdx:Number.isInteger(d.fastIdx)?d.fastIdx:-1,due:+d.due,outcome:r,demo:!!d.demo};
+  }).filter(d=>d.options[d.chosen]);
+  if(o.T&&typeof o.T==='object'){
+    out.T={on:!!o.T.on,city:(CITY[o.T.city]||o.T.city==='other')?o.T.city:'hanoi',cur:CURS[o.T.cur]?o.T.cur:'VND',mult:[1,1.5,2,3].includes(+o.T.mult)?+o.T.mult:1.5};
+  }
+  if(o.FX&&o.FX.manual)Object.keys(o.FX.manual).forEach(c=>{const v=+o.FX.manual[c];if(CURS[c]&&v>0&&isFinite(v))out.FX.manual[c]=v});
+  if(Array.isArray(o.PR))out.PR=o.PR.filter(p=>p&&CURS[p.cur]&&isFinite(p.amount)&&p.amount>=0&&isFinite(p.ts)).slice(-500).map(p=>({id:String(p.id||uid()).slice(0,20),ts:+p.ts,city:String(p.city||'other').slice(0,20),cityName:String(p.cityName||'').slice(0,30),item:String(p.item||'custom').slice(0,30),name:String(p.name||'').slice(0,40),cur:p.cur,amount:+p.amount,note:String(p.note||'').slice(0,120)}));
+  return out;
+}
+
+/* ========= UI 상태 ========= */
+function newOb(active){return {active:!!active,step:-1,lo:1500,hi:60000,ans:{},showResult:false}}
+function newQuick(){const o=()=>({name:'',money:'',mins:'',ref:''});return {stage:'form',a:o(),b:o(),c:o(),showC:false,ctx:null,has:[],result:null,chosen:null}}
+function newDeep(){return {stage:'form',text:'',cost:'',hours:'',category:'trip',items:[],title:'',banner:'',missing:null,chosen:null,ctl:null,cur:null}}
+const deepCur=d=>d.cur||(S.T.on?cityCur():'KRW');
+const deepCostKRW=d=>+d.cost>0?toKRW(+d.cost,deepCur(d)):0;
+function newChk(){return {item:'',asked:'',mins:'10',done:false,paid:'',note:'',custom:{name:'',lo:'',hi:''},logOpen:false}}
+const ui={tab:'home',home:'menu',err:'',ob:newOb(false),quick:newQuick(),deep:newDeep(),chk:newChk(),fxMsg:'',rev:null,revStep:0,revMsg:'',saved:null,exportText:'',confirmDel:false,importPending:null,importMsg:''};
+
+/* ========= 프로필 ========= */
+function tp(){const t=S.P.time;return t?{low:t.low,mid:t.est,high:t.high}:{low:8000,mid:10000,high:12500}}
+function setTime(est){const t=S.P.time||{calib:0};t.est=est;t.low=r500(est/1.25);t.high=r500(est*1.25);S.P.time=t}
+function calibrateSeg(seg,chosen,mult){
+  const t=S.P.time;if(!t)return;
+  const sg=seg.find(x=>x.idx===chosen);if(!sg)return;
+  const k=mult>0?mult:1,from=sg.from/k,to=sg.to/k; /* 여행 모드 배수를 걷어내고 평소 시간 가격으로 보정 */
+  let target=null;
+  if(t.est<from)target=from;else if(t.est>to)target=to;
+  if(target&&target>0&&isFinite(target)){const c=t.calib||0;setTime(Math.exp(.85*Math.log(t.est)+.15*Math.log(target)));S.P.time.calib=c+1}
+}
+
+/* ========= 해외: 통화·환율 ========= */
+/* fb: 1단위당 원화(오프라인 기본값, 2026년 7월 무렵 대략 환율). 실제 계산은 실시간 > 직접 입력 > 기본값 순서로 고른다 */
+const CURS={
+  VND:{n:'베트남 동',s:'₫',pre:false,d:0,fb:.0573},
+  THB:{n:'태국 바트',s:'฿',pre:true,d:0,fb:45},
+  JPY:{n:'일본 엔',s:'¥',pre:true,d:0,fb:9.2},
+  USD:{n:'미국 달러',s:'$',pre:true,d:2,fb:1490},
+  EUR:{n:'유로',s:'€',pre:true,d:2,fb:1700},
+  CNY:{n:'중국 위안',s:'¥',pre:true,d:1,fb:208},
+  TWD:{n:'대만 달러',s:'NT$',pre:true,d:0,fb:47},
+  PHP:{n:'필리핀 페소',s:'₱',pre:true,d:0,fb:26},
+  IDR:{n:'인도네시아 루피아',s:'Rp',pre:true,d:0,fb:.091},
+  SGD:{n:'싱가포르 달러',s:'S$',pre:true,d:2,fb:1150},
+  MYR:{n:'말레이시아 링깃',s:'RM',pre:true,d:1,fb:345},
+  HKD:{n:'홍콩 달러',s:'HK$',pre:true,d:1,fb:190}
+};
+const FB_DATE='2026년 7월 무렵 대략값';
+function rateInfo(cur){
+  if(cur==='KRW')return {r:1,src:'krw'};
+  const F=S.FX;
+  if(F.manual[cur]>0)return {r:F.manual[cur],src:'manual'};
+  if(F.live[cur]>0)return {r:F.live[cur],src:'live'};
+  return {r:(CURS[cur]||{fb:1}).fb,src:'fb'};
+}
+const toKRW=(n,cur)=>n*rateInfo(cur).r;
+function fmtCur(n,cur){
+  if(cur==='KRW')return won(n);
+  const c=CURS[cur]||{s:cur,pre:false,d:0};
+  const s=(+n).toLocaleString('ko-KR',{maximumFractionDigits:c.d,minimumFractionDigits:0});
+  return c.pre?c.s+s:s+c.s;
+}
+/* 0 개수 헷갈림 방지: 250000 → "25만", 45000 → "4만 5천" */
+function koUnit(n){
+  n=Math.round(Math.abs(n));if(n<10000)return '';
+  const eok=Math.floor(n/1e8),man=Math.floor(n%1e8/1e4),cheon=Math.floor(n%1e4/1e3),rest=n%1e3;
+  return [eok?eok+'억':'',man?man+'만':'',cheon?cheon+'천':'',rest?rest:''].filter(Boolean).join(' ');
+}
+function convLine(v,cur){
+  const n=parseFloat(v);
+  if(!isFinite(n)||n<0||cur==='KRW')return '';
+  const ku=koUnit(n),cn=(CURS[cur]||{}).n||cur;
+  return `≈ <b>${won(toKRW(n,cur))}</b>${ku?` · ${ku} ${cn.split(' ').pop()}`:''}`;
+}
+function rateSrcText(cur){
+  const i=rateInfo(cur);
+  if(i.src==='manual')return '직접 입력한 환율';
+  if(i.src==='live')return '실시간 환율'+(S.FX.ts?` (${dstr(S.FX.ts)} ${new Date(S.FX.ts).getHours()}시 받음)`:'');
+  return '기본 환율 ('+FB_DATE+') · 인터넷 연결 시 자동 갱신';
+}
+let fxBusy=false;
+async function refreshFX(force){
+  if(fxBusy)return;
+  if(!force&&S.FX.ts&&Date.now()-S.FX.ts<12*HR)return;
+  if(typeof fetch!=='function')return;
+  fxBusy=true;ui.fxMsg=force?'환율을 받아오는 중…':ui.fxMsg;if(force)render();
+  try{
+    const ctl=typeof AbortController!=='undefined'?new AbortController():null;
+    const tm=setTimeout(()=>ctl&&ctl.abort(),8000);
+    const res=await fetch('https://open.er-api.com/v6/latest/KRW',ctl?{signal:ctl.signal}:{});
+    clearTimeout(tm);
+    const j=await res.json();
+    if(!j||j.result!=='success'||!j.rates)throw new Error('bad');
+    const live={};Object.keys(CURS).forEach(c=>{const x=+j.rates[c];if(x>0&&isFinite(x))live[c]=1/x});
+    if(!Object.keys(live).length)throw new Error('empty');
+    S.FX.live=live;S.FX.ts=Date.now();S.FX.date=String(j.time_last_update_utc||'').slice(0,40);save();
+    ui.fxMsg=force?'최신 환율로 바꿨어요.':'';
+  }catch(e){
+    ui.fxMsg=force?'환율을 받아오지 못했어요. 저장된 환율로 계산해요. 필요하면 아래에 직접 입력하세요.':'';
+  }
+  fxBusy=false;
+  const ae=document.activeElement;
+  if(force||!(ae&&/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)))render();
+}
+
+/* ========= 해외: 도시별 적정가 (여행 가이드 기준 대략 범위) ========= */
+/* lo~hi: 현지 통화. tip: 흔한 바가지 수법과 대처. low: 너무 쌀 때 경고 */
+const CITY={
+  hanoi:{n:'하노이',cur:'VND',asof:'2026년 상반기 여행 가이드 기준',items:[
+    {k:'airport',n:'공항↔구시가지 택시·Grab',lo:200000,hi:400000,tip:'터미널 안에서 먼저 말 거는 기사는 피하고, 공식 택시 승강장이나 Grab 앱으로 잡으세요. 앱 예약 없이 다가오는 "그랩 기사"도 가짜일 수 있어요.'},
+    {k:'airport_bus',n:'공항버스 86번',lo:45000,hi:45000,tip:'정찰제예요. 차장에게 현금으로 내요.'},
+    {k:'grab_bike',n:'Grab 바이크 (시내)',lo:15000,hi:40000,tip:'앱에 뜬 가격이 확정가예요. 내릴 때 더 달라고 하면 앱 화면을 보여주세요.'},
+    {k:'grab_car',n:'Grab 카 (시내)',lo:40000,hi:100000,tip:'비 오는 날·출퇴근 시간엔 앱 가격 자체가 올라가요.'},
+    {k:'cyclo',n:'씨클로(인력거) 시내 한 바퀴',lo:50000,hi:150000,tip:'타기 전에 "총액·시간·1인당인지 전체인지"를 확정하세요. 내릴 때 1인당이었다고 말을 바꾸는 경우가 많아요.'},
+    {k:'pho',n:'쌀국수(퍼) 한 그릇',lo:40000,hi:80000,tip:'메뉴판에 가격이 없는 곳은 주문 전에 물어보세요.'},
+    {k:'banhmi',n:'반미',lo:20000,hi:40000,tip:'관광지 노점은 외국인에게 두 배를 부르기도 해요. 현지인이 내는 걸 보세요.'},
+    {k:'buncha',n:'분짜 1인분',lo:45000,hi:70000,tip:''},
+    {k:'coffee',n:'커피 (카페 쓰어다)',lo:20000,hi:40000,tip:''},
+    {k:'egg_coffee',n:'에그커피',lo:30000,hi:45000,tip:''},
+    {k:'biahoi',n:'비아허이(생맥주) 한 잔',lo:5000,hi:10000,tip:'계산 전에 잔 수를 같이 세 두세요.'},
+    {k:'water',n:'생수 1.5L',lo:8000,hi:15000,tip:'관광지 노점은 3~4배 부르기도 해요. 편의점 가격이 기준이에요.'},
+    {k:'massage',n:'마사지 60분 (발·전신)',lo:200000,hi:500000,tip:'팁을 강요하는 곳이 있어요. 팁 포함 여부를 미리 확인하세요.'},
+    {k:'sim',n:'유심 30일',lo:200000,hi:260000,tip:'공항에선 비싼 요금제를 권해요. 필요한 데이터만 고르세요.'},
+    {k:'halong',n:'하롱베이 당일 투어',lo:1200000,hi:1600000,tip:'포함 내역(점심·입장료·카약)을 비교하세요. 너무 싼 투어는 현장에서 추가요금을 받아요.',low:'너무 싸요. 입장료·식사가 빠져 있어서 현장에서 추가요금을 받을 수 있어요.'}
+  ]},
+  hcm:{n:'호치민',cur:'VND',asof:'2026년 여행 가이드 기준',items:[
+    {k:'airport',n:'공항↔1군 Grab',lo:150000,hi:250000,tip:'Grab이나 Xanh SM으로 잡으면 타기 전에 가격이 확정돼요. 비 오는 날·심야엔 더 올라요.'},
+    {k:'airport_taxi',n:'공항↔1군 미터 택시 (비나선·마이린)',lo:170000,hi:280000,tip:'출발 전 기본요금은 1만 1~2천 동이에요. 출발도 안 했는데 5만 동쯤 찍혀 있으면 내리세요. 회사 이름 철자·전화번호가 이상한 가짜 택시도 있어요.'},
+    {k:'airport_bus',n:'공항버스 109번',lo:15000,hi:20000,tip:'차장에게 현금으로 내요. 잔돈을 준비하세요.'},
+    {k:'grab_bike',n:'Grab 바이크 (시내)',lo:15000,hi:40000,tip:''},
+    {k:'grab_car',n:'Grab 카 (시내)',lo:40000,hi:100000,tip:''},
+    {k:'pho',n:'쌀국수(퍼) 한 그릇',lo:40000,hi:80000,tip:''},
+    {k:'banhmi',n:'반미',lo:20000,hi:40000,tip:''},
+    {k:'coffee',n:'커피 (카페 쓰어다)',lo:20000,hi:40000,tip:''},
+    {k:'water',n:'생수 1.5L',lo:8000,hi:15000,tip:''},
+    {k:'massage',n:'마사지 60분 (발·전신)',lo:200000,hi:500000,tip:'팁 포함 여부를 미리 확인하세요.'}
+  ]},
+  danang:{n:'다낭',cur:'VND',asof:'2026년 7월 여행 가이드 기준',items:[
+    {k:'airport',n:'공항↔시내 Grab·택시',lo:40000,hi:80000,tip:'10분 거리예요. 이보다 훨씬 부르면 앱으로 잡으세요.'},
+    {k:'airport_beach',n:'공항↔미케비치 Grab·택시',lo:60000,hi:100000,tip:''},
+    {k:'grab',n:'Grab 시내 5km',lo:30000,hi:50000,tip:''},
+    {k:'miquang',n:'미꽝 한 그릇',lo:30000,hi:50000,tip:''},
+    {k:'banhmi',n:'반미',lo:15000,hi:30000,tip:''},
+    {k:'coffee',n:'커피 (카페 핀)',lo:12000,hi:25000,tip:''},
+    {k:'massage',n:'전신 마사지 60분',lo:200000,hi:400000,tip:'팁 포함 여부를 미리 확인하세요.'},
+    {k:'foot',n:'발 마사지 60분',lo:150000,hi:250000,tip:''},
+    {k:'bana',n:'바나힐 성인 입장권',lo:950000,hi:950000,tip:'정가 상품이에요. 이보다 비싸게 파는 대행은 수수료가 붙은 거예요.',low:'정가보다 싸요. 입장권이 아니라 교통편만 포함인지 확인하세요.'}
+  ]},
+  bangkok:{n:'방콕',cur:'THB',asof:'2026년 여행 가이드 기준',items:[
+    {k:'airport',n:'수완나품 공항↔수쿰윗 미터 택시',lo:300,hi:500,tip:'공항 추가요금 50바트와 고속도로 통행료가 포함된 범위예요. "미터 켜 주세요(Meter, please)"라고 하고, 정액을 부르면 다른 택시를 타세요.'},
+    {k:'arl',n:'공항철도 (시티라인)',lo:45,hi:45,tip:'정찰제예요.'},
+    {k:'taxi_start',n:'택시 기본요금',lo:35,hi:35,tip:'미터 기본요금이에요. 미터를 안 켜면 내리세요.'},
+    {k:'tuktuk',n:'툭툭 단거리',lo:100,hi:200,tip:'타기 전에 가격을 확정하세요.',low:'너무 싸요. 보석상·양복점에 들르는 코스일 수 있어요. 목적지 외에는 들르지 않는다고 미리 말하세요.'},
+    {k:'bts',n:'BTS 지상철 1회',lo:17,hi:65,tip:'역 기계로 사면 정가예요.'},
+    {k:'street',n:'길거리 식사 (팟타이 등)',lo:40,hi:100,tip:''},
+    {k:'massage',n:'타이 마사지 60분',lo:250,hi:500,tip:'고급 스파는 1,000바트 이상이에요. 업소 등급을 같이 보세요.'},
+    {k:'coconut',n:'코코넛',lo:40,hi:80,tip:''},
+    {k:'beer',n:'맥주 (식당)',lo:60,hi:120,tip:''}
+  ]}
+};
+const cityCur=()=>S.T.city==='other'?S.T.cur:(CITY[S.T.city]||{cur:'VND'}).cur;
+const cityName=()=>S.T.city==='other'?'기타 도시':(CITY[S.T.city]||{n:''}).n;
+/* 빠른 비교 여행 예시: 공항에서 시내로 */
+const QEX={
+  hanoi:{a:{name:'기사가 부른 택시',money:'600000',mins:'35',ref:'airport'},b:{name:'Grab 앱 가격 (대기 포함)',money:'280000',mins:'45',ref:'airport'},c:{name:'공항버스 86번',money:'45000',mins:'75',ref:'airport_bus'}},
+  hcm:{a:{name:'공항 앞 호객 택시',money:'500000',mins:'30',ref:'airport_taxi'},b:{name:'Grab 앱 가격 (대기 포함)',money:'200000',mins:'40',ref:'airport'},c:{name:'공항버스 109번',money:'20000',mins:'60',ref:'airport_bus'}},
+  danang:{a:{name:'기사가 부른 택시',money:'200000',mins:'12',ref:'airport'},b:{name:'Grab 앱 가격 (대기 포함)',money:'60000',mins:'18',ref:'airport'}},
+  bangkok:{a:{name:'정액 부르는 택시',money:'800',mins:'45',ref:'airport'},b:{name:'미터 택시',money:'400',mins:'50',ref:'airport'},c:{name:'공항철도+BTS',money:'90',mins:'65',ref:''}}
+};
+const findItem=(city,k)=>CITY[city]&&CITY[city].items.find(x=>x.k===k);
+const tMult=()=>S.T.on?S.T.mult:1;
+/* 여행 모드: 시간 가격에 배수 */
+function tpq(){const t=tp(),m=tMult();return {low:t.low*m,mid:t.mid*m,high:t.high*m}}
+/* 부른 가격이 적정 범위 대비 어디인지 */
+function fairCheck(it,amt){
+  if(!it||!isFinite(amt))return null;
+  const lo=it.lo,hi=it.hi,mid=(lo+hi)/2;
+  let lvl;
+  if(amt<lo*.7)lvl='low';else if(amt<=hi*1.05)lvl='ok';else if(amt<=hi*1.5)lvl='high';else lvl='scam';
+  return {lvl,ratio:amt/hi,mid,lo,hi,over:Math.max(0,amt-hi),overMid:Math.max(0,amt-mid)};
+}
+const LVL={ok:{t:'적정 범위',c:'ok'},high:{t:'조금 비싸요',c:'warn'},scam:{t:'바가지 의심',c:'bad'},low:{t:'너무 싸요',c:'warn'}};
+function fairTag(f,cur){
+  if(!f)return '';
+  const pct=Math.round((f.ratio-1)*100);
+  const d=f.lvl==='ok'?'':f.lvl==='low'?' · 추가요금 확인':` · 적정 상한보다 +${pct}%`;
+  return `<span class="tag ${LVL[f.lvl].c}">${LVL[f.lvl].t}${d}</span><span class="small">적정 ${fmtCur(f.lo,cur)}${f.hi!==f.lo?'~'+fmtCur(f.hi,cur):''}</span>`;
+}
+/* 흥정 목표가: 나눌 수 있는 깔끔한 숫자로 */
+function niceRound(n,cur){
+  const c=CURS[cur]||{d:0};if(n<=0)return 0;
+  const p=Math.pow(10,Math.max(0,Math.floor(Math.log10(n))-1));
+  const v=Math.round(n/p)*p;
+  return c.d?Math.round(v*100)/100:Math.round(v);
+}
+
+/* ========= 온보딩 ========= */
+const TIME_Q=[
+  {title:'학교(회사)까지 가는 길',slow:{n:'버스',m:2000,min:35},fast:{n:'택시',min:10},save:25},
+  {title:'저녁 식사',slow:{n:'직접 요리',m:5000,min:60,note:'장보기·요리·설거지 포함'},fast:{n:'배달',min:25,note:'주문~식사 시작까지'},save:35},
+  {title:'본가에 가는 길',slow:{n:'시외버스',m:20000,min:210},fast:{n:'KTX',min:120},save:90},
+  {title:'고장 난 자전거',slow:{n:'직접 고치기',m:3000,min:120,note:'부품값 포함'},fast:{n:'수리점 맡기기',min:30},save:90}
+];
+function timeQuestion(i){
+  const q=TIME_Q[i],o=ui.ob;
+  const th=Math.sqrt(o.lo*o.hi);
+  const raw=q.slow.m+th*q.save/60;
+  const step=raw>30000?1000:500;
+  const fm=Math.max(q.slow.m+step,Math.round(raw/step)*step);
+  return {q,fm,realTh:(fm-q.slow.m)/(q.save/60)};
+}
+function obQuestion(s){
+  if(s<4){
+    const {q,fm}=timeQuestion(s);
+    const slow={k:'slow',t:q.slow.n+' '+won(q.slow.m),s:mm(q.slow.min)+(q.slow.note?' · '+q.slow.note:'')};
+    const fast={k:'fast',t:q.fast.n+' '+won(fm),s:mm(q.fast.min)+(q.fast.note?' · '+q.fast.note:'')};
+    return {kick:q.title,prompt:'어느 쪽을 고르시겠어요?',opts:s%2?[fast,slow]:[slow,fast]};
+  }
+  if(s===4)return {kick:'용돈 게임',prompt:'동전을 던져 앞면이면 100,000원, 뒷면이면 0원이에요.',opts:[{k:'sure',t:'확정 40,000원 받기',s:'고민 없이 바로 받아요'},{k:'gamble',t:'동전 던지기',s:'앞면 100,000원 / 뒷면 0원'}]};
+  if(s===5){
+    const sure=ui.ob.ans.r1==='gamble'?55000:25000;
+    return {kick:'용돈 게임',prompt:'같은 동전 던지기예요. 확정 금액만 바뀌었어요.',opts:[{k:'sure',t:'확정 '+won(sure)+' 받기',s:'고민 없이 바로 받아요'},{k:'gamble',t:'동전 던지기',s:'앞면 100,000원 / 뒷면 0원'}]};
+  }
+  if(s===6)return {kick:'기다림',prompt:'어느 쪽이 더 끌리세요?',opts:[{k:'now',t:'지금 50,000원',s:'바로 받아요'},{k:'later',t:'한 달 뒤 55,000원',s:'10% 더, 대신 기다려요'}]};
+  if(s===7)return {kick:'뜻밖의 돈',prompt:'400,000원이 생겼어요.',opts:[{k:'exp',t:'친구들과 3일 여행',s:'돈은 사라지지만 추억이 남아요'},{k:'save',t:'저축',s:'통장에 그대로 둬요'}]};
+  if(s===8)return {kick:'토요일 오후 3시간',prompt:'무엇을 하시겠어요?',opts:[{k:'friend',t:'친구 약속',s:'20,000원 쓰고 즐겁게 놀아요'},{k:'work',t:'혼자 알바',s:'30,000원을 벌어요'}]};
+  return {kick:'신발 사기',prompt:'3년 동안 드는 총비용은 같아요.',opts:[{k:'durable',t:'120,000원짜리 신발 1켤레',s:'3년 쓰는 튼튼한 신발'},{k:'cheap',t:'40,000원짜리 신발 3켤레',s:'1년마다 새로 사요'}]};
+}
+function obAnswer(k){
+  const o=ui.ob,s=o.step;
+  if(s<4){const {realTh}=timeQuestion(s);if(k==='fast')o.lo=Math.min(realTh,o.hi*.98);else o.hi=Math.max(realTh,o.lo*1.02)}
+  else if(s===4)o.ans.r1=k;
+  else if(s===5){o.ans.risk=o.ans.r1==='gamble'?(k==='gamble'?.9:.65):(k==='gamble'?.4:.15)}
+  else if(s===6)o.ans.future=k==='later'?.75:.25;
+  else if(s===7)o.ans.exp=k==='exp'?.8:.25;
+  else if(s===8)o.ans.rel=k==='friend'?.8:.3;
+  else if(s===9)o.ans.dur=k==='durable'?.75:.3;
+  o.step++;
+  if(o.step>=10){
+    const a=o.ans;
+    setTime(Math.sqrt(o.lo*o.hi));S.P.time.calib=0;
+    S.P.risk=a.risk;S.P.future=a.future;S.P.exp=a.exp;S.P.rel=a.rel;S.P.dur=a.dur;
+    S.onboarded=true;o.showResult=true;save();
+  }
+}
+
+/* ========= 빠른 모드 계산 ========= */
+function evalOpts(opts,hs){
+  const p=tpq(),minM=Math.min(...opts.map(o=>o.mins));
+  return opts.map(o=>{
+    const h=o.mins>minM?hs:0,hrs=o.mins/60;
+    const at=pr=>({money:o.money,time:hrs*pr,hassle:hrs*pr*h,total:o.money+hrs*pr*(1+h)});
+    return {name:o.name,money:o.money,mins:o.mins,h,eff:hrs*(1+h),lo:at(p.low),mid:at(p.mid),hi:at(p.high),loc:o.loc||null,ref:o.ref||''};
+  });
+}
+/* 시간 가격 p(원/시간)에 따라 가장 싼 선택지가 바뀌는 구간 (하한 포락선) */
+function envelope(r){
+  const seg=[];let p=0,cur=0;
+  r.forEach((o,i)=>{if(o.money<r[cur].money-1e-9||(Math.abs(o.money-r[cur].money)<1e-9&&o.eff<r[cur].eff))cur=i});
+  for(let g=0;g<6;g++){
+    let nxt=-1,np=Infinity;
+    r.forEach((o,j)=>{
+      if(o.eff<r[cur].eff-1e-12){const x=(o.money-r[cur].money)/(r[cur].eff-o.eff);if(x>=p-1e-9&&x<np){np=x;nxt=j}}
+    });
+    if(nxt<0){seg.push({idx:cur,from:p,to:Infinity});break}
+    seg.push({idx:cur,from:p,to:np});p=np;cur=nxt;
+  }
+  return seg.filter(x=>x.to-x.from>1);
+}
+function quickVerdict(r){
+  const arg=k=>{let b=0;r.forEach((o,i)=>{if(o[k].total<r[b][k].total)b=i});return b};
+  const bLo=arg('lo'),bMid=arg('mid'),bHi=arg('hi');
+  const sorted=r.map((o,i)=>({i,t:o.mid.total})).sort((a,b)=>a.t-b.t);
+  const gap=sorted[1].t-sorted[0].t;
+  const minEff=Math.min(...r.map(o=>o.eff));
+  const fl=r.map((o,i)=>i).filter(i=>Math.abs(r[i].eff-minEff)<1e-9);
+  const tie=bLo===bHi&&gap<1;
+  return {best:bMid,second:sorted[1].i,gap,tie,straddle:bLo!==bHi||tie,seg:envelope(r),fast:fl.length===1?fl[0]:-1};
+}
+function optCard(o,max,win){
+  const w=x=>(Math.max(0,x)/max*100).toFixed(1)+'%';
+  const m=o.mid;
+  return `<div class="opt ${win?'win':''}">
+    <div class="opt-h"><h3 style="margin:0">${esc(o.name)}</h3>${win?'<span class="tag">진짜 가격이 더 낮아요</span>':''}</div>
+    <div class="big num">${won(m.total)}</div>
+    <div class="range">내 시간 가격 범위 기준 ${won(o.lo.total)} ~ ${won(o.hi.total)}</div>
+    ${o.loc?`<div class="small" style="margin-top:4px">현지 가격 <b class="num">${fmtCur(o.loc.amt,o.loc.cur)}</b>${koUnit(o.loc.amt)&&o.loc.cur!=='KRW'?' ('+koUnit(o.loc.amt)+')':''} = ${won(o.money)}</div>`:''}
+    ${o.ref&&o.loc&&findItem(S.T.city,o.ref)?`<div class="fair" style="margin:8px 0 0">${fairTag(fairCheck(findItem(S.T.city,o.ref),o.loc.amt),o.loc.cur)}</div>`:''}
+    <div class="bar" role="img" aria-label="${esc(o.name)}: 보이는 가격 ${won(o.money)}, 시간 비용 ${won(m.time)}${m.hassle>0?', 불편 비용 '+won(m.hassle):''}">
+      <i class="s-vis" style="width:${w(o.money)}"></i><i class="s-time" style="width:${w(m.time)}"></i><i class="s-hass" style="width:${w(m.hassle)}"></i>
+    </div>
+    <dl class="legend">
+      <div><dt><span class="dot s-vis"></span>보이는 가격</dt><dd class="num">${won(o.money)}</dd></div>
+      <div><dt><span class="dot s-time"></span>시간 비용 (${mm(o.mins)})</dt><dd class="num">+${won(m.time)}</dd></div>
+      ${m.hassle>0?`<div><dt><span class="dot s-hass"></span>불편·피로 비용</dt><dd class="num">+${won(m.hassle)}</dd></div>`:''}
+    </dl></div>`;
+}
+
+/* ========= 심층 모드 계산 ========= */
+function mkItem(group,label,kind,low,high,extra){
+  const val=(low+high)/2;
+  const max=kind==='hours'?Math.max(Math.ceil(high*2),4):Math.max(Math.ceil(high*2/1000)*1000,10000);
+  return Object.assign({id:uid(),group,label,kind,low,high,val,max,src:'ai'},extra||{});
+}
+function benefitW(it){
+  const P=S.P;
+  const dw={experience:.6+.8*P.exp,relation:.6+.8*P.rel,future:.6+.8*P.future,durable:.6+.8*P.dur,wellbeing:1}[it.dim]||1;
+  const pri=(P.ctx[ui.deep.category]||{}).pri;
+  const pf=pri==='value'?1.25:pri==='cost'?.8:1;
+  return {dw,pf,f:dw*pf};
+}
+const aversion=()=>.7+.6*(1-S.P.risk);
+function itemVals(it){
+  const t=tp();
+  let lo,mid,hi;
+  if(it.kind==='hours'){lo=it.low*t.low;mid=it.val*t.mid;hi=it.high*t.high}else{lo=it.low;mid=it.val;hi=it.high}
+  let f=1;
+  if(it.group==='benefit')f=benefitW(it).f;
+  else if(it.group==='risk')f=(it.prob==null?.3:it.prob)*aversion();
+  return {lo:lo*f,mid:mid*f,hi:hi*f,f};
+}
+function deepTotals(items){
+  const c={lo:0,mid:0,hi:0},b={lo:0,mid:0,hi:0};let vis=0;
+  items.forEach(it=>{const v=itemVals(it),tgt=it.group==='benefit'?b:c;tgt.lo+=v.lo;tgt.mid+=v.mid;tgt.hi+=v.hi;if(it.group==='direct')vis+=v.mid});
+  return {c,b,vis,net:{mid:b.mid-c.mid,lo:b.lo-c.hi,hi:b.hi-c.lo}};
+}
+function deepVerdict(T){
+  const n=T.net;
+  if(n.lo>0)return {fav:0,text:`현재 당신의 가치 기준에서는 <strong>얻는 것이 비용보다 높게</strong> 평가돼요. 불확실성을 감안해도 순가치가 ${man(n.lo)} 이상이에요.`};
+  if(n.hi<0)return {fav:1,text:`현재 당신의 가치 기준에서는 <strong>비용이 얻는 것보다 높게</strong> 평가돼요. 불확실성을 감안해도 순가치가 ${man(n.hi)} 이하예요.`};
+  return {fav:null,text:`중간값으로는 <strong>${n.mid>=0?'얻는 것':'비용'}이 조금 앞서지만</strong>, 불확실성 범위(${man(n.lo)} ~ ${man(n.hi)})가 0을 지나요. 지금 정보로는 갈리지 않으니 값을 조정해 보세요.`};
+}
+function rowVal(it){
+  const v=itemVals(it),collapsed=Math.abs(v.hi-v.lo)<1;
+  const sign=it.group==='benefit'?'+':'';
+  return `<span class="num">${sign}${man(v.mid)}</span>`+(collapsed?'':`<span class="range" style="display:block;font-weight:400;text-align:right">${man(v.lo)} ~ ${man(v.hi)}</span>`);
+}
+const GLABEL={time:'시간',opp:'기회비용',future:'미래 비용',risk:'위험'};
+function rowSub(it){
+  const v=itemVals(it),tags=[];
+  if(GLABEL[it.group])tags.push(`<span class="tag amb">${GLABEL[it.group]}</span>`);
+  if(it.kind==='hours')tags.push(`<span>${(+it.val).toFixed(1).replace(/\.0$/,'')}시간${it.group==='benefit'?' 상당':' × 내 시간 가격'}</span>`);
+  if(it.group==='benefit'){const w=benefitW(it);tags.push(`<span class="tag soft">${DIM[it.dim]||'편익'} ×${w.f.toFixed(2)} 내 프로필 반영</span>`)}
+  if(it.group==='risk')tags.push(`<span class="tag soft">발생 확률 ${Math.round((it.prob==null?.3:it.prob)*100)}% · 위험 성향 ×${aversion().toFixed(2)}</span>`);
+  tags.push(`<span class="tag ${it.src==='user'?'':'amb'}">${it.src==='user'?'직접 수정':it.src==='tpl'?'기본 추정':'AI 추정'}</span>`);
+  return tags.join('');
+}
+function rowHtml(it){
+  const step=it.kind==='hours'?.5:Math.max(100,Math.round(it.max/200/100)*100);
+  return `<div class="row" id="row-${it.id}">
+    <div class="row-h"><span class="lab">${esc(it.label)}</span><span class="val" data-v>${rowVal(it)}</span></div>
+    <div class="row-sub" data-sub>${rowSub(it)}</div>
+    <input type="range" min="0" max="${it.max}" step="${step}" value="${it.val}" data-slide="${it.id}" aria-label="${esc(it.label)} 조정">
+  </div>`;
+}
+function summaryHtml(){
+  const d=ui.deep,T=deepTotals(d.items),V=deepVerdict(T);
+  const scale=Math.max(T.c.mid,T.b.mid,1);
+  const w=x=>(Math.max(0,x)/scale*100).toFixed(1)+'%';
+  const hid=T.c.mid-T.vis;
+  return `<div class="card" id="deep-summary">
+    <div class="bal">
+      <div><div class="lab"><span>비용 합계</span><span class="num"><b>${man(T.c.mid)}</b></span></div>
+        <div class="bar" role="img" aria-label="비용 ${man(T.c.mid)} 중 보이는 가격 ${man(T.vis)}, 숨은 비용 ${man(hid)}"><i class="s-vis" style="width:${w(T.vis)}"></i><i class="s-time" style="width:${w(hid)}"></i></div>
+        <div class="small">보이는 가격 ${man(T.vis)} + 숨은 비용 ${man(hid)}</div></div>
+      <div><div class="lab"><span>얻는 것 합계</span><span class="num"><b>${man(T.b.mid)}</b></span></div>
+        <div class="bar" role="img" aria-label="얻는 것 ${man(T.b.mid)}"><i class="s-ben" style="width:${w(T.b.mid)}"></i></div></div>
+    </div>
+    <div class="verdict" style="margin:0"><p style="margin:0 0 6px">${V.text}</p><p class="small" style="margin:0">순가치(중간값) <b class="num">${T.net.mid>0?'+':''}${man(T.net.mid)}</b> · 결정은 당신 몫이에요.</p></div>
+  </div>`;
+}
+
+/* ========= 심층 분석: AI + 기본 추정 ========= */
+function buildPrompt(d){
+  return `당신은 개인 의사결정 분석 도우미입니다. 아래 선택 상황을 "비용"과 "편익"으로 분해하세요. 대학생·사회초년생 기준이며, 모든 값은 보수적인 범위로 추정합니다.
+JSON 객체 하나만 출력하세요(설명·코드펜스 금지). 스키마:
+{"title":"15자 이내 짧은 제목",
+ "usable_hours":숫자(이 선택 때문에 다른 일에 쓸 수 없게 되는 '활용 가능 시간'. 수면 제외. 여행 3일이면 약 24~30),
+ "direct_cost":숫자(원. 언급 없으면 0),
+ "opportunity":[{"label":"...","low":원,"high":원}] (시간 자체와 겹치지 않는, 포기하는 수입·기회. 없으면 []),
+ "future_cost":[{"label":"...","low":원,"high":원}] (이후에 생기는 추가 지출·부담. 없으면 []),
+ "risks":[{"label":"...","low":원,"high":원,"prob":0~1}] (발생 시 손실 금액과 확률),
+ "benefits":[{"label":"...","dim":"experience|relation|future|wellbeing|durable","low_hours":숫자,"high_hours":숫자}] (이 편익이 '내 시간 몇 시간의 가치'와 맞먹는지),
+ "missing":"판단에 꼭 필요한데 빠진 정보가 있으면 한국어 질문 한 줄, 없으면 null"}
+규칙: 각 배열 최대 3개, 라벨은 한국어 20자 이내, 과장 금지, 금액 단위는 원.
+선택 상황: ${d.text.trim().slice(0,1500)}
+분류: ${CAT[d.category]}
+사용자가 적은 금액: ${+d.cost>0?fmt(deepCostKRW(d))+'원'+(deepCur(d)!=='KRW'?' (현지 '+fmtCur(+d.cost,deepCur(d))+')':''):'없음'}
+사용자가 적은 활용 가능 시간: ${+d.hours>0?d.hours+'시간':'없음'}`;
+}
+const num=(v,lo,hi,def)=>{v=+v;return isFinite(v)?Math.min(hi,Math.max(lo,v)):def};
+function sanitizeAI(r){
+  if(!r||typeof r!=='object'||!Array.isArray(r.benefits)||!r.benefits.length)return null;
+  const arr=(a,f)=>(Array.isArray(a)?a:[]).slice(0,3).map(f).filter(Boolean);
+  const won3=x=>{if(!x||!x.label)return null;const lo=num(x.low,0,1e8,0),hi=Math.max(lo,num(x.high,0,1e8,lo));return {label:String(x.label).slice(0,30),low:lo,high:hi,prob:num(x.prob,0,1,.3)}};
+  const out={
+    title:String(r.title||'').slice(0,20),
+    hours:num(r.usable_hours,0,2000,null),
+    cost:num(r.direct_cost,0,1e9,0),
+    opp:arr(r.opportunity,won3),fut:arr(r.future_cost,won3),risks:arr(r.risks,won3),
+    ben:arr(r.benefits,x=>{if(!x||!x.label)return null;const lo=num(x.low_hours,0,500,0),hi=Math.max(lo,num(x.high_hours,0,500,lo));return {label:String(x.label).slice(0,30),dim:DIM[x.dim]?x.dim:'wellbeing',low:lo,high:hi}}),
+    missing:r.missing?String(r.missing).slice(0,120):null
+  };
+  return out.ben.length?out:null;
+}
+function itemsFromAI(ai,d){
+  const cost=+d.cost>0?deepCostKRW(d):ai.cost,hrs=+d.hours>0?+d.hours:(ai.hours==null?4:ai.hours);
+  const it=[mkItem('direct','직접 비용','won',cost,cost,{src:+d.cost>0?'user':'ai'}),mkItem('time','쓰게 되는 시간(활용 가능 시간)','hours',hrs,hrs,{src:+d.hours>0?'user':'ai'})];
+  ai.opp.forEach(x=>it.push(mkItem('opp',x.label,'won',x.low,x.high)));
+  ai.fut.forEach(x=>it.push(mkItem('future',x.label,'won',x.low,x.high)));
+  ai.risks.forEach(x=>it.push(mkItem('risk',x.label,'won',x.low,x.high,{prob:x.prob})));
+  ai.ben.forEach(x=>it.push(mkItem('benefit',x.label,'hours',x.low,x.high,{dim:x.dim})));
+  return it;
+}
+function templateItems(d){
+  const cost=Math.max(0,deepCostKRW(d)),cat=d.category;
+  const hrs=+d.hours>0?+d.hours:{trip:24,buy:2,activity:30,other:4}[cat];
+  const T=(g,l,k,a,b,x)=>mkItem(g,l,k,a,b,Object.assign({src:'tpl'},x||{}));
+  const rd=v=>Math.round(v/1000)*1000;
+  const it=[T('direct','직접 비용','won',cost,cost,{src:+d.cost>0?'user':'tpl'}),T('time','쓰게 되는 시간(활용 가능 시간)','hours',hrs,hrs,{src:+d.hours>0?'user':'tpl'})];
+  const add=(g,l,a,b,x)=>{if(b>0)it.push(T(g,l,'won',a,b,x))};
+  if(cat==='trip'){add('future','여행 중 추가 지출',rd(cost*.1),rd(cost*.3));add('risk','일정 변경·예상 밖 비용',rd(cost*.1),rd(cost*.3),{prob:.3});
+    it.push(T('benefit','친구와의 관계','hours',6,14,{dim:'relation'}),T('benefit','새로운 경험','hours',5,12,{dim:'experience'}),T('benefit','스트레스 해소','hours',3,8,{dim:'wellbeing'}))}
+  else if(cat==='buy'){add('future','유지·소모품 비용',rd(cost*.05),rd(cost*.15));add('risk','후회·되팔 때 손실',rd(cost*.2),rd(cost*.5),{prob:.3});
+    it.push(T('benefit','오래 쓰는 가치','hours',3,10,{dim:'durable'}),T('benefit','사용 편의·즐거움','hours',3,8,{dim:'wellbeing'}))}
+  else if(cat==='activity'){add('risk','일정 충돌·부담',30000,100000,{prob:.3});
+    it.push(T('benefit','성장·미래 기회','hours',8,24,{dim:'future'}),T('benefit','새로운 사람과 관계','hours',6,16,{dim:'relation'}),T('benefit','재미·성취감','hours',2,6,{dim:'wellbeing'}))}
+  else{it.push(T('benefit','즐거움·회복','hours',3,8,{dim:'wellbeing'}),T('benefit','장기적으로 남는 것','hours',2,6,{dim:'future'}))}
+  return it;
+}
+/* AI가 없는 환경(GitHub Pages 등)에서 쓸 사람용 질문 */
+function askDeepPrompt(d){
+  const c=deepCur(d),cost=+d.cost>0?(c==='KRW'?won(+d.cost):fmtCur(+d.cost,c)+' (약 '+won(deepCostKRW(d))+')'):'정하지 않음';
+  const t=tp();
+  return `이 결정을 비용과 편익으로 나눠서 분석해 주세요.
+상황: ${d.text.trim().slice(0,1500)}
+분류: ${CAT[d.category]}
+드는 돈: ${cost}
+쓰게 될 시간: ${+d.hours>0?d.hours+'시간':'정하지 않음'}
+참고로 제 시간 가격은 시간당 약 ${fmt(t.mid)}원이에요.
+1) 직접 비용, 2) 시간 비용, 3) 기회비용, 4) 나중에 생길 비용, 5) 위험(발생 확률 포함), 6) 얻는 것을 항목별로 금액 범위와 함께 정리하고, 판단에 꼭 필요한데 빠진 정보가 있으면 질문해 주세요. 추정이 불확실하면 범위를 넓게 잡아 주세요.`;
+}
+function errCopy(e){
+  const c=e&&e.code;
+  if(c==='absent'||c==='capability_removed'||c==='capability_disabled'||c==='not_declared')return 'AI 분석을 쓸 수 없는 환경이라 기본 추정으로 채웠어요.';
+  if(c==='not_granted')return 'AI 사용을 허용하지 않아 기본 추정으로 채웠어요. 원하면 다시 시도할 때 허용해 주세요.';
+  if(c==='rate_limited')return '사용 한도에 도달해 기본 추정으로 채웠어요. 잠시 뒤 다시 시도해 보세요.';
+  if(c==='invalid_json'||c==='empty_completion'||c==='refused')return 'AI 응답을 읽지 못해 기본 추정으로 채웠어요.';
+  return 'AI 분석에 실패해 기본 추정으로 채웠어요.';
+}
+async function deepAI(){
+  const d=ui.deep;
+  if(!d.text.trim()){ui.err='선택 상황을 한 줄이라도 적어주세요.';return render()}
+  ui.err='';d.stage='loading';d.ctl=new AbortController();render();
+  const ctl=d.ctl;let ai=null,banner='';
+  try{
+    const sample=(window.claude&&window.claude.use)?await window.claude.use('sample'):null;
+    if(!sample)throw {code:'absent'};
+    ai=sanitizeAI(await sample.json(buildPrompt(d),{signal:ctl.signal}));
+    if(!ai)throw {code:'invalid_json'};
+  }catch(e){
+    if(e&&e.code==='cancelled'){d.stage='form';d.ctl=null;return render()}
+    banner=errCopy(e);
+  }
+  if(d.ctl!==ctl)return;
+  d.ctl=null;deepFill(ai,banner);
+}
+function deepTpl(){const d=ui.deep;if(!d.text.trim()){ui.err='선택 상황을 한 줄이라도 적어주세요.';return render()}ui.err='';deepFill(null,'')}
+function deepFill(ai,banner){
+  const d=ui.deep;
+  d.items=ai?itemsFromAI(ai,d):templateItems(d);
+  const flat=d.text.trim().replace(/\s+/g,' ');d.title=(ai&&ai.title)||(flat.length>14?flat.slice(0,14)+'…':flat);
+  d.missing=ai?ai.missing:null;
+  d.banner=banner||(ai?'':(hasAI()?'AI 없이 ':'')+'기본 추정으로 채웠어요. 값이 대략적이니 꼭 조정해 주세요.');
+  d.stage='edit';d.chosen=null;
+  render();window.scrollTo(0,0);
+}
+
+/* ========= 회고/인사이트 ========= */
+function dueList(){const n=Date.now();return S.D.filter(d=>!d.outcome&&d.due<=n)}
+function saveOutcome(id,rating,again,note){
+  const d=S.D.find(x=>x.id===id);if(!d)return;
+  d.outcome={rating,again,note:(note||'').slice(0,200),ts:Date.now()};save();
+  const diff=d.predicted-rating;
+  ui.revMsg=`「${d.title}」 예상 ${d.predicted}점 → 실제 ${rating}점. `+(diff>=2?'기대가 꽤 컸어요.':diff<=-2?'기대보다 훨씬 좋았어요.':'예측이 비교적 맞았어요.');
+}
+function weekly(){
+  const since=Date.now()-7*DAY,w=S.D.filter(d=>d.ts>=since).sort((a,b)=>b.ts-a.ts);
+  if(!w.length)return '';
+  const rv=w.filter(d=>d.outcome);
+  let line='회고를 남기면 예측과 실제를 비교해 드려요.';
+  if(rv.length>=2){
+    const bias=avg(rv.map(d=>d.predicted))-avg(rv.map(d=>d.outcome.rating));
+    line=Math.abs(bias)<.4?'이번 주엔 예측이 실제와 거의 맞았어요.':bias>0?`이번 주엔 기대가 실제보다 평균 ${bias.toFixed(1)}점 높았어요.`:`이번 주엔 실제가 기대보다 평균 ${Math.abs(bias).toFixed(1)}점 좋았어요.`;
+  }
+  return `<section class="section"><h2>이번 주 리뷰</h2><div class="card">
+    <p style="margin:0 0 6px"><b>${w.length}개</b>의 결정을 했어요. ${line}</p>
+    ${w.slice(0,3).map(d=>`<div class="item"><span class="t">${esc(d.title)}</span><span class="small num">예상 ${d.predicted}점 → ${d.outcome?'실제 '+d.outcome.rating+'점':'회고 전'}</span></div>`).join('')}
+    </div></section>`;
+}
+
+/* ========= 데모 데이터 ========= */
+function rng(seed){let s=seed;return()=>{s=(s*1664525+1013904223)%4294967296;return s/4294967296}}
+function pickW(R,w){const r=R();return r<w[0]?1:r<w[0]+w[1]?3:5}
+function makeDemo(){
+  const R=rng(11),now=Date.now(),out=[];
+  const T={daily:['택시 vs 버스','배달 vs 직접 요리','KTX vs 시외버스','카페 작업 vs 집 공부'],trip:['친구들과 제주 여행','당일치기 바다 여행','주말 근교 캠핑'],buy:['노트북 교체','무선 이어폰 구매','운동화 구매','전공서적 새 책 vs 중고'],activity:['동아리 A 가입','스터디 참여','주말 알바 추가','학회 행사 참석']};
+  const plan=['daily','daily','buy','daily','trip','activity','daily','buy','daily','activity','daily','trip','daily','buy','activity','daily','daily','buy','trip','daily','activity','daily','buy','daily','activity','daily','daily','trip','buy','daily','daily','activity','daily','buy','daily','daily','trip','activity','daily','buy','daily','daily','activity','daily'];
+  const PW={trip:[.2,.5,.3],buy:[.15,.45,.4],activity:[.1,.5,.4],daily:[.15,.5,.35]};
+  plan.forEach((cat,i)=>{
+    const ts=now-((plan.length-i)*1.2+R()*.5)*DAY,list=T[cat],title=list[Math.floor(R()*list.length)];
+    const pred=cat==='trip'?(R()<.7?5:4):cat==='buy'?(R()<.5?4:5):cat==='activity'?(R()<.5?3:4):(R()<.6?3:4);
+    const d={id:uid(),ts,mode:cat==='daily'?'quick':'deep',cat,title,demo:true,predicted:pred,due:ts+DUE_H[cat]*HR,outcome:null,net:0};
+    if(cat==='daily'){
+      const nm=title.split(' vs ');d.options=[{name:nm[0]},{name:nm[1]||'다른 선택'}];d.fastIdx=0;d.ctx=CTXS[Math.floor(R()*3)];
+      d.be=6000+R()*30000;d.favored=d.be<tp().mid?0:1;d.chosen=R()<.55?0:1;
+    }else{d.options=[{name:'하기'},{name:'하지 않기'}];d.favored=R()<.6?0:null;d.chosen=R()<.8?0:1}
+    if(d.due<now&&R()<.92){
+      const rating=pickW(R,PW[cat]);
+      d.outcome={rating,again:rating===5?(R()<.95?'same':'diff'):rating===3?(R()<.7?'same':'diff'):(R()<.85?'diff':'same'),note:'',ts:d.due+HR};
+    }
+    out.push(d);
+  });
+  return out;
+}
+
+/* ========= 뷰: 공통 ========= */
+/* 큰 아이콘용 선 아이콘. 크기는 CSS에서 정한다 */
+const svgI=p=>`<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const IC={
+  bolt:svgI('<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>'),
+  layers:svgI('<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>'),
+  plane:svgI('<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>'),
+  search:svgI('<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><path d="M11 8v6M9 9.5c0-.8.9-1.5 2-1.5s2 .7 2 1.5-1 1.2-2 1.5-2 .7-2 1.5.9 1.5 2 1.5 2-.7 2-1.5"/>'),
+  user:svgI('<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>'),
+  bell:svgI('<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>'),
+  car:svgI('<path d="M5 17h14v-5l-2-5H7l-2 5v5z"/><circle cx="7.5" cy="17" r="1.8"/><circle cx="16.5" cy="17" r="1.8"/><line x1="5" y1="12" x2="19" y2="12"/>'),
+  bus:svgI('<rect x="5" y="3" width="14" height="15" rx="2"/><line x1="5" y1="11" x2="19" y2="11"/><circle cx="8.5" cy="14.5" r="1"/><circle cx="15.5" cy="14.5" r="1"/><line x1="7" y1="18" x2="7" y2="21"/><line x1="17" y1="18" x2="17" y2="21"/>'),
+  train:svgI('<rect x="6" y="3" width="12" height="14" rx="3"/><line x1="6" y1="10" x2="18" y2="10"/><circle cx="9.5" cy="13.5" r="1"/><circle cx="14.5" cy="13.5" r="1"/><line x1="8" y1="21" x2="10" y2="17"/><line x1="16" y1="21" x2="14" y2="17"/>'),
+  bike:svgI('<circle cx="5.5" cy="17" r="3.5"/><circle cx="18.5" cy="17" r="3.5"/><path d="M5.5 17l4-7h5l4 7M9.5 10L8 7H6M14.5 10l-2.5 7"/>'),
+  bowl:svgI('<path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M8 7c0-1.5 1-1.5 1-3M12 7c0-1.5 1-1.5 1-3M16 7c0-1.5 1-1.5 1-3"/>'),
+  cup:svgI('<path d="M5 8h12v5a6 6 0 0 1-12 0V8z"/><path d="M17 9h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 4v1M11 3v2M14 4v1"/>'),
+  beer:svgI('<path d="M6 7h10v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7z"/><path d="M16 10h2a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2"/><path d="M6 7a2.5 2.5 0 0 1 5-1 2.5 2.5 0 0 1 5 1"/>'),
+  drop:svgI('<path d="M12 2.7l5.7 5.7a8 8 0 1 1-11.3 0z"/>'),
+  spa:svgI('<path d="M12 21c-5 0-9-3-9-7 3 0 6 1 9 4 3-3 6-4 9-4 0 4-4 7-9 7z"/><path d="M12 18c-2-2-3-5-3-8 1 0 2 .5 3 1.5 1-1 2-1.5 3-1.5 0 3-1 6-3 8z"/>'),
+  phone:svgI('<rect x="6" y="2" width="12" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/>'),
+  ticket:svgI('<path d="M3 8a2 2 0 0 0 2-2h14a2 2 0 0 0 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 0-2 2H5a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-4z"/><line x1="14" y1="7" x2="14" y2="17" stroke-dasharray="2 2"/>'),
+  pen:svgI('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>'),
+  ok:svgI('<circle cx="12" cy="12" r="10"/><polyline points="8 12.5 11 15.5 16.5 9"/>'),
+  warn:svgI('<path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'),
+  stop:svgI('<polygon points="7.9 2 16.1 2 22 7.9 22 16.1 16.1 22 7.9 22 2 16.1 2 7.9"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>')
+};
+/* 적정가 항목 → 아이콘 */
+const ITEM_IC={airport:'car',airport_taxi:'car',airport_beach:'car',grab_car:'car',grab:'car',taxi_start:'car',airport_bus:'bus',arl:'train',bts:'train',grab_bike:'bike',tuktuk:'bike',cyclo:'bike',pho:'bowl',banhmi:'bowl',buncha:'bowl',miquang:'bowl',street:'bowl',coffee:'cup',egg_coffee:'cup',coconut:'cup',biahoi:'beer',beer:'beer',water:'drop',massage:'spa',foot:'spa',sim:'phone',halong:'ticket',bana:'ticket',custom:'pen'};
+const itemIc=k=>IC[ITEM_IC[k]]||'';
+const ICON={
+  tag:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
+  check:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+  chart:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>'
+};
+function chips(list,cur,action,multi){
+  return `<div class="chips">${list.map(x=>`<button type="button" class="chip" data-a="${action}" data-v="${esc(x.v)}" aria-pressed="${multi?cur.includes(x.v):cur===x.v}">${x.ic||''}${esc(x.l)}</button>`).join('')}</div>`;
+}
+const hasAI=()=>!!(window.claude&&window.claude.use);
+const errBox=()=>ui.err?`<div class="err" role="alert">${esc(ui.err)}</div>`:'';
+
+function viewShell(){
+  const due=dueList().length;
+  const t=ui.tab;
+  const body=t==='home'?viewHome():t==='review'?viewReview():viewProfile();
+  const tab=(k,l,ic,badge)=>`<button class="tab" data-a="tab" data-t="${k}" ${t===k?'aria-current="page"':''}>${ic}<span>${l}</span>${badge?`<span class="badge" aria-label="회고 ${badge}건">${badge}</span>`:''}</button>`;
+  return `<div class="app"><header class="top"><div class="brand">${ICON.tag}<span>진짜가격</span></div><span class="small">${storageOK?'':'저장 불가 · 새로고침하면 사라져요'}</span></header>
+  <main>${body}</main></div>
+  <nav class="tabs" aria-label="주요 메뉴"><div>${tab('home','결정',ICON.tag,0)}${tab('review','회고',ICON.check,due)}${tab('profile','내 프로필',ICON.chart,0)}</div></nav>`;
+}
+
+/* ========= 뷰: 온보딩 ========= */
+function viewOb(){
+  const o=ui.ob;
+  if(o.step<0){
+    return `<div class="app"><header class="top"><div class="brand">${ICON.tag}<span>진짜가격</span></div></header>
+    <h1>보이는 가격 뒤의<br>진짜 가격을 계산해요</h1>
+    <p class="lead">택시 15,000원 vs 버스 2,000원. 정말 버스가 싼 걸까요? 시간, 피로, 포기한 기회까지 더하면 답은 사람마다 달라져요.</p>
+    <div class="card"><h2>10문항으로 내 성향을 알아봐요</h2>
+    <p class="lead" style="margin:0">별점 대신 실제로 고르는 상황으로 <b>내 시간 가격</b>과 위험·미래·경험 성향을 추정해요. 정답은 없고, 2분이면 끝나요.</p></div>
+    <button class="btn primary block" data-a="ob-start" style="margin-bottom:10px">시작하기</button>
+    <button class="btn ghost block" data-a="ob-cancel">${S.onboarded?'지금은 그만두기':'나중에 할게요'}</button>
+    <p class="note">${storageOK?'모든 기록은 이 기기의 브라우저에만 저장돼요.':'이 환경에서는 저장이 되지 않을 수 있어요.'} 의료·법률·투자 결정은 다루지 않아요.</p></div>`;
+  }
+  if(o.step>=10){
+    const t=tp();
+    return `<div class="app"><header class="top"><div class="brand">${ICON.tag}<span>진짜가격</span></div></header>
+    <p class="kicker">첫 결과</p><h1>당신의 시간 가격</h1>
+    <div class="card"><div class="result-tp num">${fmt(t.mid)}<span style="font-size:22px;font-weight:600">원/시간</span></div>
+    <p class="lead" style="margin:0 0 4px">범위 ${won(t.low)} ~ ${won(t.high)}</p>
+    <p class="small" style="margin:0">1시간을 아끼려고 평균 이 정도까지 쓸 마음이 있다는 뜻이에요. 실제 선택이 쌓이면 보정돼요.</p></div>
+    <div class="card"><h3>다른 성향 추정</h3>${dimBars()}</div>
+    <div class="stack"><button class="btn primary block" data-a="ob-done">첫 결정 분석하러 가기</button>
+    <button class="btn block" data-a="copy-tp">결과 텍스트 복사</button></div></div>`;
+  }
+  const q=obQuestion(o.step);
+  return `<div class="app"><header class="top"><div class="brand">${ICON.tag}<span>진짜가격</span></div><span style="display:flex;align-items:center;gap:10px"><span class="small num">${o.step+1} / 10</span><button class="btn ghost sm" data-a="ob-cancel">그만두기</button></span></header>
+  <div class="prog" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="${o.step}"><i style="width:${o.step/10*100}%"></i></div>
+  <p class="kicker">${esc(q.kick)}</p><h1 style="font-size:23px">${esc(q.prompt)}</h1>
+  <div>${q.opts.map(x=>`<button class="ob-opt" data-a="ob" data-k="${x.k}"><b>${esc(x.t)}</b><span>${esc(x.s)}</span></button>`).join('')}</div></div>`;
+}
+function dimBars(){
+  const P=S.P;
+  const rows=[['경험에 쓰는 편',P.exp],['관계를 우선하는 편',P.rel],['미래를 위해 기다리는 편',P.future],['불확실성을 감수하는 편',P.risk],['오래 쓸 물건을 고르는 편',P.dur]];
+  return rows.map(r=>`<div class="dim"><span>${r[0]}</span><span class="num" style="text-align:right">${Math.round(r[1]*100)}</span><div class="meter" role="img" aria-label="${r[0]} ${Math.round(r[1]*100)}점"><i style="width:${r[1]*100}%"></i></div></div>`).join('')+'<p class="small" style="margin:0">설문 기반 추정이에요. 실제 선택과 회고로 계속 보정돼요.</p>';
+}
+
+/* ========= 뷰: 홈 ========= */
+function viewHome(){
+  if(ui.home==='quick')return viewQuick();
+  if(ui.home==='deep')return viewDeep();
+  if(ui.home==='saved')return viewSaved();
+  if(ui.home==='check')return viewCheck();
+  if(ui.home==='travel')return viewTravel();
+  const t=tpq(),r=evalOpts([{name:'택시',money:15000,mins:10},{name:'버스',money:2000,mins:35}],0);
+  const max=Math.max(r[0].mid.total,r[1].mid.total);
+  const due=dueList().length;
+  const tr=S.T.on;
+  const done=S.onboarded&&S.P.time;
+  const survey=done
+    ?`<div class="card survey"><span class="ico">${IC.user}</span><div><b>내 성향 설문 완료</b><span class="small">내 시간 가격 시간당 ${won(tp().mid)} · 결과는 내 프로필에서 볼 수 있어요</span></div><button class="btn sm" data-a="survey">다시 하기</button></div>`
+    :`<button class="cta survey-cta" data-a="survey"><span class="ico">${IC.user}</span><b>내 성향 설문 <span class="tag soft" style="vertical-align:middle">선택</span></b><span>10문항 · 2분. 하면 내 시간 가격으로 더 정확하게 계산해요. 안 해도 시간당 10,000원 기본값으로 모든 기능을 쓸 수 있어요.</span></button>`;
+  return `<h1 style="margin-top:2px">무엇을 계산할까요?</h1>
+  <p class="lead">보이는 가격 뒤에 숨은 시간·불편·바가지까지 더해 진짜 가격을 보여드려요.</p>
+  ${tr?`<button class="cta main" data-a="open-check"><span class="ico">${IC.search}</span><b>이 가격 괜찮아?</b><span>${esc(cityName())} · 부른 가격을 넣으면 적정가·원화 환산·흥정 목표가를 바로 보여줘요</span></button>`:''}
+  <button class="cta ${tr?'':'main'}" data-a="open-quick"><span class="ico">${IC.bolt}</span><b>빠른 분석</b><span>${tr?'현지 통화로 · Grab vs 택시 vs 버스처럼 2~3개 선택지를 비교':'10초 · 택시/버스/걷기처럼 2~3개 선택지를 바로 비교'}</span></button>
+  <button class="cta" data-a="open-deep"><span class="ico">${IC.layers}</span><b>심층 분석</b><span>2~3분 · 여행, 구매, 동아리처럼 큰 결정을 비용·편익으로 분해</span></button>
+  <button class="cta" data-a="open-travel" ${tr?'style="border-color:var(--cobalt)"':''}><span class="ico">${IC.plane}</span><b>해외 여행 모드${tr?' <span class="tag ok" style="vertical-align:middle">켜짐</span>':''}</b><span>${tr?`${esc(cityName())} · ${esc(cityCur())} · 시간 가격 ×${S.T.mult} · ${S.PR.length?'가격 기록 '+S.PR.length+'개':'가격 기록 없음'} · 눌러서 설정`:'현지 통화로 계산 · 바가지 확인 · 흥정할 가치가 있는지까지'}</span></button>
+  <section class="section" style="margin-top:20px"><h2>내 설정</h2>${survey}</section>
+  ${due?`<button class="cta" data-a="tab" data-t="review" style="border-color:var(--amber);background:var(--amber-soft);color:var(--amber-ink)"><span class="ico" style="background:var(--card);color:var(--amber-ink)">${IC.bell}</span><b>회고할 결정 ${due}개</b><span>한 번 누르면 끝나요. 예측과 실제를 비교해요.</span></button>`:''}
+  ${weekly()}
+  <section class="section hero" style="margin-top:26px"><h2>예시: 택시 15,000원, 진짜 가격은?</h2>
+    <p class="small">시간당 <b class="num">${fmt(t.mid)}원</b>${done?'(내 시간 가격)':'(기본값)'}으로 계산한 예시예요.</p>
+    <div class="card demo">${r.map(o=>{const w=x=>(x/max*100).toFixed(1)+'%';return `<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between"><b>${o.name}</b><span class="num"><b>${won(o.mid.total)}</b></span></div><div class="bar" style="margin:6px 0 2px" role="img" aria-label="${o.name} 진짜 가격 ${won(o.mid.total)}"><i class="s-vis" style="width:${w(o.money)}"></i><i class="s-time" style="width:${w(o.mid.time)}"></i></div><div class="small">보이는 가격 ${won(o.money)} + 시간 ${won(o.mid.time)}</div></div>`}).join('')}
+    <div class="legend" style="margin-top:8px;display:flex;gap:16px"><span style="display:flex;align-items:center;gap:6px" class="small"><span class="dot s-vis"></span>보이는 가격</span><span style="display:flex;align-items:center;gap:6px" class="small"><span class="dot s-time"></span>숨은 가격(시간)</span></div></div></section>
+  ${installCard()}
+  <p class="note">이 앱은 결정을 대신 내리지 않아요. 판단의 근거와 불확실성 범위를 보여주고, 선택은 당신이 해요. 의료·법률·투자 결정은 범위 밖이에요.</p>`;
+}
+function installCard(){
+  if(!PWA||isStandalone()||S.hideInstall)return '';
+  const how=isIOS()?'Safari 아래쪽 공유 버튼 → “홈 화면에 추가”':'브라우저 메뉴(⋮) → “앱 설치” 또는 “홈 화면에 추가”';
+  return `<div class="card" style="margin-top:18px"><h3>앱처럼 쓰기</h3>
+    <p class="small" style="margin-top:0">홈 화면에 추가하면 아이콘으로 바로 열리고 오프라인에서도 열려요. 브라우저가 기록을 정리해 버리는 일도 줄어들 수 있어요.</p>
+    ${installEv?'<button class="btn primary sm" data-a="pwa-install">앱으로 설치</button>':`<p class="small" style="margin:0 0 8px"><b>${how}</b></p>`}
+    <button class="btn ghost sm" data-a="pwa-hide">다시 보지 않기</button></div>`;
+}
+function viewSaved(){
+  const s=ui.saved||{};
+  return `<div class="card"><h1 style="font-size:24px">기록했어요</h1>
+  <p class="lead">「${esc(s.title||'')}」 선택과 예상 만족도 ${s.pred}점을 저장했어요. 나중에 기억으로 채우면 왜곡되기 때문에 지금 남기는 게 중요해요.</p>
+  <p class="small">회고는 <b>${esc(s.when||'')}</b>부터 회고 탭에서 한 번 눌러 답할 수 있어요. 이 웹앱은 푸시 알림을 보낼 수 없어서, 앱을 열면 회고 탭 배지로 알려드려요.</p></div>
+  <div class="stack"><button class="btn primary block" data-a="home-menu">홈으로</button><button class="btn block" data-a="tab" data-t="review">회고 탭 보기</button></div>`;
+}
+
+/* ========= 뷰: 해외 여행 모드 설정 ========= */
+function viewTravel(){
+  const T=S.T,cur=cityCur(),ri=rateInfo(cur),base=tp();
+  const cityChips=Object.keys(CITY).map(k=>({v:k,l:CITY[k].n})).concat([{v:'other',l:'기타 도시'}]);
+  const ex=Math.pow(10,Math.max(0,Math.round(Math.log10(10000/ri.r))));
+  return `<button class="back" data-a="home-menu">‹ 홈</button>
+  <h1>해외 여행 모드</h1>
+  <p class="lead">현지 통화로 넣으면 원화로 바꿔 계산하고, 부른 가격이 적정한지 확인해 드려요.</p>
+  <div class="card"><h3>여행 모드</h3>
+    <div class="chips"><button class="chip" data-a="t-on" data-v="1" aria-pressed="${T.on}">켜기</button><button class="chip" data-a="t-on" data-v="0" aria-pressed="${!T.on}">끄기</button></div>
+    <p class="small" style="margin:8px 0 0">끄면 평소처럼 원화·평소 시간 가격으로 계산해요. 가격 기록은 지워지지 않아요.</p></div>
+  <div class="card"><h3>어느 도시에 있나요?</h3>${chips(cityChips,T.city,'t-city')}
+    ${T.city==='other'?`<h3 style="margin-top:14px">현지 통화</h3>${chips(Object.keys(CURS).map(c=>({v:c,l:CURS[c].n+' '+c})),T.cur,'t-cur')}<p class="small" style="margin:8px 0 0">기타 도시는 적정가 데이터가 없어서, 가격 체크에서 기준 가격을 직접 넣어 쓰면 돼요.</p>`:`<p class="small" style="margin:8px 0 0">${esc(CITY[T.city].n)} · ${esc(CURS[cur].n)} · 적정가 ${CITY[T.city].items.length}개 항목</p>`}</div>
+  <div class="card"><h3>여행 중 시간 가격</h3>
+    <p class="small" style="margin-top:0">여행지에서의 1시간은 평소보다 귀해요. 일정이 정해져 있어서 잃은 시간을 되돌리기 어렵거든요. 배수를 높이면 시간을 아끼는 선택(택시·Grab)이 더 유리하게 계산돼요.</p>
+    ${chips([1,1.5,2,3].map(m=>({v:String(m),l:'×'+m})),String(T.mult),'t-mult')}
+    <p class="small num" style="margin:10px 0 0">평소 시간당 ${won(base.mid)} → 여행 중 <b>${won(base.mid*T.mult)}</b></p></div>
+  <div class="card"><h3>환율</h3>
+    <div class="kv"><span>1 ${esc(cur)}</span><b class="num">${ri.r>=1?fmt(ri.r):ri.r.toPrecision(3)}원</b></div>
+    <div class="kv"><span>${fmtCur(ex,cur)}</span><b class="num">≈ ${won(toKRW(ex,cur))}</b></div>
+    <p class="small" style="margin:4px 0 10px">${esc(rateSrcText(cur))}</p>
+    ${ui.fxMsg?`<div class="banner" role="status">${esc(ui.fxMsg)}</div>`:''}
+    <button class="btn sm" data-a="fx-refresh">최신 환율 받기</button>
+    <label class="field" style="margin:14px 0 0"><span>환전소·카드 환율을 직접 쓰려면: 1 ${esc(cur)} = ? 원</span><input type="number" inputmode="decimal" step="any" min="0" data-fxman="${cur}" value="${S.FX.manual[cur]?S.FX.manual[cur]:''}" placeholder="${ri.r>=1?Math.round(ri.r):ri.r.toPrecision(3)}"></label>
+    ${S.FX.manual[cur]?'<button class="btn ghost sm" data-a="fx-clear">직접 입력 지우기</button>':''}</div>
+  <p class="note">적정가는 여행 가이드에 나온 대략 범위예요. 시기·가게·흥정에 따라 달라질 수 있으니 참고용으로만 쓰고, 실제 낸 가격을 기록하면 다음부터 내 기록이 같이 보여요.</p>
+  <button class="btn primary block" data-a="open-check">이 가격 괜찮아? 바로 가기</button>`;
+}
+
+/* ========= 뷰: 이 가격 괜찮아? ========= */
+function chkItem(){
+  const c=ui.chk;
+  if(c.item==='custom'||S.T.city==='other'){
+    const lo=parseFloat(c.custom.lo),hi=parseFloat(c.custom.hi);
+    const name=(c.custom.name||'').trim();
+    const ok=isFinite(lo)&&lo>=0&&isFinite(hi)&&hi>0;
+    return {k:'custom:'+name,n:name||'직접 입력 항목',lo:ok?Math.min(lo,hi):null,hi:ok?Math.max(lo,hi):null,tip:'',custom:true};
+  }
+  return findItem(S.T.city,c.item)||null;
+}
+function recsFor(key){return S.PR.filter(p=>p.city===S.T.city&&p.item===key).sort((a,b)=>b.ts-a.ts)}
+function askPrompt(it,amt,cur){
+  const where=S.T.city==='other'?'지금 여행 중인 도시':cityName();
+  return `${where}에서 "${it.n}"에 ${fmtCur(amt,cur)}(약 ${won(toKRW(amt,cur))})를 내라고 합니다. 현지 적정 가격 범위가 어느 정도인지, 바가지인지, 흥정한다면 얼마를 제시하면 좋을지, 흔한 바가지 수법이 있는지 알려주세요. 확실하지 않은 정보는 확실하지 않다고 말해 주세요.`;
+}
+function viewCheck(){
+  const c=ui.chk,cur=cityCur(),city=S.T.city,other=city==='other';
+  const items=other?[]:CITY[city].items;
+  const it=(c.item||other)?chkItem():null;
+  const hasRange=it&&it.lo!=null;
+  const asked=parseFloat(c.asked);
+  const recs=it?recsFor(it.k):[];
+  let res='';
+  if(c.done&&it&&isFinite(asked)&&asked>=0){
+    const tq=tpq(),mins=Math.max(0,parseFloat(c.mins)||0),timeCost=mins/60*tq.mid;
+    let box='',haggle='';
+    if(hasRange){
+      const f=fairCheck(it,asked),pct=Math.round((f.ratio-1)*100);
+      const head={ok:'적정 범위예요',high:'조금 비싸요',scam:'바가지 의심',low:'너무 싸요'}[f.lvl];
+      const body=f.lvl==='ok'?`적정 범위 ${fmtCur(f.lo,cur)}${f.hi!==f.lo?'~'+fmtCur(f.hi,cur):''} 안이에요.`
+        :f.lvl==='low'?(it.low||'적정가보다 많이 싸요. 추가요금·옵션 강매·다른 가게로 데려가는 수법이 아닌지 확인하세요.')
+        :`적정 상한보다 ${pct}% 비싸요. 원화로 약 ${won(toKRW(f.over,cur))} 더 내는 셈이에요.`;
+      box=`<div class="lvl ${f.lvl}" role="status">${f.lvl==='ok'?IC.ok:f.lvl==='scam'?IC.stop:IC.warn}<div><h2>${head}</h2><p>${esc(body)}</p></div></div>`;
+      if(f.lo===f.hi){
+        haggle=`<div class="card"><h3>흥정</h3><p class="small" style="margin:0">정찰제 항목이라 흥정 대상이 아니에요. 정가 ${fmtCur(f.lo,cur)}보다 비싸게 부르면 다른 곳(공식 창구·앱)을 이용하세요.</p></div>`;
+      }else{
+        const start=niceRound(f.lo,cur),target=niceRound(f.mid,cur),walk=niceRound(f.hi,cur);
+        const save=toKRW(Math.max(0,asked-target),cur);
+        let verdict;
+        if(asked<=target)verdict=`이미 목표가 이하예요. 흥정에 시간을 쓸 이유가 거의 없어요.`;
+        else if(save>timeCost)verdict=`<b>흥정할 가치가 있어요.</b> 목표가까지 깎으면 약 <b>${won(save)}</b>을 아끼고, 흥정 ${mins}분의 시간 비용은 약 ${won(timeCost)}이에요.`;
+        else verdict=`<b>흥정보다 그냥 내거나 다른 곳으로 가는 게 나아요.</b> 깎을 수 있는 돈은 약 ${won(save)}인데, 흥정 ${mins}분의 시간 비용이 약 ${won(timeCost)}이에요.`;
+        if(f.lvl==='scam')verdict+=` 다만 적정가보다 훨씬 비싸서, 흥정보다 Grab 같은 앱이나 다른 가게를 먼저 보는 걸 권해요.`;
+        haggle=`<div class="card"><h3>흥정 가이드</h3>
+          <div class="three"><div><span>처음 제시</span><b class="num">${fmtCur(start,cur)}</b></div><div><span>목표가</span><b class="num">${fmtCur(target,cur)}</b></div><div><span>이 이상이면 떠나기</span><b class="num">${fmtCur(walk,cur)}</b></div></div>
+          <p style="margin:0">${verdict}</p>
+          <p class="small" style="margin:8px 0 0">시간 비용은 여행 중 시간 가격(시간당 약 ${won(tq.mid)}) 기준이에요.</p></div>`;
+      }
+    }else{
+      box=`<div class="lvl high" role="status">${IC.warn}<div><h2>비교할 기준가가 없어요</h2><p>기준 가격(최소·최대)을 넣으면 바가지 여부와 흥정 목표가를 보여드려요. ${recs.length?'아래 내 기록과 비교해 보세요.':''}</p></div></div>`;
+    }
+    res=`<section class="section" style="margin-top:6px">${box}
+      <div class="card"><div class="kv"><span>부른 가격</span><b class="num">${fmtCur(asked,cur)}</b></div><div class="kv"><span>원화로</span><b class="num">≈ ${won(toKRW(asked,cur))}</b></div>${koUnit(asked)&&cur!=='KRW'?`<div class="kv"><span>0 개수 확인</span><b>${koUnit(asked)}</b></div>`:''}</div>
+      ${haggle}
+      <div class="card"><h3>실제로 얼마 냈나요?</h3>
+        ${c.logOpen?`<label class="field"><span>낸 금액 (${esc(cur)})</span><input type="number" inputmode="decimal" step="any" min="0" data-bind="chk.paid" data-conv="cpaid" data-cur="${cur}" value="${esc(c.paid)}"><span class="conv" data-conv-out="cpaid">${convLine(c.paid,cur)}</span></label>
+          <label class="field"><span>메모 · 선택</span><input type="text" maxlength="80" data-bind="chk.note" value="${esc(c.note)}" placeholder="예) 구시가지 노점, 처음엔 10만 동 부름"></label>
+          <div class="grid2"><button class="btn primary" data-a="chk-save">기록하기</button><button class="btn ghost" data-a="chk-log0">취소</button></div>`
+        :`<p class="small" style="margin-top:0">기록해 두면 다음에 같은 항목을 볼 때 내가 낸 가격이 같이 보여요.</p><button class="btn sm" data-a="chk-log1">낸 가격 기록하기</button>`}
+      </div></section>`;
+  }
+  const recHtml=recs.length?`<div class="card"><h3>내 기록 <span class="small" style="font-weight:400">· ${recs.length}개 · 평균 ${fmtCur(niceRound(avg(recs.map(r=>r.amount)),cur),cur)}</span></h3>${recs.slice(0,5).map(r=>`<div class="item"><div><div class="t num">${fmtCur(r.amount,r.cur)} <span class="small">≈ ${won(toKRW(r.amount,r.cur))}</span></div><div class="small">${dstr(r.ts)}${r.note?' · '+esc(r.note):''}</div></div><button class="btn ghost sm" data-a="pr-del" data-id="${r.id}" aria-label="이 기록 지우기">지우기</button></div>`).join('')}</div>`:'';
+  const chipsList=items.map(x=>({v:x.k,l:x.n,ic:itemIc(x.k)})).concat([{v:'custom',l:'직접 입력',ic:IC.pen}]);
+  return `<button class="back" data-a="home-menu">‹ 홈</button>
+  <h1>이 가격 괜찮아?</h1>
+  <p class="lead">${esc(cityName())} · ${esc(CURS[cur]?CURS[cur].n:cur)} <button class="btn ghost sm" data-a="open-travel" style="min-height:32px;margin-left:4px">도시·환율 바꾸기</button></p>
+  ${errBox()}
+  ${other?'':`<h3>무엇을 사거나 타나요?</h3>${chips(chipsList,c.item,'chk-item')}`}
+  ${(c.item==='custom'||other)?`<div class="card" style="margin-top:14px"><label class="field"><span>항목 이름</span><input type="text" maxlength="30" data-bind="chk.custom.name" value="${esc(c.custom.name)}" placeholder="예) 야시장 망고 1kg"></label>
+    <div class="grid2"><label class="field" style="margin:0"><span>기준가 최소 (${esc(cur)}) · 선택</span><input type="number" inputmode="decimal" step="any" min="0" data-bind="chk.custom.lo" value="${esc(c.custom.lo)}"></label><label class="field" style="margin:0"><span>기준가 최대 · 선택</span><input type="number" inputmode="decimal" step="any" min="0" data-bind="chk.custom.hi" value="${esc(c.custom.hi)}"></label></div>
+    <p class="small" style="margin:8px 0 0">현지인 가격, 마트 가격, 블로그 후기 가격을 기준으로 넣으면 돼요.</p></div>`:''}
+  ${it&&!it.custom?`<div class="card" style="margin-top:14px"><div class="kv"><span>적정 범위</span><b class="num">${fmtCur(it.lo,cur)}${it.hi!==it.lo?' ~ '+fmtCur(it.hi,cur):''}</b></div><div class="kv"><span>원화로</span><b class="num">≈ ${won(toKRW(it.lo,cur))}${it.hi!==it.lo?' ~ '+won(toKRW(it.hi,cur)):''}</b></div>${it.tip?`<p class="small" style="margin:8px 0 0">${esc(it.tip)}</p>`:''}<p class="small" style="margin:6px 0 0">${esc(CITY[city].asof)} 대략값</p></div>`:''}
+  ${it?`<div class="card"><label class="field"><span>부른 가격 (${esc(cur)} ${esc(CURS[cur]?CURS[cur].s:'')})</span><input type="number" inputmode="decimal" step="any" min="0" data-bind="chk.asked" data-conv="cask" data-cur="${cur}" value="${esc(c.asked)}" placeholder="${it.hi?it.hi*2:''}"><span class="conv" data-conv-out="cask">${convLine(c.asked,cur)}</span></label>
+    <label class="field" style="margin:0"><span>흥정에 쓸 시간(분)</span><input type="number" inputmode="numeric" min="0" data-bind="chk.mins" value="${esc(c.mins)}"></label>
+    <div class="stack" style="margin-top:14px"><button class="btn primary block" data-a="chk-run">확인하기</button></div></div>`:''}
+  ${res}
+  ${recHtml}
+  ${it&&isFinite(asked)?`<button class="btn ghost block" data-a="chk-ask">AI에 물어볼 질문 복사</button><p class="small" style="margin-top:6px">Claude나 ChatGPT에 붙여넣으면 더 자세한 현지 정보를 물어볼 수 있어요.</p>${copyBoxHtml()}`:''}
+  <p class="note">적정가는 참고용 대략값이에요. 결정은 당신 몫이에요.</p>`;
+}
+
+/* ========= 뷰: 빠른 모드 ========= */
+function viewQuick(){
+  const q=ui.quick;
+  if(q.stage==='result'||q.stage==='predict')return viewQuickResult();
+  const tr=S.T.on,cur=tr?cityCur():'KRW',cs=CURS[cur]?CURS[cur].s:'원',items=tr&&CITY[S.T.city]?CITY[S.T.city].items:[];
+  const refSel=k=>items.length?`<label class="field" style="margin:12px 0 0"><span>적정가와 비교할 항목 · 선택</span><select data-bind="quick.${k}.ref"><option value="">비교 안 함</option>${items.map(it=>`<option value="${it.k}" ${q[k].ref===it.k?'selected':''}>${esc(it.n)}</option>`).join('')}</select></label>`:'';
+  const side=(k,label,ph,removable)=>`<fieldset class="pairbox" style="margin-inline:0"><legend>${label}</legend>
+    <label class="field"><span>이름</span><input type="text" data-bind="quick.${k}.name" value="${esc(q[k].name)}" placeholder="${ph[0]}" maxlength="24"></label>
+    <div class="grid2"><label class="field" style="margin:0"><span>금액(${tr?esc(cur)+' '+esc(cs):'원'})</span><input type="number" inputmode="decimal" min="0" step="any" data-bind="quick.${k}.money" ${tr?`data-conv="q${k}" data-cur="${cur}"`:''} value="${esc(q[k].money)}" placeholder="${ph[1]}">${tr?`<span class="conv" data-conv-out="q${k}">${convLine(q[k].money,cur)}</span>`:''}</label>
+    <label class="field" style="margin:0"><span>걸리는 시간(분)</span><input type="number" inputmode="numeric" min="1" data-bind="quick.${k}.mins" value="${esc(q[k].mins)}" placeholder="${ph[2]}"></label></div>
+    ${refSel(k)}
+    ${removable?'<button type="button" class="btn ghost sm" data-a="q-toggle-c" style="margin-top:12px">이 선택지 빼기</button>':''}</fieldset>`;
+  const ex=tr?(QEX[S.T.city]||null):null;
+  return `<button class="back" data-a="home-menu">‹ 홈</button>
+  <h1>선택지의 진짜 가격</h1><p class="lead">금액과 시간만 넣으면 돼요. 2개면 충분하고, 필요하면 3개까지 비교할 수 있어요.</p>
+  ${tr?`<div class="banner">여행 모드: 금액은 <b>${esc(CURS[cur]?CURS[cur].n:cur)}</b>로 넣으면 원화로 바꿔 계산해요. 시간 가격은 평소의 <b>×${S.T.mult}</b>로 계산해요.</div>`:''}
+  ${errBox()}
+  ${side('a','선택지 A',tr?['예) 기사가 부른 택시',ex?ex.a.money:'','30']:['예) 택시','15000','10'])}
+  ${side('b','선택지 B',tr?['예) Grab 앱 가격',ex?ex.b.money:'','40']:['예) 버스','2000','35'])}
+  ${q.showC?side('c','선택지 C',tr?['예) 공항버스',ex&&ex.c?ex.c.money:'','70']:['예) 걷기','0','60'],true):'<button class="btn ghost block" data-a="q-toggle-c" style="margin-bottom:14px">+ 선택지 추가 (최대 3개)</button>'}
+  <h3>어떤 상황인가요? <span class="small" style="font-weight:400">(선택)</span></h3>
+  ${chips(CTXS.map(x=>({v:x,l:x})),q.ctx,'q-ctx')}
+  <h3 style="margin-top:16px">가장 빠른 쪽보다 오래 걸리는 선택지가 힘들어지는 상황 <span class="small" style="font-weight:400">(선택)</span></h3>
+  ${chips(HASSLE.map(x=>({v:x.k,l:x.l})),q.has,'q-has',true)}
+  <div class="stack" style="margin-top:22px"><button class="btn primary block" data-a="q-run">진짜 가격 보기</button><button class="btn ghost block" data-a="q-example">${ex?`예시 채우기 (${esc(cityName())} 공항 가는 길)`:'예시 채우기 (택시·버스·걷기)'}</button></div>`;
+}
+function segRange(sg){
+  if(sg.from<=0)return fmt(sg.to)+'원 이하';
+  if(!isFinite(sg.to))return fmt(sg.from)+'원 이상';
+  return fmt(sg.from)+' ~ '+fmt(sg.to)+'원';
+}
+function segStrip(r,v){
+  const t=tpq();
+  const fin=v.seg.map(x=>x.to).filter(isFinite);
+  const maxP=Math.max(20000,(fin.length?Math.max(...fin):0)*1.4,t.high*1.3);
+  const hit=x=>x.from<=t.high&&x.to>=t.low;
+  return `<div class="strip">${v.seg.map(x=>{
+    const len=Math.min(x.to,maxP)-x.from,cur=x.from<=t.mid&&t.mid<x.to;
+    return `<div class="segb ${cur?'cur':hit(x)?'hit':''}" style="flex:${Math.max(len/maxP,.16).toFixed(3)}"><b>${esc(r[x.idx].name)}</b><span class="num">${segRange(x)}</span></div>`;
+  }).join('')}</div>`;
+}
+function viewQuickResult(){
+  const q=ui.quick,R=q.result,r=R.rows,v=R.verdict,t=tpq();
+  const max=Math.max(...r.map(o=>o.mid.total),1);
+  let verdict;
+  if(v.tie)verdict=`선택지들의 진짜 가격이 <strong>거의 같아요.</strong> 값어치는 취향과 그날의 사정에 따라 갈려요.`;
+  else if(v.straddle)verdict=`내 시간 가격 범위(${won(t.low)} ~ ${won(t.high)}) 안에서 <strong>가장 싼 선택지가 바뀌어요.</strong> 값어치는 취향과 그날의 사정에 따라 갈려요.`;
+  else verdict=`내 시간 가격(약 ${fmt(t.mid)}원/시간) 기준으로 <strong>${esc(r[v.best].name)}</strong>의 진짜 가격이 가장 낮아요. 다음으로 낮은 ${esc(r[v.second].name)}보다 약 <strong>${won(v.gap)}</strong> 낮아요.`;
+  let sub='';
+  if(v.seg.length>1){
+    const parts=v.seg.map(x=>{const n=esc(r[x.idx].name);return x.from<=0?`${won(x.to)} 이하로 치면 ${n}`:!isFinite(x.to)?`${won(x.from)} 이상이면 ${n}`:`${won(x.from)}~${won(x.to)}이면 ${n}`});
+    sub=`<p class="small" style="margin:8px 0 0">시간을 시간당 ${parts.join(', ')} 쪽이 가장 싸요.</p>${segStrip(r,v)}<p class="small" style="margin:0">진한 칸이 내 시간 가격이 속한 구간이에요.</p>`;
+  }else sub=`<p class="small" style="margin:8px 0 0">${esc(r[v.seg[0].idx].name)} 쪽이 어떤 시간 가격에서도 가장 싸요.</p>`;
+  const inSeg=new Set(v.seg.map(x=>x.idx)),never=r.filter((o,i)=>!inSeg.has(i));
+  if(never.length&&r.length>2)sub+=`<p class="small" style="margin:6px 0 0">${never.map(o=>esc(o.name)).join(', ')} 쪽은 어떤 시간 가격에서도 가장 싸지 않아요.</p>`;
+  const head=`<button class="back" data-a="q-edit">‹ 수정하기</button><h1 style="font-size:24px">진짜 가격</h1>
+    ${S.T.on?`<p class="small">여행 모드 · ${esc(cityName())} · 시간 가격 ×${S.T.mult} (시간당 약 ${won(t.mid)}) · ${esc(rateSrcText(cityCur()))}</p>`:''}
+    <div class="verdict"><p style="margin:0">${verdict}</p>${sub}</div>
+    ${r.map((o,i)=>optCard(o,max,!v.straddle&&v.best===i)).join('')}`;
+  if(q.stage==='result'){
+    return head+`<div class="card"><h2>어느 쪽을 고르셨나요?</h2><p class="small">고른 뒤에 만족도를 예상해서 남기면, 나중에 예측이 얼마나 맞았는지 알 수 있어요.</p>
+    <div class="stack">${r.map((o,i)=>`<button class="btn block" data-a="q-pick" data-i="${i}">${esc(o.name)}</button>`).join('')}</div></div>
+    <button class="btn ghost block" data-a="home-menu">아직 안 정했어요 (기록 안 함)</button>`;
+  }
+  return head+predictCard(r[q.chosen].name+' 선택','q-pred');
+}
+function predictCard(name,action){
+  const lab=['별로','아쉬움','보통','좋음','최고'];
+  return `<div class="card"><h2>「${esc(name)}」, 며칠 뒤 만족도는 몇 점일까요?</h2><p class="small">지금 예상을 남겨 두면 나중에 실제와 비교해요.</p>
+  <div class="scale">${[1,2,3,4,5].map(n=>`<button data-a="${action}" data-n="${n}" aria-label="${n}점 ${lab[n-1]}">${n}<small>${lab[n-1]}</small></button>`).join('')}</div></div>`;
+}
+
+/* ========= 뷰: 심층 모드 ========= */
+function viewDeep(){
+  const d=ui.deep;
+  if(d.stage==='loading')return `<div class="card" style="text-align:left"><div class="spin" role="status" aria-label="분석 중"></div><h2>선택을 비용과 편익으로 나누는 중이에요</h2><p class="lead">보통 5~60초 걸려요. 처음이라면 Claude 사용 허용 창이 먼저 뜰 수 있어요.</p><button class="btn block" data-a="d-cancel">취소</button></div>`;
+  if(d.stage==='edit'||d.stage==='predict')return viewDeepEdit();
+  return `<button class="back" data-a="home-menu">‹ 홈</button>
+  <h1>큰 결정, 하나씩 뜯어봐요</h1><p class="lead">상황을 편하게 적어 주세요. 비용·시간·기회비용·편익·위험으로 나눠 드려요.</p>
+  ${errBox()}
+  <label class="field"><span>어떤 선택인가요?</span><textarea data-bind="deep.text" placeholder="예) 친구들이랑 3일 동안 제주도 여행 갈까 고민 중이야. 40만 원 정도 들어." maxlength="1500">${esc(d.text)}</textarea></label>
+  <h3>분류</h3>${chips(DEEP_CATS.map(x=>({v:x,l:CAT[x]})),d.category,'d-cat')}
+  ${S.T.on&&cityCur()!=='KRW'?`<h3 style="margin-top:16px">금액 단위</h3>${chips([{v:'KRW',l:'원'},{v:cityCur(),l:CURS[cityCur()].n}],deepCur(d),'d-cur')}`:''}
+  <div class="grid2" style="margin-top:16px"><label class="field"><span>드는 돈(${deepCur(d)==='KRW'?'원':esc(deepCur(d))}) · 선택</span><input type="number" inputmode="decimal" step="any" min="0" data-bind="deep.cost" ${deepCur(d)!=='KRW'?`data-conv="dcost" data-cur="${deepCur(d)}"`:''} value="${esc(d.cost)}" placeholder="${deepCur(d)==='KRW'?'400000':''}">${deepCur(d)!=='KRW'?`<span class="conv" data-conv-out="dcost">${convLine(d.cost,deepCur(d))}</span>`:''}</label>
+  <label class="field"><span>쓰게 될 시간(시간) · 선택</span><input type="number" inputmode="numeric" min="0" data-bind="deep.hours" value="${esc(d.hours)}" placeholder="24"></label></div>
+  <p class="small" style="margin-top:-4px">시간은 다른 일에 쓸 수 없게 되는 시간이에요. 수면은 빼고 대략만 적어도 돼요.</p>
+  ${hasAI()?`<div class="stack" style="margin-top:18px"><button class="btn primary block" data-a="d-ai">AI로 분석하기</button><button class="btn ghost block" data-a="d-tpl">AI 없이 기본 추정으로 채우기</button></div>
+  <p class="note">AI 분석을 쓰면 위에 적은 내용이 Claude에게 전송돼요. 이 앱은 의료·법률·투자 결정을 다루지 않아요.</p>`:`<div class="stack" style="margin-top:18px"><button class="btn primary block" data-a="d-tpl">비용·편익으로 나누기</button><button class="btn ghost block" data-a="d-copy">AI에 물어볼 질문 복사</button></div>
+  ${copyBoxHtml()}
+  <p class="note">분류별 기본 추정값으로 채워 드려요. 값은 대략적이니 슬라이더로 꼭 조정해 주세요. 이 앱은 의료·법률·투자 결정을 다루지 않아요.</p>`}`;
+}
+function viewDeepEdit(){
+  const d=ui.deep,items=d.items;
+  const G=(gs,title)=>{const l=items.filter(i=>gs.includes(i.group));return l.length?`<h3 style="margin:0 0 4px">${title}</h3>${l.map(rowHtml).join('')}`:''};
+  const T=deepTotals(items),V=deepVerdict(T);
+  const pri=S.P.ctx[d.category];
+  const ask=pri?'':`<div class="ask"><p style="margin:0 0 10px"><b>한 가지만 더 물어볼게요.</b> ${CAT[d.category]}에서는 비용과 경험·가치 중 어느 쪽이 더 중요하세요?</p>
+    <div class="chips"><button class="chip" data-a="d-ctx" data-v="cost">비용이 더 중요</button><button class="chip" data-a="d-ctx" data-v="balanced">비슷해요</button><button class="chip" data-a="d-ctx" data-v="value">경험·가치가 더 중요</button></div></div>`;
+  const pick=d.stage==='predict'?predictCard(d.title+' — '+(d.chosen===0?'하기':'하지 않기'),'d-pred'):`<div class="card"><h2>어떻게 하실래요?</h2><p class="small">결정은 당신 몫이에요. 정했다면 기록해 두세요.</p>
+    <div class="stack"><button class="btn block" data-a="d-pick" data-i="0">하기</button><button class="btn block" data-a="d-pick" data-i="1">하지 않기</button></div></div>`;
+  return `<button class="back" data-a="d-back">‹ 상황 수정</button>
+  <h1 style="font-size:24px">${esc(d.title)}</h1>
+  ${d.banner?`<div class="banner">${esc(d.banner)}</div>`:''}
+  ${d.missing?`<div class="banner">AI가 더 알고 싶은 것: ${esc(d.missing)} <br><span class="small" style="color:inherit">상황 수정에서 내용을 보강하면 더 정확해져요.</span></div>`:''}
+  ${summaryHtml()}
+  ${ask}
+  <p class="small">슬라이더로 값을 고치면 <b>직접 수정</b>으로 표시되고 불확실성 범위가 사라져요. 숫자는 정답이 아니라 추정이에요.</p>
+  <div class="card">${G(['direct'],'보이는 가격')}</div>
+  <div class="card">${G(['time','opp','future','risk'],'숨은 비용')}</div>
+  <div class="card">${G(['benefit'],'얻는 것(편익)')}</div>
+  ${pick}`;
+}
+
+/* ========= 뷰: 회고 ========= */
+function viewReview(){
+  const now=Date.now();
+  if(ui.rev){
+    const d=S.D.find(x=>x.id===ui.rev);
+    if(d){
+      const step=ui.revStep;
+      return `<button class="back" data-a="rev-close">‹ 목록</button>
+      <div class="card"><p class="kicker">${CAT[d.cat]||''} · ${dstr(d.ts)}</p><h1 style="font-size:23px">${esc(d.title)}</h1>
+      <p class="lead" style="margin:0">내 선택: <b>${esc(d.options[d.chosen].name)}</b> · 예상 만족도 <b class="num">${d.predicted}점</b></p></div>
+      ${step===0?`<h2>어땠어요?</h2><div class="emo">${[[5,'😀','만족'],[3,'😐','보통'],[1,'😞','아쉬움']].map(x=>`<button data-a="rev-rate" data-r="${x[0]}" aria-label="${x[2]}">${x[1]}<small>${x[2]}</small></button>`).join('')}</div>`
+      :`<h2>다시 선택한다면?</h2><label class="field"><span>한 줄 메모 (선택)</span><input type="text" data-bind="revNote" maxlength="120" placeholder="예) 생각보다 피곤했어요"></label>
+      <div class="grid2"><button class="btn primary" data-a="rev-again" data-v="same">같은 선택</button><button class="btn" data-a="rev-again" data-v="diff">다른 선택</button></div>`}`;
+    }
+  }
+  const pend=S.D.filter(d=>!d.outcome).sort((a,b)=>a.due-b.due);
+  const due=pend.filter(d=>d.due<=now),wait=pend.filter(d=>d.due>now);
+  const done=S.D.filter(d=>d.outcome).sort((a,b)=>b.outcome.ts-a.outcome.ts).slice(0,8);
+  const when=d=>{const h=(d.due-now)/HR;return h<24?'오늘 안에':Math.ceil(h/24)+'일 뒤'};
+  const rowP=(d,late)=>`<div class="item"><div><div class="t">${esc(d.title)}</div><div class="small">${CAT[d.cat]||''} · 예상 ${d.predicted}점${late?'':' · '+when(d)+' 회고'}</div></div><button class="btn sm ${late?'primary':''}" data-a="rev-open" data-id="${d.id}">${late?'회고하기':'미리 하기'}</button></div>`;
+  return `<h1>회고</h1><p class="lead">한 번 누르면 끝나요. 예측과 실제를 비교해 프로필이 정교해져요.</p>
+  ${ui.revMsg?`<div class="banner" role="status">${esc(ui.revMsg)}</div>`:''}
+  <section class="section" style="margin-top:14px"><h2>지금 할 차례 ${due.length?`<span class="tag amb">${due.length}</span>`:''}</h2><div class="card">${due.length?due.map(d=>rowP(d,true)).join(''):'<p class="small" style="margin:0">지금 회고할 결정이 없어요.</p>'}</div></section>
+  ${wait.length?`<section class="section"><h2>기다리는 중</h2><div class="card">${wait.map(d=>rowP(d,false)).join('')}</div></section>`:''}
+  ${done.length?`<section class="section"><h2>최근 완료</h2><div class="card">${done.map(d=>`<div class="item"><div><div class="t">${esc(d.title)}</div><div class="small">${esc(d.options[d.chosen].name)}${d.outcome.note?' · '+esc(d.outcome.note):''}</div></div><div class="num" style="text-align:right"><b>${d.predicted} → ${d.outcome.rating}</b><div class="small">${d.outcome.again==='same'?'같은 선택':'다른 선택'}</div></div></div>`).join('')}</div></section>`:''}
+  ${!S.D.length?'<div class="card"><p style="margin:0">아직 기록한 결정이 없어요. 결정 탭에서 첫 결정을 분석해 보세요.</p></div>':''}`;
+}
+
+/* ========= 뷰: 프로필 ========= */
+function insightL1(){
+  const q=S.D.filter(d=>d.mode==='quick'&&d.ctx&&d.fastIdx>=0);
+  if(!q.length)return '<p class="small" style="margin:0">상황을 고른 빠른 모드 결정이 아직 없어요.</p>';
+  return CTXS.map(c=>{
+    const a=q.filter(d=>d.ctx===c);
+    if(a.length<3)return `<div class="item"><span>${c}</span><span class="small">표본 ${a.length}건 · 아직 판단하기 이릅니다</span></div>`;
+    const p=Math.round(a.filter(d=>d.chosen===d.fastIdx).length/a.length*100);
+    return `<div class="item"><span>${c}</span><span class="num"><b>${p}%</b> <span class="small">시간 절약 선택 (${a.length}건)</span></span></div>`;
+  }).join('');
+}
+function insightL2(rv){
+  const bias=avg(rv.map(d=>d.predicted))-avg(rv.map(d=>d.outcome.rating));
+  const head=Math.abs(bias)<.3?'예측이 실제와 비교적 잘 맞는 편이에요.':bias>0?`전체적으로 만족도를 실제보다 <b>${bias.toFixed(1)}점 높게</b> 예상하는 경향이 있어요.`:`전체적으로 만족도를 실제보다 <b>${Math.abs(bias).toFixed(1)}점 낮게</b> 예상하는 경향이 있어요.`;
+  const rows=Object.keys(CAT).map(c=>{
+    const a=rv.filter(d=>d.cat===c);if(a.length<3)return '';
+    const p=avg(a.map(d=>d.predicted)),ac=avg(a.map(d=>d.outcome.rating)),b=p-ac;
+    return `<div class="item"><span>${CAT[c]} <span class="small">(${a.length}건)</span></span><span class="num"><b>${p.toFixed(1)} → ${ac.toFixed(1)}</b> <span class="small" style="color:${b>.5?'var(--red)':b<-.5?'var(--green)':'var(--muted)'}">${b>0?'+':''}${b.toFixed(1)}</span></span></div>`;
+  }).join('');
+  return `<p style="margin:0 0 6px">${head}</p>${rows}<p class="small" style="margin:8px 0 0">예측 점수 → 실제 점수 (😀=5, 😐=3, 😞=1로 환산)</p>`;
+}
+function insightL3(rv){
+  const reg=Object.keys(CAT).map(c=>{const a=rv.filter(d=>d.cat===c);return a.length>=4?{c,n:a.length,p:a.filter(d=>d.outcome.again==='diff').length/a.length}:null}).filter(Boolean).sort((x,y)=>y.p-x.p);
+  const ag=rv.filter(d=>d.favored!=null&&d.favored===d.chosen),dg=rv.filter(d=>d.favored!=null&&d.favored!==d.chosen);
+  let s='';
+  if(reg.length)s+=`<p style="margin:0 0 6px">다시 선택하면 다르게 고르겠다는 비율이 가장 높은 유형은 <b>${CAT[reg[0].c]}</b>예요 (${Math.round(reg[0].p*100)}%, ${reg[0].n}건).</p>`;
+  if(ag.length>=5&&dg.length>=5)s+=`<p style="margin:0">분석 결과와 같은 쪽을 고른 결정의 만족도 평균은 <b>${avg(ag.map(d=>d.outcome.rating)).toFixed(1)}점</b>, 다른 쪽을 고른 결정은 <b>${avg(dg.map(d=>d.outcome.rating)).toFixed(1)}점</b>이에요.</p>`;
+  else s+=`<p class="small" style="margin:0">분석과 같은/다른 선택을 비교하려면 각각 5건 이상 필요해요 (현재 ${ag.length}건 / ${dg.length}건).</p>`;
+  return s;
+}
+function levelCard(title,need,have,unit,unlockedHtml,desc){
+  const ok=have>=need;
+  if(ok)return `<div class="card unl"><h3>${title}</h3>${unlockedHtml()}</div>`;
+  return `<div class="card lock"><h3>${title} <span class="tag soft">잠김</span></h3><p class="small" style="margin:0 0 8px">${desc}</p><div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="${need}" aria-valuenow="${have}"><i style="width:${Math.min(100,have/need*100)}%"></i></div><p class="small num" style="margin:6px 0 0">${unit} ${have} / ${need} · 표본이 부족하면 판단하지 않아요</p></div>`;
+}
+function viewProfile(){
+  const t=tp(),nd=S.D.length,rv=S.D.filter(d=>d.outcome),n=rv.length,hasDemo=S.D.some(d=>d.demo);
+  const ctxRows=Object.keys(S.P.ctx).map(c=>`<div class="item"><span>${CAT[c]}</span><span class="small">${{cost:'비용을 더 중시',balanced:'비용과 가치를 균형 있게',value:'경험·가치를 더 중시'}[S.P.ctx[c].pri]}</span></div>`).join('');
+  return `<h1>내 프로필</h1>
+  <div class="card"><p class="kicker">내 시간 가격</p><div class="result-tp num" style="font-size:44px">${fmt(t.mid)}<span style="font-size:20px;font-weight:600">원/시간</span></div>
+    <p class="small" style="margin:0 0 10px">범위 ${won(t.low)} ~ ${won(t.high)} · ${!S.P.time?'기본값 · 설문을 하면 내 값으로 바뀌어요':S.P.time.calib?`실제 선택 ${S.P.time.calib}건으로 보정됨`:'설문 기반 추정'}</p>
+    <button class="btn sm" data-a="copy-tp">결과 텍스트 복사</button></div>
+  <div class="card"><h3>결정 성향</h3>${dimBars()}</div>
+  ${ctxRows?`<div class="card"><h3>상황별 가치관</h3>${ctxRows}</div>`:''}
+  <section class="section"><h2>인사이트</h2>
+  <p class="small">결정 ${nd}개 · 회고 완료 ${n}개. 표본이 충분해질 때만 열려요.</p>
+  ${levelCard('상황별 시간 선택',10,nd,'결정',()=>insightL1(),'결정 10개가 쌓이면 출근길·약속·주말의 시간 절약 경향을 보여드려요.')}
+  ${levelCard('내 예측 오차',20,n,'회고 완료',()=>insightL2(rv),'회고까지 마친 결정 20개가 쌓이면 어떤 결정에서 만족도를 과대·과소평가하는지 보여드려요.')}
+  ${levelCard('후회 패턴',40,n,'회고 완료',()=>insightL3(rv),'회고까지 마친 결정 40개가 쌓이면 후회가 큰 결정 유형과 분석과의 일치도를 보여드려요.')}
+  </section>
+  <section class="section"><h2>내 데이터</h2><div class="card">
+    <p class="small" style="margin-top:0">${storageOK?'모든 기록은 이 기기의 브라우저에만 저장돼요. 개인 데이터를 팔거나 광고에 쓰지 않아요.':'저장소를 쓸 수 없는 환경이라 새로고침하면 기록이 사라져요.'} ${hasAI()?'심층 분석에서 AI를 쓸 때만 입력 문장이 Claude로 전송돼요.':''}</p>
+    <div class="stack">
+      <button class="btn block" data-a="export">데이터 내보내기 (JSON)</button>
+      <label class="btn block" style="position:relative;cursor:pointer">백업 불러오기<input type="file" accept="application/json,.json" data-import style="position:absolute;inset:0;opacity:0;cursor:pointer" aria-label="백업 파일 선택"></label>
+      <button class="btn block" data-a="retake">${S.P.time?'성향 설문 다시 하기':'성향 설문 하기'}</button>
+      ${hasDemo?'<button class="btn block" data-a="demo-clear">데모 데이터 지우기</button>':'<button class="btn block" data-a="demo-load">데모 데이터 불러오기 (인사이트 미리보기)</button>'}
+      ${ui.confirmDel?'<button class="btn block" style="border-color:var(--red);color:var(--red)" data-a="del2">정말 모든 데이터 삭제</button><button class="btn ghost block" data-a="del0">취소</button>':'<button class="btn ghost block" data-a="del1">모든 데이터 삭제</button>'}
+    </div>
+    ${ui.importMsg?`<div class="banner" style="margin-top:14px" role="status">${esc(ui.importMsg)}</div>`:''}
+    ${ui.importPending?`<div class="ask" style="margin-top:14px"><p style="margin:0 0 10px">결정 <b>${ui.importPending.D.length}개</b>가 담긴 백업이에요. 불러오면 <b>지금 기록이 이 백업으로 바뀌어요.</b></p><div class="chips"><button class="chip" data-a="import-apply">불러오기</button><button class="chip" data-a="import-cancel">취소</button></div></div>`:''}
+    ${ui.exportText?`<p class="small" style="margin:14px 0 6px">다운로드가 안 되면 아래 내용을 복사해 두세요.</p><pre class="export" tabindex="0">${esc(ui.exportText)}</pre><button class="btn sm ghost" data-a="export-close">닫기</button>`:''}
+  </div></div></section>`;
+}
+
+/* ========= 렌더 & 이벤트 ========= */
+function render(){
+  const root=$('#root');
+  root.innerHTML=ui.ob.active?viewOb():viewShell();
+}
+function go(){render();window.scrollTo(0,0)}
+let toastT;
+function toast(m){const el=$('#toast');if(!el)return;el.textContent=m;el.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('on'),2400)}
+function setPath(o,p,v){const k=p.split('.');let c=o;for(let i=0;i<k.length-1;i++)c=c[k[i]];c[k[k.length-1]]=v}
+async function copyText(s,stay){
+  try{await navigator.clipboard.writeText(s);toast('복사했어요');if(stay){ui.copyBox=s;render()}}
+  catch(e){if(stay){ui.copyBox=s;toast('복사가 막혀 있어 아래에 표시했어요');render();return}ui.exportText=s;toast('복사가 막혀 있어 아래에 표시했어요');ui.tab='profile';go()}
+}
+const copyBoxHtml=()=>ui.copyBox?`<div class="card"><p class="small" style="margin:0 0 6px">아래 질문을 Claude나 ChatGPT에 붙여넣으세요.</p><pre class="export" tabindex="0">${esc(ui.copyBox)}</pre><button class="btn sm ghost" data-a="copybox-close">닫기</button></div>`:'';
+async function doExport(){
+  const data=JSON.stringify(S,null,2);
+  try{
+    const dl=(window.claude&&window.claude.use)?await window.claude.use('downloads'):null;
+    if(!dl)throw {code:'unavailable'};
+    await dl.save({filename:'jinjja-gagyeok-data.json',data});toast('내보냈어요');
+  }catch(e){
+    if(e&&e.code==='declined')return;
+    ui.exportText=data;render();
+  }
+}
+function validQuick(){
+  const q=ui.quick,rows=[];
+  for(const k of (q.showC?['a','b','c']:['a','b'])){
+    const o=q[k],money=parseFloat(o.money),mins=parseFloat(o.mins),L=k.toUpperCase();
+    if(!isFinite(money)||money<0){ui.err=`선택지 ${L}의 금액을 0 이상 숫자로 입력해 주세요. (공짜면 0)`;return null}
+    if(!isFinite(mins)||mins<=0){ui.err=`선택지 ${L}의 걸리는 시간(분)을 1 이상 숫자로 입력해 주세요.`;return null}
+    if(S.T.on){const cur=cityCur();rows.push({name:(o.name||'').trim()||`선택지 ${L}`,money:toKRW(money,cur),mins,loc:{amt:money,cur},ref:o.ref||''})}
+    else rows.push({name:(o.name||'').trim()||`선택지 ${L}`,money,mins});
+  }
+  return rows;
+}
+const ACT={
+  'tab':d=>{ui.tab=d.t;ui.rev=null;ui.revMsg=d.t==='review'?ui.revMsg:'';go()},
+  'ob-start':()=>{ui.ob.step=0;go()},
+  'ob':d=>{obAnswer(d.k);go()},
+  'ob-done':()=>{ui.ob.active=false;ui.tab='home';ui.home='menu';go()},
+  'ob-cancel':()=>{ui.ob.active=false;go()},
+  'copy-tp':()=>{const t=tp();copyText(`내 시간 가격은 시간당 약 ${fmt(t.mid)}원 (${fmt(t.low)}~${fmt(t.high)}원) — 진짜가격`)},
+  'home-menu':()=>{ui.home='menu';ui.err='';ui.copyBox='';ui.quick=newQuick();ui.deep=newDeep();ui.chk.done=false;ui.chk.logOpen=false;ui.fxMsg='';ui.copyBox='';go()},
+  /* 해외 여행 모드 */
+  'open-travel':()=>{ui.home='travel';ui.tab='home';ui.err='';go()},
+  'open-check':()=>{ui.home='check';ui.tab='home';ui.err='';go()},
+  't-on':d=>{S.T.on=d.v==='1';save();if(S.T.on)refreshFX(false);ui.quick=newQuick();ui.deep=newDeep();render()},
+  't-city':d=>{S.T.city=d.v;if(d.v!=='other'&&CITY[d.v])S.T.cur=CITY[d.v].cur;save();ui.chk=newChk();ui.quick=newQuick();render()},
+  't-cur':d=>{S.T.cur=d.v;save();ui.chk=newChk();ui.quick=newQuick();render()},
+  't-mult':d=>{S.T.mult=+d.v;save();render()},
+  'fx-refresh':()=>{refreshFX(true)},
+  'fx-clear':()=>{delete S.FX.manual[cityCur()];save();render()},
+  'chk-item':d=>{const c=ui.chk;c.item=c.item===d.v?'':d.v;c.done=false;c.logOpen=false;ui.err='';render()},
+  'chk-run':()=>{const c=ui.chk,a=parseFloat(c.asked);if(!isFinite(a)||a<0){ui.err='부른 가격을 0 이상 숫자로 넣어 주세요.';c.done=false;return render()}
+    const it=chkItem();if(it&&it.custom&&!(c.custom.name||'').trim()){ui.err='항목 이름을 적어 주세요.';c.done=false;return render()}
+    ui.err='';c.done=true;c.paid=c.paid||c.asked;render();const el=document.querySelector('.lvl');if(el&&el.scrollIntoView)el.scrollIntoView({block:'start',behavior:'smooth'})},
+  'chk-log1':()=>{ui.chk.logOpen=true;render()},
+  'chk-log0':()=>{ui.chk.logOpen=false;render()},
+  'chk-save':()=>{const c=ui.chk,it=chkItem(),a=parseFloat(c.paid);if(!it||!isFinite(a)||a<0){ui.err='낸 금액을 0 이상 숫자로 넣어 주세요.';return render()}
+    S.PR.push({id:uid(),ts:Date.now(),city:S.T.city,cityName:cityName(),item:it.k,name:it.n,cur:cityCur(),amount:a,note:(c.note||'').slice(0,80)});
+    if(S.PR.length>500)S.PR=S.PR.slice(-500);
+    save();ui.err='';c.logOpen=false;c.note='';toast('가격을 기록했어요');render()},
+  'chk-ask':()=>{const c=ui.chk,it=chkItem(),a=parseFloat(c.asked);if(it&&isFinite(a))copyText(askPrompt(it,a,cityCur()),true)},
+  'copybox-close':()=>{ui.copyBox='';render()},
+  'pr-del':d=>{S.PR=S.PR.filter(p=>p.id!==d.id);save();render()},
+  'open-quick':()=>{ui.home='quick';ui.err='';go()},
+  'open-deep':()=>{ui.home='deep';ui.err='';go()},
+  /* 빠른 모드 */
+  'q-example':()=>{const q=ui.quick,ex=S.T.on?QEX[S.T.city]:null;
+    if(ex){q.a=Object.assign({},ex.a);q.b=Object.assign({},ex.b);q.c=ex.c?Object.assign({},ex.c):{name:'',money:'',mins:'',ref:''};q.showC=!!ex.c;q.has=['bag'];q.ctx='주말·여가'}
+    else{q.a={name:'택시',money:'15000',mins:'10',ref:''};q.b={name:'버스',money:'2000',mins:'35',ref:''};q.c={name:'걷기',money:'0',mins:'60',ref:''};q.showC=true;q.ctx='출근·등교'}
+    ui.err='';go()},
+  'q-toggle-c':()=>{ui.quick.showC=!ui.quick.showC;ui.err='';render()},
+  'q-ctx':d=>{ui.quick.ctx=ui.quick.ctx===d.v?null:d.v;render()},
+  'q-has':d=>{const h=ui.quick.has,i=h.indexOf(d.v);if(i<0)h.push(d.v);else h.splice(i,1);render()},
+  'q-run':()=>{
+    const rows=validQuick();if(!rows){return render()}
+    ui.err='';const q=ui.quick;
+    const hs=HASSLE.filter(x=>q.has.includes(x.k)).reduce((s,x)=>s+x.w,0);
+    const r=evalOpts(rows,hs);q.result={rows:r,verdict:quickVerdict(r)};q.stage='result';q.chosen=null;go();
+  },
+  'q-edit':()=>{ui.quick.stage='form';go()},
+  'q-pick':d=>{ui.quick.chosen=+d.i;ui.quick.stage='predict';render();window.scrollTo(0,document.body.scrollHeight)},
+  'q-pred':d=>{
+    const q=ui.quick,r=q.result.rows,v=q.result.verdict,ts=Date.now();
+    const rec={id:uid(),ts,mode:'quick',cat:'daily',title:r.map(o=>o.name).join(' vs '),ctx:q.ctx,options:r.map(o=>({name:o.name})),chosen:q.chosen,favored:v.straddle?null:v.best,predicted:+d.n,net:v.gap,be:null,fastIdx:v.fast,due:ts+DUE_H.daily*HR,outcome:null};
+    if(S.T.on)rec.travel=cityName();
+    S.D.push(rec);
+    calibrateSeg(v.seg,q.chosen,tMult());
+    save();ui.saved={title:rec.title,pred:rec.predicted,when:'오늘 저녁'};ui.quick=newQuick();ui.home='saved';go();
+  },
+  /* 심층 모드 */
+  'd-cat':d=>{ui.deep.category=d.v;render()},
+  'd-cur':d=>{ui.deep.cur=d.v;render()},
+  'd-copy':()=>{const d=ui.deep;if(!d.text.trim()){ui.err='선택 상황을 한 줄이라도 적어주세요.';return render()}ui.err='';copyText(askDeepPrompt(d),true)},
+  'd-ai':()=>{deepAI()},
+  'd-tpl':()=>{deepTpl()},
+  'd-cancel':()=>{if(ui.deep.ctl)ui.deep.ctl.abort();ui.deep.ctl=null;ui.deep.stage='form';go()},
+  'd-back':()=>{ui.deep.stage='form';go()},
+  'd-ctx':d=>{S.P.ctx[ui.deep.category]={pri:d.v,ts:Date.now()};save();render()},
+  'd-pick':d=>{ui.deep.chosen=+d.i;ui.deep.stage='predict';render();window.scrollTo(0,document.body.scrollHeight)},
+  'd-pred':d=>{
+    const dp=ui.deep,V=deepVerdict(deepTotals(dp.items)),ts=Date.now(),cat=dp.category;
+    const rec={id:uid(),ts,mode:'deep',cat,title:dp.title,options:[{name:'하기'},{name:'하지 않기'}],chosen:dp.chosen,favored:V.fav,predicted:+d.n,net:deepTotals(dp.items).net.mid,due:ts+DUE_H[cat]*HR,outcome:null};
+    S.D.push(rec);save();
+    const days=Math.round(DUE_H[cat]/24);
+    ui.saved={title:rec.title,pred:rec.predicted,when:days>=1?days+'일 뒤':'오늘 저녁'};ui.deep=newDeep();ui.home='saved';go();
+  },
+  /* 회고 */
+  'rev-open':d=>{ui.rev=d.id;ui.revStep=0;ui.revNote='';ui.revMsg='';go()},
+  'rev-close':()=>{ui.rev=null;go()},
+  'rev-rate':d=>{ui.revRating=+d.r;ui.revStep=1;go()},
+  'rev-again':d=>{saveOutcome(ui.rev,ui.revRating,d.v,ui.revNote);ui.rev=null;ui.revStep=0;go()},
+  /* 프로필 */
+  'export':()=>{doExport()},
+  'export-close':()=>{ui.exportText='';render()},
+  'retake':()=>{ui.ob=newOb(true);go()},
+  'survey':()=>{ui.ob=newOb(true);go()},
+  'demo-load':()=>{S.D=S.D.concat(makeDemo());save();toast('데모 데이터를 불러왔어요');render()},
+  'demo-clear':()=>{S.D=S.D.filter(d=>!d.demo);save();toast('데모 데이터를 지웠어요');render()},
+  'import-apply':()=>{S=ui.importPending;ui.importPending=null;ui.importMsg='백업을 불러왔어요.';ui.ob=newOb(false);save();go()},
+  'import-cancel':()=>{ui.importPending=null;render()},
+  'pwa-install':()=>{if(installEv){installEv.prompt();installEv=null}render()},
+  'pwa-hide':()=>{S.hideInstall=true;save();render()},
+  'del1':()=>{ui.confirmDel=true;render()},
+  'del0':()=>{ui.confirmDel=false;render()},
+  'del2':()=>{try{localStorage.removeItem(KEY)}catch(e){}S=fresh();ui.confirmDel=false;ui.exportText='';ui.quick=newQuick();ui.deep=newDeep();ui.home='menu';ui.tab='home';ui.ob=newOb(false);go()}
+};
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]');
+  if(!b||b.disabled)return;
+  const f=ACT[b.dataset.a];if(f)f(b.dataset,b);
+});
+document.addEventListener('change',async e=>{
+  const t=e.target;
+  if(t&&t.dataset&&t.dataset.fxman!==undefined){render();return}
+  if(!t||!t.dataset||t.dataset.import===undefined)return;
+  const f=t.files&&t.files[0];if(!f)return;
+  ui.importMsg='';ui.importPending=null;
+  try{
+    if(f.size>5e6)throw new Error('big');
+    const o=cleanImport(JSON.parse(await f.text()));
+    if(!o)throw new Error('bad');
+    ui.importPending=o;
+  }catch(err){ui.importMsg='이 진짜가격 백업 파일이 아니에요. 내보내기로 받은 JSON 파일을 골라 주세요.'}
+  t.value='';render();
+});
+document.addEventListener('input',e=>{
+  const t=e.target;if(!t||!t.dataset)return;
+  if(t.dataset.bind){
+    setPath(ui,t.dataset.bind,t.value);
+    if(t.dataset.conv){const o=document.querySelector(`[data-conv-out="${t.dataset.conv}"]`);if(o)o.innerHTML=convLine(t.value,t.dataset.cur)}
+    return}
+  if(t.dataset.fxman){const v=parseFloat(t.value);if(isFinite(v)&&v>0)S.FX.manual[t.dataset.fxman]=v;else delete S.FX.manual[t.dataset.fxman];save();return}
+  if(t.dataset.slide){
+    const it=ui.deep.items.find(x=>x.id===t.dataset.slide);if(!it)return;
+    const v=parseFloat(t.value);it.val=v;it.low=v;it.high=v;it.src='user';
+    const row=document.getElementById('row-'+it.id);
+    if(row){row.querySelector('[data-v]').innerHTML=rowVal(it);row.querySelector('[data-sub]').innerHTML=rowSub(it)}
+    const sm=document.getElementById('deep-summary');
+    if(sm){const tmp=document.createElement('div');tmp.innerHTML=summaryHtml();sm.replaceWith(tmp.firstElementChild)}
+  }
+});
+render();
+if(S.T.on)refreshFX(false);
+
+</script>
+</body>
+</html>
